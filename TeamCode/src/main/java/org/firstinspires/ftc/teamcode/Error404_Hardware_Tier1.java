@@ -36,38 +36,79 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-
+/**
+ * Tier 1 extends the <code>OpMode</code> class and captures all of our hardware and implements basic methods for
+ * interacting with the motors.
+ * Basic driving and robot operations are also achieved in this class.
+ *
+ * @author Team 8668
+ * @see OpMode
+ */
 public class Error404_Hardware_Tier1 extends OpMode {
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor leftFront;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor rightFront;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor leftRear;
+    /** This motor is one of the drive motors that makes up the robot drivetrain. */
     protected DcMotor rightRear;
+    /** The leftGlyph motor spins the left glyph intake wheel. */
     protected DcMotor leftGlyph;
+    /** The rightGlyph motor spins the right glyph intake wheel. */
     protected DcMotor rightGlyph;
-    protected Servo shoulder;
-    protected Servo hand;
-    protected Servo elbow;
+
+    /** The arm servo makes the jewel sword rotate down in preperation for knocking the correct jewel off. */
     protected Servo arm;
+    /** The swivel servo rotates the jewel arm back and forth to knock off the correct jewel. */
     protected Servo swivel;
+    /** The shoulder servo extends the relic arm over the field wall. */
+    protected Servo shoulder;
+    /** The elbow servo lifts the relic up and down. */
+    protected Servo elbow;
+    /** The hand servo opens and closes the relic claw. */
+    protected Servo hand;
+    /**  */
     protected Servo leftWhiskerServo;
+    /**  */
     protected Servo rightWhiskerServo;
 
+    /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
-
+    /** The navxMicro is a gyro and is used to record the robot's heading. */
     protected NavxMicroNavigationSensor navxMicro;
+    /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
+    /**  */
     protected AnalogInput leftWhisker;
+    /**  */
     protected AnalogInput rightWhisker;
 
+
+    /* The Vuforia system is used to track special patterns on the edge of the field. */
+
+    /** Part of the vuforia system. */
     OpenGLMatrix lastLocation = null;
+    /** The Vuforia system uses this. */
     VuforiaLocalizer vuforia;
 
+    /** The Vuforia system uses this. */
     VuforiaTrackables relicTrackables;
+    /** The Vuforia system uses this. */
     VuforiaTrackable relicTemplate;
+    /** The Vuforia system uses this. */
     int cameraMonitorViewId;
+    /** The Vuforia system uses this. */
     VuforiaLocalizer.Parameters parameters;
+    /** The Vuforia system uses this. */
     RelicRecoveryVuMark vuMark;
 
+    /**
+     * When the driver selects an <code>OpMode</code> on the driver station,
+     * this method initializes the hardware found in the <code>HardwareMap</code>.
+     * If the device cannot be found in the config file, an error message
+     * shows on the driver station telemetry.
+     */
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
         /* Attempting a hardware map of the motors, servos, and sensors//
@@ -189,12 +230,11 @@ public class Error404_Hardware_Tier1 extends OpMode {
 
     }
 
-    ////////////////////////////////////////////
-    /*    Method that reads the pictograph    //
-    //        and returns the side of         //
-    //   the cryptobox that the glyph needs   //
-    //    to go into to score bonus points    //
-    *///////////////////////////////////////////
+    /**
+     * Detects cryptograph pattern.
+     *
+     * @return  a String denoting left, center, right, or blank if it can't determine the cryptograph.
+     */
     public String readCryptograph(){
         String dejavu="";
 
@@ -215,6 +255,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return null;
     }
 
+    /** When the driver hits start sets up Vuforia. */
     public void start() {
         cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -245,6 +286,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Gets the motor's position and power
+     *
+     * @param motor  the motor whose position and power will be recorded
+     * @return  a String which is the motor's power
+     */
     public String get_power_tele(DcMotor motor)
     {
         String motorReturn = "";
@@ -256,6 +303,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's position
+     *
+     * @param motor  the motor whose position will be recorded
+     * @return  the motor's posisiton
+     */
     public int get_position(DcMotor motor)
     {
         int motorReturn = 0;
@@ -267,6 +320,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current encoder count
+     *
+     * @param motor  the motor whose encoder counts will be recorded
+     * @return  the motor's encoder count
+     */
     public String get_position_tele(DcMotor motor)
     {
         String motorReturn = "";
@@ -279,6 +338,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current mode
+     *
+     * @param motor  the motor whose mode will be checked
+     * @return  the motor's mode
+     */
     public String get_mode(DcMotor motor) {
         String motorReturn = "";
         if (motor != null) {
@@ -289,6 +354,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return motorReturn;
     }
 
+    /**
+     * Get the motor's current direction
+     *
+     * @param motor  the motor whose direction will be recorded
+     * @return  the motor's direction
+     */
     public String get_direction(DcMotor motor) {
         String motorReturn = "";
         if (motor != null) {
@@ -318,10 +389,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     }
 
     //////////////////////////////////////////////
-    /*  method that checks if motors are reset  //
-    //      if found, else returns false        //
+    /*  method that checks if motors are reset.  //
+    // If found returns true, else returns false //
     */////////////////////////////////////////////
-
     public boolean is_encoder_reset(DcMotor motor)
     {
         if(get_position(motor) == 0)
@@ -334,7 +404,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     /* methods that resets encoders if found,//
     //          else does nothing.           //
     *//////////////////////////////////////////
-
    /* public void reset_encoder(DcMotor motor)
     {
         if(motor != null)
@@ -343,6 +412,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
     }
 */
+
+    /**
+     * Used to get the robot's heading.
+     *
+     * @return  the robtot's heading as an Int
+     */
     public int getHeading(){
         Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
@@ -357,6 +432,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //If it is not null, the power is set //
     //to that motor.                      //
     ////////////////////////////////////////
+
+    /**
+     * If the motor is valid, set the motor to a certain power
+     *
+     * @param power  a double the is the power to be set to the motor
+     * @param motor  The motor whose power will be set.
+     */
     public void set_power(double power, DcMotor motor){
         if (motor != null) {
             motor.setPower(power);
@@ -371,6 +453,14 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //RUE= Run using encoders    //
     //RWOE= Run without encoders //
     ///////////////////////////////
+
+    /**
+     * If the motor is valid, set it with 3 different available modes (RUN_TO_POSITION,
+     * RUN-USING_ENCODERS, RUN_WITHOUT_ENCODERS).
+     *
+     * @param motor  The motor whose modes will be set.
+     * @param modetoset  The different modes to be set
+     */
     public void set_mode(DcMotor motor, String modetoset){
         modetoset=modetoset.toUpperCase();
         if (motor != null){
@@ -393,6 +483,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     // and R for reversed. If the motor is not null, the     //
     //direction is set.                                      //
     ///////////////////////////////////////////////////////////
+
+    /**
+     * If the motor is valid, set the motor direction as either forward (f) or reverse (r).
+     *
+     * @param motor  The motor whose direction will be set
+     * @param direction  a String that sets the motor's direction.
+     */
     public void set_direction(DcMotor motor, String direction) {
         if (motor != null) {
             direction=direction.toLowerCase();
@@ -411,6 +508,13 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //position. It then sets the position   //
     //to the motor if the motor is not null.//
     //////////////////////////////////////////
+
+    /**
+     * Tells the motor to go to a certain position.
+     *
+     * @param motor  The motor whose position will be set.
+     * @param position  the desired posistion for the motor to achieve.
+     */
     public void set_position(DcMotor motor, int position)
     {
         if (motor != null){
@@ -425,6 +529,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //needed number of encoder ticks needed to      //
     //drive the distance input.                     //
     //////////////////////////////////////////////////
+
+    /**
+     * converts inches to encoder counts
+     *
+     * @param desiredDistance  an Int that is the target distance
+     * @param wheel_diameter  a Double that is your wheel diameter
+     * @param gear_ratio  a Double that is the gear ratio
+     * @return  the needed number of encoder ticks to move the target amount of inches
+     */
     public int distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
         return (int) ( 280*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
 
