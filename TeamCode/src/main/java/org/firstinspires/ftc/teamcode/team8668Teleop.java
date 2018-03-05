@@ -214,11 +214,11 @@ public class team8668Teleop extends OpMode {
         shoulderPos = Range.clip(shoulderPos,0.7,0.95); //keep shoulder servo value in given range
 
         if(gamepad2.dpad_up){
-                elbowPos += 0.001;
+                elbowPos += 0.003;
             //increment elbow out
         }
         else if(gamepad2.dpad_down) { //increment elbow in
-                elbowPos -= 0.001;
+                elbowPos -= 0.003;
         }
 
 
