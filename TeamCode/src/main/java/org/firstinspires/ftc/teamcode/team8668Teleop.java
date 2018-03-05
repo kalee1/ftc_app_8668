@@ -16,33 +16,62 @@ import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODE
 
 @TeleOp(name="8668 Teleop meccanum", group="Teleop")
 
+/**
+ * team8668Teleop extends the <code>OpMode</code> class.
+ *
+ * Contains all of the button and joy-stick initializations for moving the robot with the
+ * remotes as well as the motor and servo initializations for Teleop.
+ *
+ * @author Team 8668
+ * @see OpMode
+ */
 public class team8668Teleop extends OpMode {
-    ////////////////////////////////////////////
-    // This is the Teleop program for driver control.
-    ////////////////////////////////////////////////
+
+    /** The front right drive motor on the robot. */
     DcMotor rightFront;
+    /** The front left drive motor on the robot. */
     DcMotor leftFront;
+    /** The right rear drive motor on the robot. */
     DcMotor rightRear;
+    /** The left rear drive motor on the robot. */
     DcMotor leftRear;
+    /** The left glyph intake motor -- used in conjunction with the rightGlyph motor to suck in glyphs. */
     DcMotor leftGlyph;
+    /** The right glyph intake motor -- used in conjunction with the leftGlyph motor to suck in glyphs. */
     DcMotor rightGlyph;
+    /**
+     * Actaully just an encoder counter attached to the axle the glyphter servo spins.
+     * This encoder counter lets us move a servo with encoder counts like a DC motor.
+     * */
     DcMotor encoderMotor;
 
+
+    /** The arm servo raises and lowers the jewel arm. */
     Servo arm;
     Servo glyph;
-    Servo shoulder;
-    Servo hand;
-    Servo elbow;
+    /** The swivel servo swings the jewel sword back and forth to knock off the glyph. */
     Servo swivel;
+    /** The shoulder servo is a high-torque servo that extends the relic arm up and over the field wall. */
+    Servo shoulder;
+    /** The elbow servo raises and lowers the relic for extra flexibility when deploying the relic. */
+    Servo elbow;
+    /** The hand servo controls the claw that grabs the relic. */
+    Servo hand;
+    /** The glyphter servo raises and lowers the glyph lifter so that glyphs can be deployed at any of the four levels. */
     Servo glyphter;
     Servo glyphTrayTilt;
     Servo glyphTrayMove;
     Servo rightFinger;
     Servo leftFinger;
 
-
-
+    /**
+     * A limit switch on the bottom of the glyph lifter. It acts as a hard stop to prevent the
+     * glyph lifter from going down too far. The bottom limit switch also acts as
+     * the home position for the glyph lifter.
+     * */
     DigitalChannel bottom;
+    /** A limit switch on the top of the glyph lifter. It acts as a hard stop to prevent the
+     * glyph lifter from going up too far. */
     DigitalChannel top;
 
     float launchspeed1;
@@ -50,19 +79,34 @@ public class team8668Teleop extends OpMode {
     double rightVal=0;
     double leftVal=0;
     double incrementDir=0;
+
+    /** Setting the start position of the elbow servo. */
     double elbowPos=1;
+    /** Setting the start position of the shoulder servo. */
     double shoulderPos=0.95;
+
     double swivelPos =0.522;
+    /** Setting the start position for the hand servo. */
     double handPos=0.7;
+    /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. */
     double glyphterSpeed=0.5;
+
     double tiltPosition=0.05;
+
     double trayMovePosition=0.5;
+
     boolean fingersOut = true;
+
     boolean fingerShift = false;
+	/** An int that is the delta for the encoder count for the glyph lifter. This int is set to zero
+     * everytime the bottom limit switch is pressed, giving us the usualbilty of a real encoder
+     * motor with physical limits. */
     int encoderDelta=0;
 
     public team8668Teleop() {
     }
+
+    /** Setting the modes and names for all the motors and servos. */
     @Override
     public void init() {
         //Initialize all motors, servos, and sensors, as well as setting some servos to initilaize to a particualr position.
@@ -107,6 +151,8 @@ public class team8668Teleop extends OpMode {
         arm.setPosition(0.1);
         swivel.setPosition(0.5);
     }
+
+    /** Reading the raw input from the controllers and turning them into movement values for the motors and servos. */
     @Override
     public void loop() {
         //rightFinger.setPosition(0.2);
@@ -126,7 +172,7 @@ public class team8668Teleop extends OpMode {
             rightFinger.setPosition(0.6);
             leftFinger.setPosition(0.4);
         }
-        //////////////////////////////////////////
+		//////////////////////////////////////////
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
 
@@ -288,9 +334,16 @@ public class team8668Teleop extends OpMode {
 
 
     }
+
+    /** Stop everything */
     @Override
     public void stop() {
     }
+
+    /**
+     * Takes the raw data input from the joystick and returns it as a curve to help with smoother robot movement.
+     *
+     * @param dVal The value of the d stick recorded as a double. */
     double scaleInput(double dVal) {
         double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
