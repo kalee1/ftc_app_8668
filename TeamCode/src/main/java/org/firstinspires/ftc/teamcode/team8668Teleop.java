@@ -57,6 +57,8 @@ public class team8668Teleop extends OpMode {
     double glyphterSpeed=0.5;
     double tiltPosition=0.05;
     double trayMovePosition=0.5;
+    boolean fingersOut = true;
+    boolean fingerShift = false;
     int encoderDelta=0;
 
     public team8668Teleop() {
@@ -107,8 +109,23 @@ public class team8668Teleop extends OpMode {
     }
     @Override
     public void loop() {
-        rightFinger.setPosition(0.2);
-        leftFinger.setPosition(0.8);
+        //rightFinger.setPosition(0.2);
+        //leftFinger.setPosition(0.8);
+        if(gamepad2.start){
+            fingerShift=true;
+        }
+        if(!gamepad2.start && fingerShift){
+            fingersOut=!fingersOut;
+            fingerShift=false;
+        }
+        if(fingersOut){
+            rightFinger.setPosition(0.2);
+            leftFinger.setPosition(0.8);
+        }
+        if(!fingersOut){
+            rightFinger.setPosition(0.6);
+            leftFinger.setPosition(0.4);
+        }
         //////////////////////////////////////////
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
