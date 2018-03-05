@@ -237,7 +237,7 @@ public class team8668Teleop extends OpMode {
 
         //Tilting the glyph tray towards the cryptobox
         tiltPosition+=(gamepad2.right_stick_y)*(0.003);
-        tiltPosition=Range.clip(tiltPosition, 0.05, 0.227);
+        tiltPosition=Range.clip(tiltPosition, 0.05, 0.267);
         glyphTrayTilt.setPosition(tiltPosition);
 
         //moving the belt on the glyph tray
