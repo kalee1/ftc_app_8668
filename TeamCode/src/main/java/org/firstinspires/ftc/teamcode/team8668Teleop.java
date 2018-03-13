@@ -188,9 +188,9 @@ public class team8668Teleop extends OpMode {
         leftStick_x.add(gamepad1.left_stick_x);    //assigning joystick and axis to filter window
         rightStick_x.add(gamepad1.right_stick_x);    //assigning joystick and axis to filter window
 
-        float yL_val = (float) leftStick_y.getValue();    //getting raw values from left joystick on the y-axis
-        float xL_val = (float) leftStick_x.getValue();    //getting raw values from left joystick on the x-axis
-        float xR_val = (float) rightStick_x.getValue();    //getting raw values from right joytick on the x-axis
+        float yL_val = (float) leftStick_y.getValue();    //getting smoothed values from left joystick on the y-axis
+        float xL_val = (float) leftStick_x.getValue();    //getting smoothed values from left joystick on the x-axis
+        float xR_val = (float) rightStick_x.getValue();    //getting smoothed values from right joytick on the x-axis
 
 
         //clipping all incoming values to make sure that they don't exceed +/- 1
