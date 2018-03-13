@@ -64,6 +64,11 @@ public class team8668Teleop extends OpMode {
     Servo rightFinger;
     Servo leftFinger;
 
+    MovingAverage leftStick_y = new movingAverage(6);
+    MovingAverage leftStick_x = new movingAverage(6);
+    MovingAverage rightStick_x = new movingAverage(6);
+
+
     /**
      * A limit switch on the bottom of the glyph lifter. It acts as a hard stop to prevent the
      * glyph lifter from going down too far. The bottom limit switch also acts as
@@ -176,15 +181,19 @@ public class team8668Teleop extends OpMode {
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
 
-        float yL_val = -gamepad1.left_stick_y;            //reading raw values from the joysticks
-        float xL_val = gamepad1.left_stick_x;            //reading raw values from the joysticks
-        float xR_val = gamepad1.right_stick_x;
+        leftStick_y.add(-gamepad1.left_stick_y);
+        leftStick_x.add(gamepad1.left_stick_x);
+        rightStick_x.add(gamepad1.right_stick_x);
 
 
-        //clip the right/left values so that the values never exceed +/- 1.
-        yL_val = (float) scaleInput(yL_val);
-        xL_val = (float) scaleInput(xL_val);
-        xR_val = (float) scaleInput(xR_val);
+        float yL_val = (float) leftStick_y.getValue();
+        float xL_val = (float) leftStick_x.getValue();
+        float xR_val = (float) rightStick_x.getValue();
+
+        yL_val = Range.clip(yL_val, -1, 1);
+        xL_val = Range.clip(xL_val, -1, 1);
+        xR_val = Range.clip(xR_val, -1, 1);
+
 
         float RF =(yL_val-xR_val-xL_val);  //these are the calculations need to make a simple
         float LF =(yL_val+xR_val+xL_val);  // mecaccnum drive. The left joystick controls moving
