@@ -64,9 +64,12 @@ public class team8668Teleop extends OpMode {
     Servo rightFinger;
     Servo leftFinger;
 
-    MovingAverage leftStick_y = new movingAverage(6);
-    MovingAverage leftStick_x = new movingAverage(6);
-    MovingAverage rightStick_x = new movingAverage(6);
+    /** Moving average window used to filter the leftStick_y value. */
+    MovingAverage leftStick_y = new MovingAverage(6);
+    /** Moving average window used to filter the leftStick_x value. */
+    MovingAverage leftStick_x = new MovingAverage(6);
+    /** Moving average window used to filter the rightStick_x value. */
+    MovingAverage rightStick_x = new MovingAverage(6);
 
 
     /**
@@ -181,15 +184,16 @@ public class team8668Teleop extends OpMode {
         /////Drive Train//////////////////////////
         /////////////////////////////////////////
 
-        leftStick_y.add(-gamepad1.left_stick_y);
-        leftStick_x.add(gamepad1.left_stick_x);
-        rightStick_x.add(gamepad1.right_stick_x);
+        leftStick_y.add(-gamepad1.left_stick_y);    //assigning joystick and axis to filter window
+        leftStick_x.add(gamepad1.left_stick_x);    //assigning joystick and axis to filter window
+        rightStick_x.add(gamepad1.right_stick_x);    //assigning joystick and axis to filter window
+
+        float yL_val = (float) leftStick_y.getValue();    //getting raw values from left joystick on the y-axis
+        float xL_val = (float) leftStick_x.getValue();    //getting raw values from left joystick on the x-axis
+        float xR_val = (float) rightStick_x.getValue();    //getting raw values from right joytick on the x-axis
 
 
-        float yL_val = (float) leftStick_y.getValue();
-        float xL_val = (float) leftStick_x.getValue();
-        float xR_val = (float) rightStick_x.getValue();
-
+        //clipping all incoming values to make sure that they don't exceed +/- 1
         yL_val = Range.clip(yL_val, -1, 1);
         xL_val = Range.clip(xL_val, -1, 1);
         xR_val = Range.clip(xR_val, -1, 1);
@@ -200,7 +204,8 @@ public class team8668Teleop extends OpMode {
         float RR= (yL_val-xR_val+xL_val);  //straight forward/backward and straight sideways. The
         float LR =(yL_val+xR_val-xL_val);  //right joystick controls turning.
 
-        RF = Range.clip(RF, -1, 1);          //make sure power stays between -1 and 1
+        //Make sure power stays between +/- 1
+        RF = Range.clip(RF, -1, 1);
         LF = Range.clip(LF, -1, 1);
         RR = Range.clip(RR, -1, 1);
         LR = Range.clip(LR, -1, 1);
