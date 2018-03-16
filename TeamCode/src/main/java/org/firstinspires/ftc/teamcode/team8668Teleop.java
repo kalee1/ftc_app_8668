@@ -1,14 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODERS;
@@ -63,6 +69,9 @@ public class team8668Teleop extends OpMode {
     Servo glyphTrayMove;
     Servo rightFinger;
     Servo leftFinger;
+    protected IntegratingGyroscope gyro;
+    /** The navxMicro is a gyro and is used to record the robot's heading. */
+    protected NavxMicroNavigationSensor navxMicro;
 
     /**
      * A limit switch on the bottom of the glyph lifter. It acts as a hard stop to prevent the
@@ -98,6 +107,9 @@ public class team8668Teleop extends OpMode {
     boolean fingersOut = true;
 
     boolean fingerShift = false;
+
+    int gyroX=0;
+    int gyroY=0;
 	/** An int that is the delta for the encoder count for the glyph lifter. This int is set to zero
      * everytime the bottom limit switch is pressed, giving us the usualbilty of a real encoder
      * motor with physical limits. */
@@ -150,6 +162,15 @@ public class team8668Teleop extends OpMode {
         glyph.setPosition(0.25);
         arm.setPosition(0.1);
         swivel.setPosition(0.5);
+
+        try {
+            navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
+            gyro = (IntegratingGyroscope)navxMicro;
+        } catch (Exception p_exeception) {
+            telemetry.addData("navx not found in config file", 0);
+            navxMicro = null;
+        }
+
     }
 
     /** Reading the raw input from the controllers and turning them into movement values for the motors and servos. */
@@ -245,6 +266,25 @@ public class team8668Teleop extends OpMode {
             swivelPos=0.64;
         }
         else {swivelPos=0.52;}
+
+        if(gamepad1.right_stick_button){
+
+            Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            gyroX=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.thirdAngle));
+
+            Orientation angles2 = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            gyroY=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles2.angleUnit, angles2.secondAngle));
+
+            RF =(-gyroY+gyroX);  //these are the calculations need to make a simple
+            LF =(-gyroY-gyroX);  // mecaccnum drive. The left joystick controls moving
+            RR= (-gyroY-gyroX);  //straight forward/backward and straight sideways. The
+            LR =(-gyroY+gyroX);  //right joystick controls turning.
+
+            RF = Range.clip(RF, -1, 1);          //make sure power stays between -1 and 1
+            LF = Range.clip(LF, -1, 1);
+            RR = Range.clip(RR, -1, 1);
+            LR = Range.clip(LR, -1, 1);
+        }
 
         Range.clip(handPos, 0.35, 0.8);
         rightFront.setPower(RF);              //Set all values to correct devices
