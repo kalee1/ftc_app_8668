@@ -1,4 +1,7 @@
+package org.firstinspires.ftc.teamcode;
+
 import java.util.Vector;
+
 
 /**
  * MovingAverage implements a moving average window filter for use with data
