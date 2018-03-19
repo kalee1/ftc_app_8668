@@ -275,10 +275,10 @@ public class team8668Teleop extends OpMode {
             Orientation angles2 = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             gyroY=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles2.angleUnit, angles2.secondAngle));
 
-            RF =(-gyroY+gyroX);  //these are the calculations need to make a simple
-            LF =(-gyroY-gyroX);  // mecaccnum drive. The left joystick controls moving
-            RR= (-gyroY-gyroX);  //straight forward/backward and straight sideways. The
-            LR =(-gyroY+gyroX);  //right joystick controls turning.
+            RF =((-gyroY+gyroX)/200);  //these are the calculations need to make a simple
+            LF =(-gyroY-gyroX)/200;  // mecaccnum drive. The left joystick controls moving
+            RR= (-gyroY-gyroX)/200;  //straight forward/backward and straight sideways. The
+            LR =(-gyroY+gyroX)/200;  //right joystick controls turning.
 
             RF = Range.clip(RF, -1, 1);          //make sure power stays between -1 and 1
             LF = Range.clip(LF, -1, 1);
