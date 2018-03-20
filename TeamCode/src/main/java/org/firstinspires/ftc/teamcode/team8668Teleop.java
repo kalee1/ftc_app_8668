@@ -110,6 +110,9 @@ public class team8668Teleop extends OpMode {
 
     int gyroX=0;
     int gyroY=0;
+    int xdelta=0;
+    int ydelta=0;
+
 	/** An int that is the delta for the encoder count for the glyph lifter. This int is set to zero
      * everytime the bottom limit switch is pressed, giving us the usualbilty of a real encoder
      * motor with physical limits. */
@@ -170,6 +173,17 @@ public class team8668Teleop extends OpMode {
             telemetry.addData("navx not found in config file", 0);
             navxMicro = null;
         }
+
+
+    }
+    @Override
+    public void start(){
+
+        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        xdelta=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.thirdAngle));
+
+        Orientation angles2 = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        ydelta=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles2.angleUnit, angles2.secondAngle));
 
     }
 
@@ -275,10 +289,10 @@ public class team8668Teleop extends OpMode {
             Orientation angles2 = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             gyroY=(int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles2.angleUnit, angles2.secondAngle));
 
-            RF =((-gyroY+gyroX)/200);  //these are the calculations need to make a simple
-            LF =(-gyroY-gyroX)/200;  // mecaccnum drive. The left joystick controls moving
-            RR= (-gyroY-gyroX)/200;  //straight forward/backward and straight sideways. The
-            LR =(-gyroY+gyroX)/200;  //right joystick controls turning.
+            RF =((((gyroY-ydelta)/(float)(1.5))+(gyroX-xdelta))/7);  //these are the calculations need to make a simple
+            LF =(((gyroY-ydelta)/(float)(1.5))-(gyroX-xdelta))/7;  // mecaccnum drive. The left joystick controls moving
+            RR= (((gyroY-ydelta)/(float)(1.5))-(gyroX-xdelta))/7;  //straight forward/backward and straight sideways. The
+            LR =(((gyroY-ydelta)/(float)(1.5))+(gyroX-xdelta))/7;  //right joystick controls turning.
 
             RF = Range.clip(RF, -1, 1);          //make sure power stays between -1 and 1
             LF = Range.clip(LF, -1, 1);
@@ -362,6 +376,8 @@ public class team8668Teleop extends OpMode {
       telemetry.addData("pusher: ",glyph.getPosition());
       telemetry.addData("swivel: ",swivel.getPosition());
       telemetry.addData("hand: ",handPos);
+      telemetry.addData("gyro X: ",gyroX);
+      telemetry.addData("gyro Y: ",gyroY);
       telemetry.addData("glyph Tray Position: ",glyphTrayMove.getPosition());
       telemetry.addData("glyph Tray Tilt: ",glyphTrayTilt.getPosition());
       telemetry.addData("Right Rear Position: ", rightRear.getCurrentPosition());
