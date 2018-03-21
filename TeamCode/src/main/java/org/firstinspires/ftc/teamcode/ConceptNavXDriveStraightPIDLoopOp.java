@@ -60,9 +60,7 @@ import java.text.DecimalFormat;
 @TeleOp(name = "Concept: navX Drive Straight PID - Loop", group = "Concept")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 
-public class ConceptNavXDriveStraightPIDLoopOp extends OpMode {
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+public class ConceptNavXDriveStraightPIDLoopOp extends Error404_Hardware_Tier2 {
 
     /* This is the port on the Core Device Interface Module        */
     /* in which the navX-Model Device is connected.  Modify this  */
@@ -89,15 +87,13 @@ public class ConceptNavXDriveStraightPIDLoopOp extends OpMode {
 
     @Override
     public void init() {
-        leftMotor = hardwareMap.dcMotor.get("left motor");
-        rightMotor = hardwareMap.dcMotor.get("right motor");
 
         navx_device = AHRS.getInstance(hardwareMap.deviceInterfaceModule.get("dim"),
                 NAVX_DIM_I2C_PORT,
                 AHRS.DeviceDataType.kProcessedData,
                 NAVX_DEVICE_UPDATE_RATE_HZ);
 
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        //rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         /* If possible, use encoders when driving, as it results in more */
         /* predictable drive system response.                           */
@@ -155,14 +151,14 @@ public class ConceptNavXDriveStraightPIDLoopOp extends OpMode {
 
             if (yawPIDController.isNewUpdateAvailable(yawPIDResult)) {
                 if (yawPIDResult.isOnTarget()) {
-                    leftMotor.setPower(drive_speed);
-                    rightMotor.setPower(drive_speed);
+                    left_set_power(drive_speed);
+                    right_set_power(drive_speed);
                     telemetry.addData("Motor Output", df.format(drive_speed) + ", " +
                             df.format(drive_speed));
                 } else {
                     double output = yawPIDResult.getOutput();
-                    leftMotor.setPower(limit(drive_speed + output));
-                    rightMotor.setPower(limit(drive_speed - output));
+                    left_set_power(limit(drive_speed + output));
+                    right_set_power(limit(drive_speed - output));
                     telemetry.addData("Motor Output", df.format(limit(drive_speed + output)) + ", " +
                             df.format(limit(drive_speed - output)));
                 }
