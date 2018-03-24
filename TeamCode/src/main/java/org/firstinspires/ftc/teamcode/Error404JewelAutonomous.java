@@ -22,10 +22,13 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    /** Initializing the method used for driving from the balancing stone to the cryptobox. */
+    /** Initializing the variable that is the distanve from the balancing stone to the cryptobox. */
     protected int cryptoboxDriveDistance;
+    protected int glyphPileDriveDistance;
+    protected int driveIntoPile;
     /** Initializing the method used for turning the correct side of the robot to face the cryptobox. */
     protected int turnToCryptobox;
+    protected int turnToPile;
     /** Initializing the method used for sliding to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
@@ -148,11 +151,10 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
 
-            case 7:  //Drive to Cryptobox
-                if(cryptoboxDriveDistance!=0)
+            case 7:  //Drive to Pile
+                if(glyphPileDriveDistance!=0)
                 {
-                    //driveStraight("RUE", 0.3, "f", 0);
-                    if(cryptoboxDriveDistance>0)
+                    if(glyphPileDriveDistance>0)
                     {
                         driveStraightCombo(0.7);
                     }
@@ -161,9 +163,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         driveStraightCombo(-0.7);
                     }
 
-                    if (leftFront.getCurrentPosition() - encoder > Math.abs(cryptoboxDriveDistance))
+                    if (leftFront.getCurrentPosition() - encoder > Math.abs(glyphPileDriveDistance))
                     {
-                        //slide_sideways("RUE", 0, "l", 0);
                         stopEverything();
                         setMultipleDirections("turn", "right");
                         state++;
@@ -179,10 +180,68 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
                 break;
 
-            case 8:  //Face Cryptobox
+            case 8:  //Face Glyph Pile
+                if(turnToPile!=0)
+                {
+                    pointTurnCombo(0.6);
+                    if (Math.abs(getHeading()) > turnToPile)
+                    {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("slide", "left");
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 9:  // Drive Into GLyph Pile
+                if(driveIntoPile!=0)
+                {
+                    if(driveIntoPile>0)
+                    {
+                        driveStraightCombo(0.7);
+                    }
+                    else
+                    {
+                        driveStraightCombo(-0.7);
+                    }
+
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(driveIntoPile))
+                    {
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        state++;
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 10:  //Collect Glyphs From Pile
+                glyphIntake("in");
+                driveStraightCombo(0.7);
+                if(leftFront.getCurrentPosition()-encoder>50)
+                {
+                    stopEverything();
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 11:  //Orient on Cryptobox
                 if(turnToCryptobox!=0)
                 {
-                    //pointTurn("RUE", 0.3, "r", 0);
                     pointTurnCombo(0.6);
                     if (Math.abs(getHeading()) > turnToCryptobox)
                     {
@@ -200,7 +259,35 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 9:  // Slide to Cryptobox
+            case 12:  // Drive To Cryptobox
+                if(cryptoboxDriveDistance!=0)
+                {
+                    if(cryptoboxDriveDistance>0)
+                    {
+                        driveStraightCombo(0.7);
+                    }
+                    else
+                    {
+                        driveStraightCombo(-0.7);
+                    }
+
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxDriveDistance))
+                    {
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        state++;
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 13:  // Slide to Cryptobox
                 if(cryptoboxSlide!=0)
                 {
                     if(cryptoboxSlide>0)
@@ -227,8 +314,8 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-
-            case 10:  //Drive into Cryptobox
+            
+            case 14:  //Drive into Cryptobox
                 driveStraight("RUE",0.6,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>150)
                 {
@@ -238,12 +325,12 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 11:  //Deploy Glyph
+            case 15:  //Deploy Glyph
                 glyphIntake("out");
                 state++;
                 break;
 
-            case 12:  //Wait
+            case 16:  //Wait
                 if(leftGlyph.getCurrentPosition()>20)
                 {
                     state++;
@@ -251,7 +338,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 13:  // Back Up
+            case 17:  // Back Up
                 driveStraight("RUE",0.7,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>130)
                 {
@@ -261,7 +348,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     glyphIntake("stop");
                 }
                 break;
-            case 14: // Push Glyph in
+            case 18: // Push Glyph in
                 glyphIntake("outSlow");
                 driveStraight("RUE",0.3,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>150)
@@ -271,7 +358,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 15:
+            case 19:
                 driveStraight("RUE",0.7,"r",0);
                 if(leftFront.getCurrentPosition()-encoder>100)
                 {
