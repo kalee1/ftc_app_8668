@@ -22,14 +22,17 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     private int state = 0;
     private int encoder=0;
     private double timer=0;
-    /** Initializing the variable that is the distanve from the balancing stone to the cryptobox. */
+    /** A move variable for driving from the glyph pile to the cryptobox. */
     protected int cryptoboxDriveDistance;
+    /** A move variable for driving to line up on the glyph pile. */
     protected int glyphPileDriveDistance;
+    /** A move variable for driving the robot into the glyph pile. */
     protected int driveIntoPile;
-    /** Initializing the method used for turning the correct side of the robot to face the cryptobox. */
+    /** Initializing the turning variable used for turning the correct side of the robot to face the cryptobox. */
     protected int turnToCryptobox;
+    /** A move variable for turing the robot to face the glyph pile. */
     protected int turnToPile;
-    /** Initializing the method used for sliding to align on a particular column of the cryptobox. */
+    /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
     private String fieldSide;
