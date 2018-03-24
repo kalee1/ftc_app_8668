@@ -59,9 +59,15 @@ public class team8668Teleop extends OpMode {
     Servo hand;
     /** The glyphter servo raises and lowers the glyph lifter so that glyphs can be deployed at any of the four levels. */
     Servo glyphter;
+    /**  */
     Servo glyphTrayTilt;
+    /** */
     Servo glyphTrayMove;
+    /**This servo in combination with the leftFinger servo stick out two flexible fingers that aid
+     * the drivers with aligning the robot on a column when deploying glyphs. */
     Servo rightFinger;
+    /**This servo in combination with the rightFinger servo stick out two flexible fingers that aid
+     * the drivers with aligning the robot on a column when deploying glyphs. */
     Servo leftFinger;
 
     /**
@@ -90,14 +96,14 @@ public class team8668Teleop extends OpMode {
     double handPos=0.7;
     /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. */
     double glyphterSpeed=0.5;
-
+    /** Setting the start position for the glyphTrayTilt servo. */
     double tiltPosition=0.05;
-
+    /** Setting the start position for the glyphTrayMove servo. */
     double trayMovePosition=0.5;
 
     boolean fingersOut = true;
-
     boolean fingerShift = false;
+
 	/** An int that is the delta for the encoder count for the glyph lifter. This int is set to zero
      * everytime the bottom limit switch is pressed, giving us the usualbilty of a real encoder
      * motor with physical limits. */
