@@ -314,7 +314,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            
+
             case 14:  //Drive into Cryptobox
                 driveStraight("RUE",0.6,"f",0);
                 if(leftFront.getCurrentPosition()-encoder>150)

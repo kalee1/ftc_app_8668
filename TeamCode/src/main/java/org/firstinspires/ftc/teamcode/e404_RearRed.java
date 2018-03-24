@@ -24,6 +24,9 @@ public class e404_RearRed extends Error404JewelAutonomous
     /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
+        glyphPileDriveDistance = 0;
+        turnToPile = 0;
+        driveIntoPile = 0;
         cryptoboxDriveDistance = 560;
         cryptoboxSlide=-380;
         turnToCryptobox=0;
