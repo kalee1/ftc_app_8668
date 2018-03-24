@@ -68,10 +68,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    /**  */
     protected Servo leftWhiskerServo;
-    /**  */
     protected Servo rightWhiskerServo;
+    protected Servo glyphter;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
@@ -170,6 +169,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("navx not found in config file", 0);
             navxMicro = null;
+        }
+        try {
+            glyphter = hardwareMap.get(Servo.class, "glyphter");
+        } catch (Exception p_exeception) {
+            telemetry.addData("Glyphter not found in config file", 0);
+            arm = null;
         }
 
 

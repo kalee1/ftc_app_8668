@@ -29,6 +29,12 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     /** Initializing the method used for sliding to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
+    protected int slideAwayFromTheCryptobox;
+    protected int turnToPile;
+    protected int driveToPile;
+    protected int backToCryptobox;
+    protected int slideBackToCryptobox;
+
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
@@ -252,7 +258,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 13:  // Back Up
-                driveStraight("RUE",0.7,"r",0);
+                driveStraightCombo(-0.7);
                 if(leftFront.getCurrentPosition()-encoder>130)
                 {
                     driveStraight("RUE",0,"f",0);
@@ -261,9 +267,10 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     glyphIntake("stop");
                 }
                 break;
+
             case 14: // Push Glyph in
                 glyphIntake("outSlow");
-                driveStraight("RUE",0.3,"f",0);
+                driveStraightCombo(0.3);
                 if(leftFront.getCurrentPosition()-encoder>150)
                 {
                     driveStraight("RUE",0,"r",0);
@@ -271,8 +278,9 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 15:
-                driveStraight("RUE",0.7,"r",0);
+
+            case 15: //Back away from the cryptobox
+                driveStraightCombo(0.7);
                 if(leftFront.getCurrentPosition()-encoder>100)
                 {
                     driveStraight("RUE",0,"f",0);
@@ -280,6 +288,212 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
+
+            case 16:  //Slide to line up on glyph pile
+                if(slideAwayFromTheCryptobox!=0)
+                {
+                    if(slideAwayFromTheCryptobox>0)
+                    {
+                        slideSidewaysCombo(0.7);
+                    }
+                    else
+                    {
+                        slideSidewaysCombo(-0.7);
+                    }
+
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(slideAwayFromTheCryptobox))
+                    {
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        state++;
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 17:  //Face Glyph Pile
+                if(turnToPile!=0)
+                {
+                    pointTurnCombo(0.6);
+                    if (Math.abs(getHeading()) > turnToPile)
+                    {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("slide", "left");
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 18:  //Drive into GLyph Pile
+                if(driveToPile!=0)
+                {
+                    if(driveToPile>0)
+                    {
+                        driveStraightCombo(0.7);
+                    }
+                    else
+                    {
+                        driveStraightCombo(-0.7);
+                    }
+
+                    if (leftFront.getCurrentPosition() - encoder > Math.abs(driveToPile))
+                    {
+                        //slide_sideways("RUE", 0, "l", 0);
+                        stopEverything();
+                        setMultipleDirections("turn", "right");
+                        state++;
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("turn", "right");
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
+                }
+
+                break;
+
+            case 19:  //Collect Glyphs
+                glyphIntake("in");
+                driveStraightCombo(0.3);
+                if(leftFront.getCurrentPosition()-encoder>150)
+                {
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 20:  //Drive back to cryptobox -- investigate using
+                      //ultrasonic sensors to detect distance away from wall and cryptobox
+                if(backToCryptobox!=0)
+                {
+                    if(backToCryptobox>0)
+                    {
+                        driveStraightCombo(-0.7);
+                    }
+                    else
+                    {
+                        driveStraightCombo(0.7);
+                    }
+
+                    if (leftFront.getCurrentPosition() - encoder > Math.abs(backToCryptobox))
+                    {
+                        //slide_sideways("RUE", 0, "l", 0);
+                        stopEverything();
+                        setMultipleDirections("turn", "right");
+                        state++;
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("turn", "right");
+                    state++;
+                    encoder = leftFront.getCurrentPosition();
+                }
+
+                break;
+
+            case 21:  //Line up on cryptobox column -- investigate using ultrasonic sensor to dedect
+                      //distance away from wall and cryptobox as well as detecting cryptobox
+                if(slideBackToCryptobox!=0)
+                {
+                    if(slideBackToCryptobox>0)
+                    {
+                        slideSidewaysCombo(0.7);
+                    }
+                    else
+                    {
+                        slideSidewaysCombo(-0.7);
+                    }
+
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(slideBackToCryptobox))
+                    {
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        state++;
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("straight", "forward");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 22:  //Drive into Cryptobox
+                driveStraight("RUE",0.6,"f",0);
+                if(leftFront.getCurrentPosition()-encoder>150)
+                {
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 23:  //Deploy Glyphs
+                /* Insert glyphter dump */
+                state++;
+                break;
+
+            case 24:  //Wait
+                if(leftGlyph.getCurrentPosition()>20)
+                {
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 25:  // Back Up
+                driveStraightCombo(-0.7);
+                if(leftFront.getCurrentPosition()-encoder>130)
+                {
+                    driveStraight("RUE",0,"f",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                    glyphIntake("stop");
+                }
+                break;
+
+            case 26: // Push Glyphs in
+                driveStraightCombo(-0.3);
+                if(leftFront.getCurrentPosition()-encoder>150)
+                {
+                    driveStraight("RUE",0,"r",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 27: //Back away from the cryptobox
+                driveStraightCombo(0.7);
+                if(leftFront.getCurrentPosition()-encoder>100)
+                {
+                    driveStraight("RUE",0,"f",0);
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+
+
             default:
                 glyphIntake("stop");
                 break;

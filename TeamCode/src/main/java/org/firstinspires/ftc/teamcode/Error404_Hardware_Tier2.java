@@ -51,6 +51,14 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             leftGlyph.setPower(0);
             rightGlyph.setPower(0);
         }
+        if(inOrOut.toLowerCase().equals("in")){
+            rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightGlyph.setDirection(FORWARD);
+            leftGlyph.setDirection(REVERSE);
+            leftGlyph.setPower(0.2);
+            rightGlyph.setPower(0.2);
+        }
     }
 
     /**
@@ -180,7 +188,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param direction  a String that tells the direction (forward "f" or reverse "r")
      * @param position  an Int that tells the motor position on the robot
      */
-
     //tells robot to drive straight at a certain power in a direction until the desired position is reached
     public void driveStraight(String mode, double power, String direction, int position) {
         position=distance2encoder(position,6,1);
