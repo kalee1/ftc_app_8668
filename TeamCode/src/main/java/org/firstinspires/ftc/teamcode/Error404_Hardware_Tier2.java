@@ -506,6 +506,21 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         }
         else return analogIn;
     }
+    
+    public void gyroStraightTarget (double power, double sensitivity, double target){
+        set_direction(leftFront, "f");
+        set_direction(leftRear, "r");
+        set_direction(rightFront, "f");
+        set_direction(rightRear, "r");
+
+        set_mode(leftFront, "RUE");
+        set_mode(leftRear, "RUE");
+        set_mode(rightFront, "RUE");
+        set_mode(rightRear, "RUE");
+        double heading = (double)getHeading();
+        left_set_power(power+((heading-target)/sensitivity));
+        right_set_power(power-((heading-target)/sensitivity));
+    }
 
     public void motorTelemetry(DcMotor motor)
     {
