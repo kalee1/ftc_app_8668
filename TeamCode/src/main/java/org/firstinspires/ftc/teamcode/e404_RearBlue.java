@@ -27,6 +27,11 @@ public class e404_RearBlue extends Error404JewelAutonomous
         cryptoboxDriveDistance = -600;
         cryptoboxSlide=395;
         turnToCryptobox=170;
+        slideAwayFromTheCryptobox=0;
+        turnToPile=0;
+        driveToPile=0;
+        backToCryptobox=0;
+        slideBackToCryptobox=0;
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
     }
