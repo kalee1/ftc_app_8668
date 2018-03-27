@@ -171,10 +171,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
             navxMicro = null;
         }
         try {
-            glyphter = hardwareMap.get(Servo.class, "glyphter");
+            glyphter = hardwareMap.get(Servo.class, "glyphTilt");
         } catch (Exception p_exeception) {
             telemetry.addData("Glyphter not found in config file", 0);
-            arm = null;
+            glyphter = null;
         }
 
 
