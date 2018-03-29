@@ -148,6 +148,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
                 if(((int)(getRuntime()-timer))>2)
                 {
+                    setMultipleDirections("straight", "forward");
                     updateFromVuforia("CENTER");
                     state=7;
                 }
@@ -157,7 +158,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
             case 7:  //Drive to Cryptobox
                 if(cryptoboxDriveDistance!=0)
                 {
-                    //driveStraight("RUE", 0.3, "f", 0);
                     if(cryptoboxDriveDistance>0)
                     {
                         driveStraightCombo(0.7);
@@ -377,35 +377,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
 
                 break;
-
-//            case 21:  //Line up on cryptobox column -- investigate using ultrasonic sensor to dedect
-//                      //distance away from wall and cryptobox as well as detecting cryptobox
-//                if(slideBackToCryptobox!=0)
-//                {
-//                    if(slideBackToCryptobox>0)
-//                    {
-//                        slideSidewaysCombo(0.7);
-//                    }
-//                    else
-//                    {
-//                        slideSidewaysCombo(-0.7);
-//                    }
-//
-//                    if(leftFront.getCurrentPosition()-encoder>Math.abs(slideBackToCryptobox))
-//                    {
-//                        stopEverything();
-//                        setMultipleDirections("straight", "backwards");
-//                        state++;
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                else
-//                {
-//                    setMultipleDirections("straight", "backwards");
-//                    state++;
-//                    encoder=leftFront.getCurrentPosition();
-//                }
-//                break;
 
             case 22:
                 pointTurnCombo(0.6);
