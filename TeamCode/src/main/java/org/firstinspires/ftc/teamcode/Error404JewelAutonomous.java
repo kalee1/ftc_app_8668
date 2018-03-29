@@ -289,33 +289,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 break;
 
-//            case 16:  //Slide to line up on glyph pile
-//                if(slideAwayFromTheCryptobox!=0)
-//                {
-//                    if(slideAwayFromTheCryptobox>0)
-//                    {
-//                        slideSidewaysCombo(0.7);
-//                    }
-//                    else
-//                    {
-//                        slideSidewaysCombo(-0.7);
-//                    }
-//
-//                    if(leftFront.getCurrentPosition()-encoder>Math.abs(slideAwayFromTheCryptobox))
-//                    {
-//                        stopEverything();
-//                        setMultipleDirections("straight", "forward");
-//                        state++;
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                else
-//                {
-//                    setMultipleDirections("straight", "forward");
-//                    state++;
-//                    encoder=leftFront.getCurrentPosition();
-//                }
-//                break;
 
             case 17:  //Face Glyph Pile
                 if(turnToPile!=0)
