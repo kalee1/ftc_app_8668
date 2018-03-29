@@ -72,6 +72,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo leftWhiskerServo;
     /**  */
     protected Servo rightWhiskerServo;
+    protected Servo glyphter;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
@@ -214,11 +215,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("right whisker servo not found in config file", 0);
             rightWhiskerServo = null;
-        }try {
+        }
+        try {
             leftWhiskerServo = hardwareMap.get(Servo.class, "leftWhiskerServo");
         } catch (Exception p_exeception) {
-            telemetry.addData("left whisker servo not found in config file", 0);
+            telemetry.addData("glyphter servo not found in config file", 0);
             leftWhiskerServo = null;
+        }
+        try {
+            glyphter = hardwareMap.get(Servo.class, "glyphTilt");
+        } catch (Exception p_exeception) {
+            telemetry.addData("left whisker servo not found in config file", 0);
+            glyphter = null;
         }
 
         //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
