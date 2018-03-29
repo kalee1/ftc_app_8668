@@ -24,12 +24,12 @@ public class e404_RearRed extends Error404JewelAutonomous
     /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
-        glyphPileSlideDistance = 0;
-        turnToPile = 0;
-        driveIntoPile = 0;
-        cryptoboxDriveDistance = 560;
+        glyphPileSlideDistance = 600;
+        turnToPile = 150;
+        driveIntoPile = 400;
+        cryptoboxDriveDistance = -775;
         cryptoboxSlide=-380;
-        turnToCryptobox=0;
+        turnToCryptobox=170;
         setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
 

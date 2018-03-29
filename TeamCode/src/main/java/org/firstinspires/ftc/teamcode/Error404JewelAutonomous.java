@@ -250,7 +250,12 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     if(leftFront.getCurrentPosition()-encoder>50)
                     {
                         stopEverything();
-                        setMultipleDirections("turn", "right");
+                        if(fieldSide.equals("RED")){
+                            setMultipleDirections("turn", "left");
+                        }
+                        else{
+                            setMultipleDirections("turn", "right");
+                        }
                         state++;
                         encoder=leftFront.getCurrentPosition();
                     }
@@ -258,8 +263,17 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
 
             case 12:  //Orient on Cryptobox
-                if(turnToCryptobox!=0)
-                {
+                if(fieldSide.equals("RED")){
+                    pointTurnCombo(-0.6);
+                    if (Math.abs(getHeading()) > turnToCryptobox)
+                    {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "reverse");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                else{
                     pointTurnCombo(0.6);
                     if (Math.abs(getHeading()) < turnToCryptobox)
                     {
@@ -269,40 +283,23 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
-                else
-                {
-                    setMultipleDirections("straight", "reverse");
-                    state++;
-                    encoder = leftFront.getCurrentPosition();
-                }
                 break;
 
             case 13:  // Drive To Cryptobox
-                if(cryptoboxDriveDistance!=0)
-                {
-                    if(cryptoboxDriveDistance>0)
-                    {
-                        driveStraightCombo(0.7);
-                    }
-                    else
-                    {
-                        driveStraightCombo(-0.7);
-                    }
 
+                        driveStraightCombo(-0.7);
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxDriveDistance))
                     {
                         stopEverything();
-                        setMultipleDirections("slide", "right");
+                        if(fieldSide.equals("RED")){
+                            setMultipleDirections("slide", "left");
+                        }
+                        else{
+                            setMultipleDirections("slide", "right");
+                        }
                         state++;
                         encoder=leftFront.getCurrentPosition();
                     }
-                }
-                else
-                {
-                    setMultipleDirections("slide", "right");
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                }
                 break;
 
             case 14:  // Slide to Cryptobox
