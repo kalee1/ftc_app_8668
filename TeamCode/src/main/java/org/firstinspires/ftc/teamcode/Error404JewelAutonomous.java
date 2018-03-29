@@ -25,7 +25,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     /** A move variable for driving from the glyph pile to the cryptobox. */
     protected int cryptoboxDriveDistance;
     /** A move variable for driving to line up on the glyph pile. */
-    protected int glyphPileDriveDistance;
+    protected int glyphPileSlideDistance;
     /** A move variable for driving the robot into the glyph pile. */
     protected int driveIntoPile;
     /** Initializing the turning variable used for turning the correct side of the robot to face the cryptobox. */
@@ -143,44 +143,45 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 if(updateFromVuforia(readCryptograph()))
                 {
                     state= 7;
+                    setMultipleDirections("slide", "right");
                 }
 
 
                 if(((int)(getRuntime()-timer))>2)
                 {
                     updateFromVuforia("CENTER");
+                    setMultipleDirections("slide", "right");
                     state=7;
                 }
                 break;
 
 
-            case 7:  //Drive to Pile
-                if(glyphPileDriveDistance!=0)
+            case 7:  // Slide to Glyph Pile
+                if(glyphPileSlideDistance!=0)
                 {
-                    if(glyphPileDriveDistance>0)
+                    if(glyphPileSlideDistance>0)
                     {
-                        driveStraightCombo(0.7);
+                        slideSidewaysCombo(0.7);
                     }
                     else
                     {
-                        driveStraightCombo(-0.7);
+                        slideSidewaysCombo(-0.7);
                     }
 
-                    if (leftFront.getCurrentPosition() - encoder > Math.abs(glyphPileDriveDistance))
+                    if(leftFront.getCurrentPosition()-encoder>Math.abs(glyphPileSlideDistance))
                     {
                         stopEverything();
                         setMultipleDirections("turn", "right");
                         state++;
-                        encoder = leftFront.getCurrentPosition();
+                        encoder=leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
                     setMultipleDirections("turn", "right");
                     state++;
-                    encoder = leftFront.getCurrentPosition();
+                    encoder=leftFront.getCurrentPosition();
                 }
-
                 break;
 
             case 8:  //Face Glyph Pile
@@ -197,7 +198,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 }
                 else
                 {
-                    setMultipleDirections("slide", "left");
+                    setMultipleDirections("straight", "forward");
                     state++;
                     encoder = leftFront.getCurrentPosition();
                 }
@@ -233,7 +234,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
             case 10:  //Collect Glyphs From Pile
                 glyphIntake("in");
-                driveStraightCombo(0.7);
+                driveStraightCombo(0.3);
                 if(leftFront.getCurrentPosition()-encoder>50)
                 {
                     stopEverything();
