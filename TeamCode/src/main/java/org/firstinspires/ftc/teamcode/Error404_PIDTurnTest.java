@@ -25,11 +25,11 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
     /** When the driver hits start sets up PID control. */
     @Override public void start()
     {
-        double Kc = 0.1;
-        double Pc = 0.5;
-        double Kp = 0.6*Kc;
-        turnControl = new MiniPID( Kc, 0, 0 );
-//        turnControl = new MiniPID(0.5*Kc, 2*Kp/Pc, 0.125*Kp*Pc);
+        double Kc = .01;
+        double Pc = 1.55;
+        double Kp = 0.2*Kc;
+        turnControl = new MiniPID( Kc, 0.00000, .018 );
+//        turnControl = new MiniPID(Kp, 2*Kp/Pc, 0.33*Kp*Pc);
         turnControl.setOutputLimits(1.0);
 //        turnControl.setOutputRampRate(0.25);
         turnControl.reset();
@@ -68,10 +68,9 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
         else
         {
             motor_power = turnControl.getOutput( currentHeading, targetHeading );
-            pointTurnCombo( motor_power );
+            pointTurnCombo( -1*motor_power );
 
-            if ( ( Math.abs(currentHeading - targetHeading) < 1.0 ) &&
-                    ( motor_power < 0.05 ) )
+            if ( Math.abs(currentHeading - targetHeading) < 4.0 )
             {
                 done = true;
             }
@@ -92,20 +91,21 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
      * from field position-dependant child classes. */
     @Override public void loop ()
     {
+        int targetHeading = 90;
         switch (state)
         {
             case 0:
-                pointTurnGyro( 90.0 );
+                pointTurnGyro( targetHeading );
                 timer = getRuntime();
                 state++;
                 break;
             case 1:  //Turn 90 degress
-                if ( pointTurnGyro( 90.0) )
+                if ( pointTurnGyro(targetHeading) )
                 {
                     state++;
                     reason = "Turn Complete";
                 }
-                if ( getRuntime() - timer > 5.0 )
+                if ( getRuntime() - timer > 6.0 )
                 {
                     state++;
                     reason = "Timeout";
@@ -124,6 +124,7 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
         telemetry.addData("3. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("4. Delta Position: ", encoder);
         telemetry.addData("5. Reason for stop: ", reason );
+        telemetry.addData("6. Target heading: ", targetHeading);
 
 
 
