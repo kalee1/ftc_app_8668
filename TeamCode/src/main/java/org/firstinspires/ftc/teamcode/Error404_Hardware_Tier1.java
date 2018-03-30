@@ -68,9 +68,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    /**  */
     protected Servo leftWhiskerServo;
-    /**  */
     protected Servo rightWhiskerServo;
     protected Servo glyphter;
 
@@ -171,6 +169,12 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("navx not found in config file", 0);
             navxMicro = null;
+        }
+        try {
+            glyphter = hardwareMap.get(Servo.class, "glyphTilt");
+        } catch (Exception p_exeception) {
+            telemetry.addData("Glyphter not found in config file", 0);
+            glyphter = null;
         }
 
 
@@ -427,10 +431,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @return  the robtot's heading as an Int
      */
     public int getHeading(){
-        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+            return (int)getHeadingDbl();
         }
 
+    /**
+     * Used to get the robot's heading.
+     *
+     * @return  the robtot's heading as an Int
+     */
+    public double getHeadingDbl(){
+        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+    }
 
 
     ////////////////////////////////////////

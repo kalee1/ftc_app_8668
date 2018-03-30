@@ -63,12 +63,12 @@ public class team8668Teleop extends OpMode {
     Servo elbow;
     /** The hand servo controls the claw that grabs the relic. */
     Servo hand;
+
     /** The glyphter servo raises and lowers the glyph lifter so that glyphs can be deployed at any of the four levels. */
     Servo glyphter;
-    /**  */
     Servo glyphTrayTilt;
-    /** */
     Servo glyphTrayMove;
+
     /**This servo in combination with the leftFinger servo stick out two flexible fingers that aid
      * the drivers with aligning the robot on a column when deploying glyphs. */
     Servo rightFinger;

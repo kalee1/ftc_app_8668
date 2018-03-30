@@ -188,7 +188,6 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param direction  a String that tells the direction (forward "f" or reverse "r")
      * @param position  an Int that tells the motor position on the robot
      */
-
     //tells robot to drive straight at a certain power in a direction until the desired position is reached
     public void driveStraight(String mode, double power, String direction, int position) {
         position=distance2encoder(position,6,1);
