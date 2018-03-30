@@ -424,10 +424,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @return  the robtot's heading as an Int
      */
     public int getHeading(){
-        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            return (int)AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+            return (int)getHeadingDbl();
         }
 
+    /**
+     * Used to get the robot's heading.
+     *
+     * @return  the robtot's heading as an Int
+     */
+    public double getHeadingDbl(){
+        Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+    }
 
 
     ////////////////////////////////////////
