@@ -36,7 +36,6 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     protected int cryptoboxSlide;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
     protected int slideAwayFromTheCryptobox;
-    protected int turnToPile;
     protected int driveToPile;
     protected int backToCryptobox;
     protected int slideBackToCryptobox;
@@ -193,8 +192,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
             case 8:  //Face Glyph Pile
                 if(turnToPile!=0)
                 {
-                    pointTurnCombo(-0.6);
-                    if (Math.abs(getHeading()) > turnToPile)
+                    if (pointTurnGyro(turnToPile))
                     {
                         state++;
                         stopEverything();
@@ -270,8 +268,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
 
             case 12:  //Orient on Cryptobox
                 if(fieldSide.equals("RED")){
-                    pointTurnCombo(-0.6);
-                    if (Math.abs(getHeading()) > turnToCryptobox)
+                    if (pointTurnGyro(turnToCryptobox))
                     {
                         state++;
                         stopEverything();
@@ -280,8 +277,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                     }
                 }
                 else{
-                    pointTurnCombo(0.6);
-                    if (Math.abs(getHeading()) < turnToCryptobox)
+                    if (pointTurnGyro(turnToCryptobox))
                     {
                         state++;
                         stopEverything();

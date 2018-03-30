@@ -14,6 +14,19 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
  */
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
+    protected MiniPID turnControl;
+
+    /** When the driver hits start sets up PID control. */
+    @Override public void start()
+    {
+        turnControl = new MiniPID( .01, 0.00000, .018 );
+//        turnControl = new MiniPID(Kp, 2*Kp/Pc, 0.33*Kp*Pc);
+        turnControl.setOutputLimits(1.0);
+//        turnControl.setOutputRampRate(0.25);
+        turnControl.reset();
+        super.start();
+    }
+
     /** this method is used to stop all the drive motors. */
     public void stopEverything(){
         leftFront.setPower(0.0);
@@ -107,6 +120,36 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         else if(power==0){
             stopEverything();
         }
+    }
+
+    /**
+     * Uses PID control to turn to a particular heading.
+     *
+     * @param targetHeading specifies the direction the robot needs to face
+     */
+    public boolean pointTurnGyro( double targetHeading )
+    {
+        boolean done = false;
+        double currentHeading = getHeadingDbl();
+        double motor_power = 0;
+
+        if ( Math.abs( targetHeading ) > 180.0 )
+        {
+            // Reject any targetHeadings outside of the allowable rage of the gyro (+/- 180 degrees)
+            done = true;
+        }
+        else
+        {
+            motor_power = turnControl.getOutput( currentHeading, targetHeading );
+            pointTurnCombo( -1*motor_power );
+
+            if ( Math.abs(currentHeading - targetHeading) < 4.0 )
+            {
+                done = true;
+            }
+        }
+
+        return done;
     }
 
     /**

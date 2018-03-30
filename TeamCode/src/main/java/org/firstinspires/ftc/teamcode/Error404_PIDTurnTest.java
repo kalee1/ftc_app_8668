@@ -25,10 +25,7 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
     /** When the driver hits start sets up PID control. */
     @Override public void start()
     {
-        double Kc = .01;
-        double Pc = 1.55;
-        double Kp = 0.2*Kc;
-        turnControl = new MiniPID( Kc, 0.00000, .018 );
+        turnControl = new MiniPID( .01, 0.00000, .018 );
 //        turnControl = new MiniPID(Kp, 2*Kp/Pc, 0.33*Kp*Pc);
         turnControl.setOutputLimits(1.0);
 //        turnControl.setOutputRampRate(0.25);

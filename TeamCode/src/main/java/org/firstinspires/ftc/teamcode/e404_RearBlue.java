@@ -25,11 +25,11 @@ public class e404_RearBlue extends Error404JewelAutonomous
     @Override public void init()
     {
         glyphPileSlideDistance = 600;
-        turnToPile = 35;
+        turnToPile = 45;
         driveIntoPile = 400;
         cryptoboxDriveDistance = -775;
         cryptoboxSlide=395;
-        turnToCryptobox=10;
+        turnToCryptobox=0;
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
     }
