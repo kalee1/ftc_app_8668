@@ -238,9 +238,9 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 driveStraightCombo(0.6);
                 if(leftFront.getCurrentPosition()-encoder>150)
                 {
-                    timer=getRuntime();
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
+                    timer=getRuntime();
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -252,6 +252,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 12:  //Wait
+               // if(leftGlyph.getCurrentPosition()>20)
                 if(getRuntime()-timer>2.5)
                 {
                     state++;
@@ -447,6 +448,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 if(leftFront.getCurrentPosition()-encoder>100)
                 {
                     state++;
+                    stopEverything();
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
