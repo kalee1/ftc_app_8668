@@ -247,7 +247,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
                 break;
 
             case 11:  //Deploy Glyph
-                glyphter.setPosition(.22);
+                glyphIntake("out");
                 state++;
                 break;
 
