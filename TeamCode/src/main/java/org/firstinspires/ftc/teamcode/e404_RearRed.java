@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Red Rear", group="Jewel")
 
 /**
- * e404_RearRed extends <code>Error404JewelAutonomous</code> class and has the encoder distances for this quadrant.
+ * e404_RearRed extends <code>Error404AutonomousRear</code> class and has the encoder distances for this quadrant.
  *
  * @author Team 8668
  * @See Error404AutonomousRear
@@ -32,6 +32,7 @@ public class e404_RearRed extends Error404AutonomousRear
         turnToCryptobox=180;
         setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+
 
     }
     

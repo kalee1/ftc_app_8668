@@ -35,10 +35,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
-    protected int slideAwayFromTheCryptobox;
-    protected int driveToPile;
-    protected int backToCryptobox;
-    protected int slideBackToCryptobox;
+
 
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */

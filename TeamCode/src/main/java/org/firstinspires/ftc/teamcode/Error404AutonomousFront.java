@@ -188,9 +188,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 8:  //Face Cryptobox
                 if(turnToCryptobox!=0)
                 {
-                    //pointTurn("RUE", 0.3, "r", 0);
-                    pointTurnCombo(0.6);
-                    if (Math.abs(getHeading()) > turnToCryptobox)
+                    if (pointTurnGyro(turnToCryptobox))
                     {
                         state++;
                         stopEverything();

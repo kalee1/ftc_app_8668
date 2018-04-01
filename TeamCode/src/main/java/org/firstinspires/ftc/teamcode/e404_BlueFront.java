@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * e404_BlueFront extends <code>Error404AutonomousFront</code> class and has the encoder distances for this quadrant.
  *
  * @author Team 8668
- * @See Error404JewelAutonomous
+ * @See Error404AutonomousFront
  * */
 public class e404_BlueFront extends Error404AutonomousFront
 
