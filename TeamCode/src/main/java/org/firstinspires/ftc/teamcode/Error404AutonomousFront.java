@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
  /**
- *Error404JewelAutonomous extends <code>Error404_Hardware_Tier2</code> and contains the state
+ *Error404AutonomousFront extends <code>Error404_Hardware_Tier2</code> and contains the state
   * machine that steps through each step in the autonomous mission.
   *
   * This year's field presents a unique challenge for autonomous. The field is set up so that there
@@ -14,7 +14,7 @@ package org.firstinspires.ftc.teamcode;
  * @author Team 8668
  * @see Error404_Hardware_Tier2
  */
-public class Error404JewelAutonomous extends Error404_Hardware_Tier2
+public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
 {
     //////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ public class Error404JewelAutonomous extends Error404_Hardware_Tier2
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
 
-    public Error404JewelAutonomous()
+    public Error404AutonomousFront()
     {
     }
 

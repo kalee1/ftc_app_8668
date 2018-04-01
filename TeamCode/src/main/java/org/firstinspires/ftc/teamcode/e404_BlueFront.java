@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Blue Front", group="Jewel")
 
 /**
- * e404_BlueFront extends <code>Error404JewelAutonomous</code> class and has the encoder distances for this quadrant.
+ * e404_BlueFront extends <code>Error404AutonomousFront</code> class and has the encoder distances for this quadrant.
  *
  * @author Team 8668
  * @See Error404JewelAutonomous
  * */
-public class e404_BlueFront extends Error404JewelAutonomous
+public class e404_BlueFront extends Error404AutonomousFront
 
 {
     ///////////////////////////////////////////////////////////////////
