@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Red Front", group="Jewel")
 
 /**
- * e404_FrontRed extends <code>Error404JewelAutonomous</code> class and has the encoder distances for this quadrant.
+ * e404_FrontRed extends <code>Error404AutonomousFront</code> class and has the encoder distances for this quadrant.
  *
  * @author Team 8668
  * @See Error404JewelAutonomous
  * */
-public class e404_FrontRed extends Error404AutonomousRear
+public class e404_FrontRed extends Error404AutonomousFront
 
 {
     ///////////////////////////////////////////////////////////////////
@@ -24,12 +24,14 @@ public class e404_FrontRed extends Error404AutonomousRear
     /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
-        glyphPileSlideDistance = 780;
-        turnToPile = 0;
-        driveIntoPile = 0;
-        turnToCryptobox=80;
-        cryptoboxDriveDistance = 0;
+        cryptoboxDriveDistance = 780;
         cryptoboxSlide=0;
+        turnToCryptobox=80;
+        slideAwayFromTheCryptobox=0;
+        turnToPile=0;
+        driveToPile=0;
+        backToCryptobox=0;
+        slideBackToCryptobox=0;
         setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
     }
