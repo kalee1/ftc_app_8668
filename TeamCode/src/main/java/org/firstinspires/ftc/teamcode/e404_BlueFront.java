@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * @author Team 8668
  * @See Error404JewelAutonomous
  * */
-public class e404_BlueFront extends Error404JewelAutonomous
+public class e404_BlueFront extends Error404AutonomousRear
 
 {
     ///////////////////////////////////////////////////////////////////
