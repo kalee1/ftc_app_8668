@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -78,9 +79,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected NavxMicroNavigationSensor navxMicro;
     /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
-    /**  */
+    protected ModernRoboticsI2cRangeSensor topRange;
+    protected ModernRoboticsI2cRangeSensor bottomRange;
     protected AnalogInput leftWhisker;
-    /**  */
     protected AnalogInput rightWhisker;
 
 
@@ -175,6 +176,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("Glyphter not found in config file", 0);
             glyphter = null;
+        }
+        try {
+            topRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "topRange");
+        } catch (Exception p_exeception) {
+            telemetry.addData("topRange not found in config file", 0);
+            topRange = null;
+        }
+        try {
+            bottomRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "bottomRange");
+        } catch (Exception p_exeception) {
+            telemetry.addData("bottomRange not found in config file", 0);
+            bottomRange = null;
         }
 
 

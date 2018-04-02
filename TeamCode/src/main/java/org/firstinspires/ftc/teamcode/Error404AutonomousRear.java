@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
- /**
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+/**
  *Error404AutonomousRear extends <code>Error404_Hardware_Tier2</code> and contains the state
   * machine that steps through each step in the autonomous mission.
   *
@@ -34,9 +36,9 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     protected int turnToPile;
     /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
+    protected int distanceFromWall;
+    protected int slideToEdge;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
-
-
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
@@ -286,8 +288,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 13:  // Drive To Cryptobox
 
-                        driveStraightCombo(-0.7);
-                    if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxDriveDistance))
+                    gyroStraightTarget(-0.7, 40, turnToCryptobox);
+                    if(bottomRange.getDistance(DistanceUnit.CM)>Math.abs(distanceFromWall))
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -302,6 +304,34 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
 
             case 14:  // Slide to Cryptobox
+                if(slideToEdge!=0)
+                {
+                    if(slideToEdge>0)
+                    {
+                        slideSidewaysCombo(0.3);
+                    }
+                    else
+                    {
+                        slideSidewaysCombo(-0.3);
+                    }
+
+                    if(topRange.getDistance(DistanceUnit.CM)<Math.abs(slideToEdge))
+                    {
+                        stopEverything();
+                        setMultipleDirections("straight", "reverse");
+                        state++;
+                        encoder=leftFront.getCurrentPosition();
+                    }
+                }
+                else
+                {
+                    setMultipleDirections("straight", "reverse");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
+                }
+                break;
+
+            case 15:  // Line up on a cryptobox column
                 if(cryptoboxSlide!=0)
                 {
                     if(cryptoboxSlide>0)
@@ -329,7 +359,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 15:  //Drive into Cryptobox
+            case 16:  //Drive into Cryptobox
                 driveStraightCombo(-0.6);
                 if(leftFront.getCurrentPosition()-encoder>40)
                 {
@@ -341,12 +371,12 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 16:  //Deploy Glyph
+            case 17:  //Deploy Glyph
                 glyphter.setPosition(0.22);
                 state++;
                 break;
 
-            case 17:  //Wait
+            case 18:  //Wait
                 if(getRuntime()-timer>2.5)
                 {
                     glyphter.setPosition(.05);
@@ -355,7 +385,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 }
                 break;
 
-            case 18:  // Back Up
+            case 19:  // Back Up
                 driveStraightCombo(.7);
                 if(leftFront.getCurrentPosition()-encoder>40)
                 {
@@ -366,7 +396,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     glyphIntake("stop");
                 }
                 break;
-            case 19: // Push Glyph in
+            case 20: // Push Glyph in
                 driveStraightCombo(-0.3);
                 if(leftFront.getCurrentPosition()-encoder>40)
                 {
@@ -376,7 +406,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
-            case 20:  //drive away from cryptobox into safe zone
+            case 21:  //drive away from cryptobox into safe zone
                 driveStraightCombo(.5);
                 if(leftFront.getCurrentPosition()-encoder>100)
                 {
