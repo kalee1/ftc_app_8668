@@ -200,9 +200,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
-                    if (getRuntime()>2)
+                    if (getRuntime()-timer>2)
                     {
-//                    if(((int)(getRuntime()-timer))>2)
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
@@ -285,9 +284,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         setMultipleDirections("straight", "reverse");
                         encoder = leftFront.getCurrentPosition();
                     }
-                    if (getRuntime()>2)
+                    if (getRuntime()-timer>2)
                     {
-//                    if(((int)(getRuntime()-timer))>2)
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
