@@ -174,6 +174,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                         setMultipleDirections("turn", "right");
                         state++;
                         encoder = leftFront.getCurrentPosition();
+                        timer =getRuntime();
                     }
                 }
                 else
@@ -181,6 +182,8 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                     setMultipleDirections("turn", "right");
                     state++;
                     encoder = leftFront.getCurrentPosition();
+                    timer =getRuntime();
+
                 }
 
                 break;
@@ -190,6 +193,14 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if (pointTurnGyro(turnToCryptobox))
                     {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                    if (getRuntime()>2)
+                    {
+//                    if(((int)(getRuntime()-timer))>2)
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
@@ -292,8 +303,9 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                     else{
                         setMultipleDirections("turn", "right");
                     }
-                        state = 17;
+                    state = 17;
                     encoder=leftFront.getCurrentPosition();
+                    timer=getRuntime();
                 }
                 break;
 
@@ -304,6 +316,14 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                     pointTurnCombo(-0.6);
                     if (getHeading() > turnToPile)
                     {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                    if (getRuntime()>2)
+                    {
+//                    if(((int)(getRuntime()-timer))>2)
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
