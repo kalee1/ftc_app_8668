@@ -4,6 +4,8 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -22,19 +24,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name = "Sensor: MR range sensor", group = "Sensor")
 //@Disabled   // comment out or remove this line to enable this opmode
 
-public class RangeSensorTest extends Error404_Hardware_Tier2
+public class RangeSensorTest extends OpMode
 {
     ModernRoboticsI2cRangeSensor upperRangeSensor, lowerRangeSensor;
 
-    @Override public void init() {
+    public void init() {
         // get a reference to our compass
-        upperRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "upper_sensor_range");
-        lowerRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "lower_sensor_range");
+        upperRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "topRange");
+        lowerRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "bottomRange");
 
-        super.init();
     }
 
-    @Override public void loop()
+    public void loop()
     {
         telemetry.addData("------- Upper Ultrasonic ------", "");
 
