@@ -24,14 +24,17 @@ public class e404_RearRed extends Error404AutonomousRear
     /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
-        glyphPileSlideDistance = 600;
+        //Drive distance variables
+        glyphPileSlideDistance = 375;
+        cryptoboxSlide=-238;
+        driveIntoPile = 250;
+        cryptoboxDriveDistance = -484;
+
+        //Turn angle and range variables
         turnToPile = 135;
-        driveIntoPile = 400;
-        cryptoboxDriveDistance = -775;
-        cryptoboxSlide=-380;
         turnToCryptobox=180;
-        distanceFromWall = 100;
-        slideToEdge = 100;
+        distanceFromWall = 45;
+        slideToEdge = 50;
         setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
 

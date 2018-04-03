@@ -221,11 +221,11 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 {
                     if(driveIntoPile>0)
                     {
-                        driveStraightCombo(0.7);
+                        gyroStraightTarget(0.7, 40, turnToPile);
                     }
                     else
                     {
-                        driveStraightCombo(-0.7);
+                        gyroStraightTarget(-0.7, 40, turnToPile);
                     }
 
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(driveIntoPile))
@@ -298,6 +298,13 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "reverse");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                    if (getRuntime()-timer>2)
+                    {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
@@ -378,7 +385,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 16:  //Drive into Cryptobox
                 driveStraightCombo(-0.6);
-                if(leftFront.getCurrentPosition()-encoder>40)
+                if(leftFront.getCurrentPosition()-encoder>25)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -415,7 +422,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 20: // Push Glyph in
                 driveStraightCombo(-0.3);
-                if(leftFront.getCurrentPosition()-encoder>40)
+                if(leftFront.getCurrentPosition()-encoder>25)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -425,7 +432,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 21:  //drive away from cryptobox into safe zone
                 driveStraightCombo(.5);
-                if(leftFront.getCurrentPosition()-encoder>100)
+                if(leftFront.getCurrentPosition()-encoder>63)
                 {
                     stopEverything();
                     state++;

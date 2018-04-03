@@ -160,11 +160,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxDriveDistance>0)
                     {
-                        driveStraightCombo(0.7);
+                        gyroStraightTarget(.7, 40, 0);
                     }
                     else
                     {
-                        driveStraightCombo(-0.7);
+                        gyroStraightTarget(.7, 40, 0);
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(cryptoboxDriveDistance))
@@ -312,7 +312,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 17:  //Face Glyph Pile
                 if(turnToPile>0)
                 {
-                    pointTurnCombo(-0.6);
+                    pointTurnGyro(turnToPile);
                     if (getHeading() > turnToPile)
                     {
                         state++;
@@ -322,7 +322,6 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                     }
                     if (getRuntime()-timer>2)
                     {
-//                    if(((int)(getRuntime()-timer))>2)
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
@@ -331,7 +330,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 }
                 else
                 {
-                    pointTurnCombo(0.6);
+                    pointTurnGyro(turnToPile);
                     if (getHeading() < turnToPile)
                     {
                         state++;
@@ -339,13 +338,18 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                         setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
+                    if (getRuntime()-timer>2) {
+                        state++;
+                        stopEverything();
+                        setMultipleDirections("straight", "forward");
+                        encoder = leftFront.getCurrentPosition();
+                    }
                 }
                 break;
-
             case 18:  //Drive into GLyph Pile
                 if(driveToPile!=0)
                 {
-                    driveStraightCombo(0.7);
+                    gyroStraightTarget(.7, 40, 0);
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(driveToPile))
                     {
                         //slide_sideways("RUE", 0, "l", 0);
@@ -354,6 +358,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                         state++;
                         encoder = leftFront.getCurrentPosition();
                     }
+
                 }
                 else
                 {
@@ -382,11 +387,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(backToCryptobox>0)
                     {
-                        driveStraightCombo(-0.7);
+                        gyroStraightTarget(-0.7, 40, 0);
                     }
                     else
                     {
-                        driveStraightCombo(0.7);
+                        gyroStraightTarget(0.7, 40, 0);
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(backToCryptobox))
