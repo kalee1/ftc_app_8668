@@ -244,7 +244,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 10:  //Drive into Cryptobox
                 driveStraightCombo(0.6);
-                if(leftFront.getCurrentPosition()-encoder>150)
+                if(leftFront.getCurrentPosition()-encoder>93)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -270,7 +270,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 13:  // Back Up
                 driveStraightCombo(-0.7);
-                if(leftFront.getCurrentPosition()-encoder>130)
+                if(leftFront.getCurrentPosition()-encoder>99)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -283,7 +283,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 14: // Push Glyph in
                 glyphIntake("outSlow");
                 driveStraightCombo(0.3);
-                if(leftFront.getCurrentPosition()-encoder>150)
+                if(leftFront.getCurrentPosition()-encoder>93)
                 {
                     driveStraight("RUE",0,"r",0);
                     state++;
@@ -293,7 +293,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 15: //Back away from the cryptobox
                 driveStraightCombo(-0.7);
-                if(leftFront.getCurrentPosition()-encoder>150)
+                if(leftFront.getCurrentPosition()-encoder>94)
                 {
                     stopEverything();
                     if(fieldSide.equals("BLUE")){
@@ -372,7 +372,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 19:  //Collect Glyphs
                 glyphIntake("in");
                 driveStraightCombo(0.3);
-                if(leftFront.getCurrentPosition()-encoder>150)
+                if(leftFront.getCurrentPosition()-encoder>93)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -418,7 +418,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 23:  //Drive into Cryptobox
                 driveStraightCombo(-0.6);
-                if(leftFront.getCurrentPosition()-encoder>75)
+                if(leftFront.getCurrentPosition()-encoder>47)
                 {
                     timer = getRuntime();
                     stopEverything();
@@ -444,7 +444,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 26:  // Back Up
                 driveStraightCombo(0.7);
-                if(leftFront.getCurrentPosition()-encoder>130)
+                if(leftFront.getCurrentPosition()-encoder>81)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -456,7 +456,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 27: // Push Glyphs in
                 driveStraightCombo(-0.3);
-                if(leftFront.getCurrentPosition()-encoder>130)
+                if(leftFront.getCurrentPosition()-encoder>81)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
