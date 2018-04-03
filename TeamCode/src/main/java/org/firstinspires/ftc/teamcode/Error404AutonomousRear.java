@@ -221,11 +221,11 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 {
                     if(driveIntoPile>0)
                     {
-                        gyroStraightTarget(0.7, 40, turnToPile);
+                        driveStraightGyro(0.7, 40, turnToPile);
                     }
                     else
                     {
-                        gyroStraightTarget(-0.7, 40, turnToPile);
+                        driveStraightGyro(-0.7, 40, turnToPile);
                     }
 
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(driveIntoPile))
@@ -312,7 +312,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 13:  // Drive To Cryptobox
 
-                    gyroStraightTarget(-0.7, 40, turnToCryptobox);
+                    driveStraightGyro(-0.7, 40, turnToCryptobox);
                     if(bottomRange.getDistance(DistanceUnit.CM) < Math.abs(distanceFromWall))
                     {
                         stopEverything();

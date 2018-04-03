@@ -558,7 +558,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         else return analogIn;
     }
     
-    public void gyroStraightTarget (double power, double sensitivity, double target){
+    public void driveStraightGyro(double power, double sensitivity, double target){
 
         if(power>0) {
             set_direction(leftFront, "f");

@@ -160,11 +160,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxDriveDistance>0)
                     {
-                        gyroStraightTarget(.7, 40, 0);
+                        driveStraightGyro(.7, 40, 0);
                     }
                     else
                     {
-                        gyroStraightTarget(.7, 40, 0);
+                        driveStraightGyro(.7, 40, 0);
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(cryptoboxDriveDistance))
@@ -349,7 +349,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 18:  //Drive into GLyph Pile
                 if(driveToPile!=0)
                 {
-                    gyroStraightTarget(.7, 40, 0);
+                    driveStraightGyro(.7, 40, 0);
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(driveToPile))
                     {
                         //slide_sideways("RUE", 0, "l", 0);
@@ -387,11 +387,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(backToCryptobox>0)
                     {
-                        gyroStraightTarget(-0.7, 40, 0);
+                        driveStraightGyro(-0.7, 40, 0);
                     }
                     else
                     {
-                        gyroStraightTarget(0.7, 40, 0);
+                        driveStraightGyro(0.7, 40, 0);
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(backToCryptobox))
