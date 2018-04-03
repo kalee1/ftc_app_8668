@@ -313,7 +313,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
             case 13:  // Drive To Cryptobox
 
                     gyroStraightTarget(-0.7, 40, turnToCryptobox);
-                    if(bottomRange.getDistance(DistanceUnit.CM)>Math.abs(distanceFromWall))
+                    if(bottomRange.getDistance(DistanceUnit.CM) < Math.abs(distanceFromWall))
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -339,7 +339,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         slideSidewaysCombo(-0.3);
                     }
 
-                    if(topRange.getDistance(DistanceUnit.CM)<Math.abs(slideToEdge))
+                    if(topRange.getDistance(DistanceUnit.CM) < Math.abs(slideToEdge))
                     {
                         stopEverything();
                         setMultipleDirections("straight", "reverse");
