@@ -146,7 +146,7 @@ public class team8668Teleop extends OpMode {
         leftFront.setMode(RUN_USING_ENCODER);
         rightFront.setMode(RUN_USING_ENCODER);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftRear = hardwareMap.dcMotor.get("leftRear");
         rightRear = hardwareMap.dcMotor.get("rightRear");
         rightRear.setMode(RUN_USING_ENCODER);
