@@ -36,7 +36,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     protected int turnToPile;
     /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
-    protected int distanceFromWall;
+    protected double distanceFromWall;
     protected int slideToEdge;
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
     private String fieldSide;
@@ -304,7 +304,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     {
                         state++;
                         stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        setMultipleDirections("straight", "reverse");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
@@ -450,8 +450,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
-        telemetry.addData("6. Cryptobox Drive Distance: ", cryptoboxDriveDistance);
-        telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
+        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM));
+       // telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
         telemetry.addData("Pattern: ", readCryptograph());
 
 
