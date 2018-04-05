@@ -22,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -187,7 +188,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
         try {
             rightFront = hardwareMap.dcMotor.get("rightFront");
-            rightFront.setDirection(REVERSE);
+            rightFront.setDirection(FORWARD);
         } catch (Exception p_exeception) {
             telemetry.addData("rightFront not found in config file", 0);
             rightFront = null;

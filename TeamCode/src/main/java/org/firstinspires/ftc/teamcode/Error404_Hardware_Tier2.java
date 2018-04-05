@@ -163,13 +163,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             if(direction.equals("forward")){
                 set_direction(leftFront, "f");
                 set_direction(leftRear, "r");
-                set_direction(rightFront, "f");
+                set_direction(rightFront, "r");
                 set_direction(rightRear, "r");
             }
             if(direction.equals("reverse")){
                 set_direction(leftFront, "r");
                 set_direction(leftRear, "f");
-                set_direction(rightFront, "r");
+                set_direction(rightFront, "f");
                 set_direction(rightRear, "f");
             }
         }
@@ -177,13 +177,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             if(direction.equals("right")){
                 set_direction(leftFront, "f");
                 set_direction(leftRear, "r");
-                set_direction(rightFront, "r");
+                set_direction(rightFront, "f");
                 set_direction(rightRear, "f");
             }
             if(direction.equals("left")){
                 set_direction(leftFront, "r");
                 set_direction(leftRear, "f");
-                set_direction(rightFront, "f");
+                set_direction(rightFront, "r");
                 set_direction(rightRear, "r");
             }
         }
@@ -191,13 +191,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             if(direction.equals("right")){
                 set_direction(leftFront, "f");
                 set_direction(rightRear, "r");
-                set_direction(rightFront, "r");
+                set_direction(rightFront, "f");
                 set_direction(leftRear, "f");
             }
             if(direction.equals("left")){
                 set_direction(leftFront, "r");
                 set_direction(rightRear, "f");
-                set_direction(rightFront, "f");
+                set_direction(rightFront, "r");
                 set_direction(leftRear, "r");
             }
         }
@@ -218,12 +218,12 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if (direction.toLowerCase().equals("f")) {
             set_direction(leftFront, "f");
             set_direction(leftRear, "r");
-            set_direction(rightFront, "f");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "r");
         } else {
             set_direction(leftFront, "r");
             set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "f");
         }
         set_mode(leftFront, mode);
@@ -278,12 +278,12 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if (direction.toLowerCase().equals("r")) {
             set_direction(leftFront, "f");
             set_direction(leftRear, "r");
-            set_direction(rightFront, "r");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "f");
         } else {
             set_direction(leftFront, "r");
             set_direction(leftRear, "f");
-            set_direction(rightFront, "f");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "r");
         }
         //sets mode to what is sent in with the "mode" parameter
@@ -320,7 +320,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if (direction.toLowerCase().equals("r")) {
             set_direction(leftFront, "f");
             set_direction(rightRear, "r");
-            set_direction(rightFront, "r");
+            set_direction(rightFront, "f");
             set_direction(leftRear, "f");
             set_position(rightFront, position);
             set_position(rightRear, position);
@@ -334,7 +334,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         } else if (direction.toLowerCase().equals("l")) {  // added else tim
             set_direction(leftFront, "r");
             set_direction(rightRear, "f");
-            set_direction(rightFront, "f");
+            set_direction(rightFront, "r");
             set_direction(leftRear, "r");
             set_position(rightFront, position);
             set_position(rightRear, position);
@@ -353,13 +353,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if(power>0) {
             set_direction(leftFront, "f");
             set_direction(leftRear, "r");
-            set_direction(rightFront, "f");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "r");
         }
         if(power<0) {
             set_direction(leftFront, "r");
             set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "f");
         }
 
