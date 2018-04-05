@@ -151,18 +151,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("camera not found in config file", 0);
             camera = null;
         }
-        try {
-            leftWhisker = hardwareMap.get(AnalogInput.class, "leftWhisker");
-        } catch (Exception p_exeception) {
-            telemetry.addData("left whisker not found in config file", 0);
-            leftWhisker = null;
-        }
-        try {
-            rightWhisker = hardwareMap.get(AnalogInput.class, "rightWhisker");
-        } catch (Exception p_exeception) {
-            telemetry.addData("right whisker not found in config file", 0);
-            rightWhisker = null;
-        }
+
         try {
             navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
             gyro = (IntegratingGyroscope)navxMicro;
@@ -199,6 +188,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         try {
             rightFront = hardwareMap.dcMotor.get("rightFront");
             rightFront.setDirection(REVERSE);
+            rightFront.
         } catch (Exception p_exeception) {
             telemetry.addData("rightFront not found in config file", 0);
             rightFront = null;
@@ -226,18 +216,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("rightGlyph not found in config file", 0);
             leftFront = null;
-        }
-        try {
-            rightWhiskerServo = hardwareMap.get(Servo.class, "rightWhiskerServo");
-        } catch (Exception p_exeception) {
-            telemetry.addData("right whisker servo not found in config file", 0);
-            rightWhiskerServo = null;
-        }
-        try {
-            leftWhiskerServo = hardwareMap.get(Servo.class, "leftWhiskerServo");
-        } catch (Exception p_exeception) {
-            telemetry.addData("glyphter servo not found in config file", 0);
-            leftWhiskerServo = null;
         }
         try {
             glyphter = hardwareMap.get(Servo.class, "glyphTilt");
