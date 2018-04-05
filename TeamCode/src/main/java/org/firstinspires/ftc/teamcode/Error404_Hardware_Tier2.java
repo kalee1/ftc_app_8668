@@ -353,13 +353,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if(power>0) {
             set_direction(leftFront, "f");
             set_direction(leftRear, "r");
-            set_direction(rightFront, "f");
+            set_direction(rightFront, "r");
             set_direction(rightRear, "r");
         }
         if(power<0) {
             set_direction(leftFront, "r");
             set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
+            set_direction(rightFront, "f");
             set_direction(rightRear, "f");
         }
 
