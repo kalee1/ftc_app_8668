@@ -71,8 +71,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    protected Servo leftWhiskerServo;
-    protected Servo rightWhiskerServo;
     protected Servo glyphter;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
@@ -83,8 +81,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected AnalogInput camera;
     protected ModernRoboticsI2cRangeSensor topRange;
     protected ModernRoboticsI2cRangeSensor bottomRange;
-    protected AnalogInput leftWhisker;
-    protected AnalogInput rightWhisker;
+
 
 
     /* The Vuforia system is used to track special patterns on the edge of the field. */
