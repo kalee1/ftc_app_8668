@@ -373,8 +373,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             right_set_power(power - ((heading - target) / sensitivity));
         }
         if(power<0) {
-            left_set_power(power - ((heading - target) / sensitivity));
-            right_set_power(power + ((heading - target) / sensitivity));
+            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
+            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
         }
     }
 
