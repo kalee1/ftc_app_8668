@@ -25,6 +25,7 @@ class MovingAverage
 	 */
 	private int mySize;
     private double mySum;
+	private double deadband = 0.3;
 
 	/**
 	 * Initialize a moving average window to accept a certain number of values.
@@ -48,22 +49,36 @@ class MovingAverage
 	 */
     public void add(double num)
 	{
-		/* udate the sum */
-        mySum += num;
 
-		/* add the value to the window */
-        myVector.add(new Double(num));
-
-        /* if the window is too big, prune the oldest value.  Since the <code>add</code>
-		 * method for <code>Vector</code> adds the new value to the end, the oldest
-		 * value is the first one in the list.  Thus, the oldest will be at the
-		 * first position.
-		 */
-		if (myVector.size() > mySize)
+		if (Math.abs(num) < deadband)
 		{
-			/* simulataneously remove the value and adjust the sum accordingly */
-            mySum -= myVector.remove(0).doubleValue();
-        }
+			myVector.clear();
+			int i;
+			for (i=0; i < mySize; i++)
+			{
+				myVector.add(new Double(num));
+			}
+		}
+		else
+		{
+			/* udate the sum */
+			mySum += num;
+
+			/* add the value to the window */
+			myVector.add(new Double(num));
+
+        	/* if the window is too big, prune the oldest value.  Since the <code>add</code>
+		 	* method for <code>Vector</code> adds the new value to the end, the oldest
+			* value is the first one in the list.  Thus, the oldest will be at the
+			* first position.
+			*/
+			if (myVector.size() > mySize)
+			{
+				/* simulataneously remove the value and adjust the sum accordingly */
+				mySum -= myVector.remove(0).doubleValue();
+			}
+		}
+
     }
 
 	/**
