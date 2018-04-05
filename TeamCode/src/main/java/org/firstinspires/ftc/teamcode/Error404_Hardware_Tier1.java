@@ -187,6 +187,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
         try {
             rightFront = hardwareMap.dcMotor.get("rightFront");
+            rightFront.setDirection(REVERSE);
         } catch (Exception p_exeception) {
             telemetry.addData("rightFront not found in config file", 0);
             rightFront = null;
