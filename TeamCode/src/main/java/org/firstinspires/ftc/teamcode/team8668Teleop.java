@@ -174,7 +174,7 @@ public class team8668Teleop extends OpMode {
         leftGlyph.setMode(RUN_USING_ENCODER);
         rightGlyph.setMode(RUN_USING_ENCODER);
         leftGlyph.setDirection(DcMotor.Direction.REVERSE);
-        rightGlyph.setDirection(DcMotor.Direction.FORWARD);
+        rightGlyph.setDirection(DcMotor.Direction.REVERSE);
         hand.setPosition(0.7);
         glyph.setPosition(0.25);
         arm.setPosition(0.1);
