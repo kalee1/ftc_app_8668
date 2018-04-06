@@ -342,14 +342,14 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     if(topRange.getDistance(DistanceUnit.CM) < Math.abs(slideToEdge))
                     {
                         stopEverything();
-                        setMultipleDirections("straight", "reverse");
+                        setMultipleDirections("slide", "right");
                         state++;
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
-                    setMultipleDirections("straight", "reverse");
+                    setMultipleDirections("slide", "right");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -451,7 +451,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM));
-       // telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
+        telemetry.addData("7. Top Wall Distance: ", topRange.getDistance(DistanceUnit.CM));
         telemetry.addData("Pattern: ", readCryptograph());
 
 
