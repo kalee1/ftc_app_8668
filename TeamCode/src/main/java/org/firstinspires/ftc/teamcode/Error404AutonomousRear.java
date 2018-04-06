@@ -42,6 +42,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
+    protected RangeCheck distanceCheckBottom = new RangeCheck(360, 52, 3);
+    protected RangeCheck distanceCheckTop = new RangeCheck(360, 20, 3);
 
     public Error404AutonomousRear()
     {
@@ -313,7 +315,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
             case 13:  // Drive To Cryptobox
 
                     driveStraightGyro(-0.7, 40, turnToCryptobox);
-                    if(bottomRange.getDistance(DistanceUnit.CM) < Math.abs(distanceFromWall))
+                    if(distanceCheckBottom.checkRange(bottomRange.getDistance(DistanceUnit.CM)))
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -339,7 +341,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         slideSidewaysCombo(-0.3);
                     }
 
-                    if(topRange.getDistance(DistanceUnit.CM) < Math.abs(slideToEdge))
+                    if(distanceCheckTop.checkRange(bottomRange.getDistance(DistanceUnit.CM)))
                     {
                         stopEverything();
                         setMultipleDirections("slide", "right");
