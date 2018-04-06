@@ -38,10 +38,14 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     protected int cryptoboxSlide;
     protected double distanceFromWall;
     protected int slideToEdge;
+    protected boolean useExtendedGyro;
+
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
+
+    private String theColumn = "NONE";
 
     protected RangeCheck distanceCheckBottom = new RangeCheck(360, 52, 3);
 
@@ -92,6 +96,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
      * from field position-dependant child classes. */
     @Override public void loop ()
     {
+        boolean result = false;
+
         switch (state)
         {
             case 0: // Lower Arm
@@ -148,7 +154,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
 
             case 6:  //Read Pictograph
-                if(updateFromVuforia(readCryptograph()))
+                theColumn = readCryptograph();
+                if( updateFromVuforia( theColumn ) )
                 {
                     state= 7;
                     setMultipleDirections("slide", "left");
@@ -197,19 +204,13 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
             case 8:  //Face Glyph Pile
                 if(turnToPile!=0)
                 {
-                    if (pointTurnGyro(turnToPile))
+                    if (pointTurnGyro(turnToPile, useExtendedGyro) || getRuntime() - timer > 2.5 )
                     {
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
-                    }
-                    if (getRuntime()-timer>2)
-                    {
-                        state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
-                        encoder = leftFront.getCurrentPosition();
+                        timer = getRuntime();
                     }
                 }
                 else
@@ -217,22 +218,25 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     setMultipleDirections("straight", "forward");
                     state++;
                     encoder = leftFront.getCurrentPosition();
+                    timer = getRuntime();
                 }
                 break;
 
             case 9:  // Drive Into GLyph Pile
+                glyphIntake("in");
+
                 if(driveIntoPile!=0)
                 {
                     if(driveIntoPile>0)
                     {
-                        driveStraightGyro(0.7, 40, turnToPile);
+                        driveStraightCombo(0.7 );
                     }
                     else
                     {
-                        driveStraightGyro(-0.7, 40, turnToPile);
+                        driveStraightCombo(-0.7 );
                     }
 
-                    if(leftFront.getCurrentPosition()-encoder>Math.abs(driveIntoPile))
+                    if( getRuntime() - timer > 1.25 )
                     {
                         stopEverything();
                         setMultipleDirections("straight", "forward");
@@ -249,9 +253,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
 
             case 10:  //Collect Glyphs From Pile
-                glyphIntake("in");
                 driveStraightCombo(0.3);
-                if(leftFront.getCurrentPosition()-encoder>50)
+                if(leftFront.getCurrentPosition() - encoder> 100 )
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -263,7 +266,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
             case 11:  // Back up from glyph pile
 
                     driveStraightCombo(-0.7);
-                    if(leftFront.getCurrentPosition()-encoder>50)
+                    if(leftFront.getCurrentPosition() - encoder > 100 )
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -281,30 +284,16 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 12:  //Orient on Cryptobox
                 if(fieldSide.equals("RED")){
-                    if (pointTurnGyro(turnToCryptobox))
+                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2.5 )
                     {
                         state++;
                         stopEverything();
                         setMultipleDirections("straight", "reverse");
-                        encoder = leftFront.getCurrentPosition();
-                    }
-                    if (getRuntime()-timer>2)
-                    {
-                        state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
                 else{
-                    if (pointTurnGyro(turnToCryptobox))
-                    {
-                        state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "reverse");
-                        encoder = leftFront.getCurrentPosition();
-                    }
-                    if (getRuntime()-timer>2)
+                    if (pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2.5 )
                     {
                         state++;
                         stopEverything();
@@ -316,8 +305,9 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 13:  // Drive To Cryptobox
 
-                    driveStraightGyro(-0.7, 40, turnToCryptobox);
-                    if(distanceCheckBottom.checkRange(bottomRange.getDistance(DistanceUnit.CM)))
+                    driveStraightGyro(-0.5, 40, turnToCryptobox, useExtendedGyro);
+                    //driveStraightCombo( -0.7);
+                    if( leftFront.getCurrentPosition() - encoder > 500 )  //need to make this generic
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -326,38 +316,38 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         else{
                             setMultipleDirections("slide", "right");
                         }
-                        state++;
+                        state = 15;
                         encoder=leftFront.getCurrentPosition();
                     }
                 break;
 
-            case 14:  // Slide to Cryptobox
-                if(slideToEdge!=0)
-                {
-                    if(slideToEdge>0)
-                    {
-                        slideSidewaysCombo(0.3);
-                    }
-                    else
-                    {
-                        slideSidewaysCombo(-0.3);
-                    }
-
-                    if(distanceCheckTop.checkRange(bottomRange.getDistance(DistanceUnit.CM)))
-                    {
-                        stopEverything();
-                        setMultipleDirections("slide", "right");
-                        state++;
-                        encoder=leftFront.getCurrentPosition();
-                    }
-                }
-                else
-                {
-                    setMultipleDirections("slide", "right");
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                }
-                break;
+//            case 14:  // Slide to Cryptobox
+//                if(slideToEdge!=0)
+//                {
+//                    if(slideToEdge>0)
+//                    {
+//                        slideSidewaysCombo(0.3);
+//                    }
+//                    else
+//                    {
+//                        slideSidewaysCombo(-0.3);
+//                    }
+//
+//                    if( (result = distanceCheckTop.checkRange(bottomRange.getDistance(DistanceUnit.CM) ) ) )
+//                    {
+//                        stopEverything();
+//                        setMultipleDirections("slide", "right");
+//                        state++;
+//                        encoder=leftFront.getCurrentPosition();
+//                    }
+//                }
+//                else
+//                {
+//                    setMultipleDirections("slide", "right");
+//                    state++;
+//                    encoder=leftFront.getCurrentPosition();
+//                }
+//                break;
 
             case 15:  // Line up on a cryptobox column
                 if(cryptoboxSlide!=0)
@@ -400,7 +390,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
 
             case 17:  //Deploy Glyph
-                glyphter.setPosition(0.22);
+                glyphter.setPosition(0.23);
                 state++;
                 break;
 
@@ -414,8 +404,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
 
             case 19:  // Back Up
-                driveStraightCombo(.7);
-                if(leftFront.getCurrentPosition()-encoder>40)
+                driveStraightCombo(0.7);
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -426,7 +416,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 20: // Push Glyph in
                 driveStraightCombo(-0.3);
-                if(leftFront.getCurrentPosition()-encoder>25)
+                if(leftFront.getCurrentPosition()-encoder>40)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -435,8 +425,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 }
                 break;
             case 21:  //drive away from cryptobox into safe zone
-                driveStraightCombo(.5);
-                if(leftFront.getCurrentPosition()-encoder>63)
+                driveStraightCombo(0.5);
+                if(leftFront.getCurrentPosition()-encoder>50)
                 {
                     stopEverything();
                     state++;
@@ -454,9 +444,12 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
         telemetry.addData("3. Camera:  ", camera.getVoltage());
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
-        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM));
-        telemetry.addData("7. Top Wall Distance: ", topRange.getDistance(DistanceUnit.CM));
-        telemetry.addData("Pattern: ", readCryptograph());
+        telemetry.addData("6. Pattern: ", theColumn );
+
+        //        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM) );
+//        telemetry.addData("8. rangeCheck result: ", result);
+//        telemetry.addData("9. length: ", distanceCheckBottom.getLength());
+//        telemetry.addData("7. Top Wall Distance: ", topRange.cmUltrasonic());
 
 
 

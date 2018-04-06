@@ -26,12 +26,13 @@ public class e404_BlueFront extends Error404AutonomousFront
     {
         cryptoboxDriveDistance = -503;
         cryptoboxSlide=0;
-        turnToCryptobox=50;
+        turnToCryptobox=-85;
         slideAwayFromTheCryptobox=0;
-        turnToPile=50;
+        turnToPile=85;
         driveToPile=313;
         backToCryptobox=313;
         slideBackToCryptobox=0;
+        useExtendedGyro = false;
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
 

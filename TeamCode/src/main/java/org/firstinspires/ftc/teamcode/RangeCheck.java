@@ -22,16 +22,16 @@ public class RangeCheck {
     {
         if ( rangeNum < upperLimit && rangeNum > lowerLimit)
         {
-            length++;
+            length = 0;
         }
         else
         {
-            length = 0;
+            length++;
         }
 
         if(length >= lengthLimit)
         {
-            length = 0;
+
             return true;
         }
         else
@@ -39,6 +39,11 @@ public class RangeCheck {
             return false;
         }
 
+    }
+
+    public int getLength()
+    {
+        return length;
     }
 
 

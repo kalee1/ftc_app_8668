@@ -51,7 +51,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if(inOrOut.toLowerCase().equals("outSlow")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightGlyph.setDirection(REVERSE);
+            rightGlyph.setDirection(FORWARD);
             leftGlyph.setDirection(FORWARD);
             leftGlyph.setPower(0.2);
             rightGlyph.setPower(0.2);
@@ -59,7 +59,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if(inOrOut.toLowerCase().equals("out")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightGlyph.setDirection(REVERSE);
+            rightGlyph.setDirection(FORWARD);
             leftGlyph.setDirection(FORWARD);
             leftGlyph.setPower(0.5);
             rightGlyph.setPower(0.5);
@@ -75,7 +75,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         if(inOrOut.toLowerCase().equals("in")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightGlyph.setDirection(FORWARD);
+            rightGlyph.setDirection(REVERSE);
             leftGlyph.setDirection(REVERSE);
             leftGlyph.setPower(0.5);
             rightGlyph.setPower(0.5);
@@ -135,10 +135,17 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param targetHeading specifies the direction the robot needs to face
      */
-    public boolean pointTurnGyro( double targetHeading )
+    public boolean pointTurnGyro( double targetHeading, boolean extendedGyro )
     {
         boolean done = false;
         double currentHeading = getHeadingDbl();
+        if ( extendedGyro )
+        {
+            if ( currentHeading < 0.0 )
+            {
+                currentHeading = 360.0 + currentHeading;
+            }
+        }
         double motor_power = 0;
 
         if ( Math.abs( targetHeading ) > 180.0 )
@@ -355,7 +362,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
 
-    public void driveStraightGyro(double power, double sensitivity, double target){
+    public void driveStraightGyro(double power, double sensitivity, double target, boolean extGyro ){
 
         if(power>0) {
             set_direction(leftFront, "f");
@@ -375,19 +382,27 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         set_mode(rightFront, "RUE");
         set_mode(rightRear, "RUE");
         double heading = getHeadingDbl();
+
+        if ( extGyro )
+        {
+            if ( heading < 0.0 )
+            {
+                heading = heading + 360.0;
+            }
+        }
         double correction = driveControl.getOutput( heading, target );
 
         if(power>0) {
-//            left_set_power(power + ((heading - target) / sensitivity));
-//            right_set_power(power - ((heading - target) / sensitivity));
-            left_set_power( power - correction );
-            right_set_power( power + correction );
+            left_set_power(power + ((heading - target) / sensitivity));
+            right_set_power(power - ((heading - target) / sensitivity));
+//            left_set_power( power - correction );
+//            right_set_power( power + correction );
         }
         if(power<0) {
-            left_set_power( power + correction );
-            right_set_power( power - correction );
-//            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
-//            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
+//            left_set_power( Math.abs(power) + correction );
+//            right_set_power( Math.abs(power) - correction );
+            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
+            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
         }
     }
 
