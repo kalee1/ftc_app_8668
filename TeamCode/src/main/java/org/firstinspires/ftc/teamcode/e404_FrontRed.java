@@ -24,14 +24,15 @@ public class e404_FrontRed extends Error404AutonomousFront
     /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
-        cryptoboxDriveDistance = 780;
+        cryptoboxDriveDistance = 503;
         cryptoboxSlide=0;
-        turnToCryptobox=80;
+        turnToCryptobox=-85;
         slideAwayFromTheCryptobox=0;
-        turnToPile=0;
-        driveToPile=0;
-        backToCryptobox=0;
+        turnToPile=85;
+        driveToPile=313;
+        backToCryptobox=313;
         slideBackToCryptobox=0;
+        useExtendedGyro = false;
         setMultipleDirections("straight", "forward");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
     }
@@ -51,17 +52,17 @@ public class e404_FrontRed extends Error404AutonomousFront
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = 920;
+            cryptoboxDriveDistance = 619;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=620;
+            cryptoboxDriveDistance=420;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=780;
+            cryptoboxDriveDistance=503;
             result = true;
         }
         return result;

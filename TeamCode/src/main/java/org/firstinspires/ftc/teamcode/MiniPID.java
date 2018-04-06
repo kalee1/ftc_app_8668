@@ -27,6 +27,7 @@ public class MiniPID
 
 	private double maxOutput=0; 
 	private double minOutput=0;
+	private double minOutputMagnitude = 0;
 
 	private double setpoint=0;
 
@@ -222,6 +223,11 @@ public class MiniPID
 		}
 	}
 
+	public void setOutputMin( double minimum )
+	{
+		minOutputMagnitude = Math.abs(minimum);
+	}
+
 	/** 
 	 * Set the operating direction of the PID controller
 	 * @param reversed Set true to reverse PID output
@@ -328,11 +334,17 @@ public class MiniPID
 		if(minOutput!=maxOutput){ 
 			output=constrain(output, minOutput,maxOutput);
 			}
+
 		if(outputFilter!=0){
 			output=lastOutput*outputFilter+output*(1-outputFilter);
 		}
 
-		// Get a test printline with lots of details about the internal 
+		if ( minOutputMagnitude != 0 )
+		{
+ 			if (output > 0 && output < minOutputMagnitude ) { output = minOutputMagnitude; }
+ 			if (output < 0 && output > -1.0*minOutputMagnitude ) { output = -1.0*minOutputMagnitude; }
+		}
+		// Get a test printline with lots of details about the internal
 		// calculations. This can be useful for debugging. 
 		// System.out.printf("Final output %5.2f [ %5.2f, %5.2f , %5.2f  ], eSum %.2f\n",output,Poutput, Ioutput, Doutput,errorSum );
 		// System.out.printf("%5.2f\t%5.2f\t%5.2f\t%5.2f\n",output,Poutput, Ioutput, Doutput );

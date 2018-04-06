@@ -53,9 +53,11 @@ class MovingAverage
 		if (Math.abs(num) < deadband)
 		{
 			myVector.clear();
+			mySum = 0;
 			int i;
 			for (i=0; i < mySize; i++)
 			{
+				mySum += num;
 				myVector.add(new Double(num));
 			}
 		}

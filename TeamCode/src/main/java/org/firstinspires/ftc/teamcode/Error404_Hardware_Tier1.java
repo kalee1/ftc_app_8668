@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -21,6 +22,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -68,8 +72,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
-    protected Servo leftWhiskerServo;
-    protected Servo rightWhiskerServo;
     protected Servo glyphter;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
@@ -78,10 +80,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected NavxMicroNavigationSensor navxMicro;
     /** The camera is used to differentiate colors during the jewel mission. */
     protected AnalogInput camera;
-    /**  */
-    protected AnalogInput leftWhisker;
-    /**  */
-    protected AnalogInput rightWhisker;
+    protected ModernRoboticsI2cRangeSensor topRange;
+    protected ModernRoboticsI2cRangeSensor bottomRange;
+
 
 
     /* The Vuforia system is used to track special patterns on the edge of the field. */
@@ -151,18 +152,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("camera not found in config file", 0);
             camera = null;
         }
-        try {
-            leftWhisker = hardwareMap.get(AnalogInput.class, "leftWhisker");
-        } catch (Exception p_exeception) {
-            telemetry.addData("left whisker not found in config file", 0);
-            leftWhisker = null;
-        }
-        try {
-            rightWhisker = hardwareMap.get(AnalogInput.class, "rightWhisker");
-        } catch (Exception p_exeception) {
-            telemetry.addData("right whisker not found in config file", 0);
-            rightWhisker = null;
-        }
+
         try {
             navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
             gyro = (IntegratingGyroscope)navxMicro;
@@ -176,6 +166,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
             telemetry.addData("Glyphter not found in config file", 0);
             glyphter = null;
         }
+        try {
+            topRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "topRange");
+        } catch (Exception p_exeception) {
+            telemetry.addData("topRange not found in config file", 0);
+            topRange = null;
+        }
+        try {
+            bottomRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "bottomRange");
+        } catch (Exception p_exeception) {
+            telemetry.addData("bottomRange not found in config file", 0);
+            bottomRange = null;
+        }
 
 
         try {
@@ -186,6 +188,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
         try {
             rightFront = hardwareMap.dcMotor.get("rightFront");
+            rightFront.setDirection(FORWARD);
         } catch (Exception p_exeception) {
             telemetry.addData("rightFront not found in config file", 0);
             rightFront = null;
@@ -213,18 +216,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
         } catch (Exception p_exeception) {
             telemetry.addData("rightGlyph not found in config file", 0);
             leftFront = null;
-        }
-        try {
-            rightWhiskerServo = hardwareMap.get(Servo.class, "rightWhiskerServo");
-        } catch (Exception p_exeception) {
-            telemetry.addData("right whisker servo not found in config file", 0);
-            rightWhiskerServo = null;
-        }
-        try {
-            leftWhiskerServo = hardwareMap.get(Servo.class, "leftWhiskerServo");
-        } catch (Exception p_exeception) {
-            telemetry.addData("glyphter servo not found in config file", 0);
-            leftWhiskerServo = null;
         }
         try {
             glyphter = hardwareMap.get(Servo.class, "glyphTilt");
@@ -514,7 +505,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
         if (motor != null) {
             direction=direction.toLowerCase();
             if (direction.equals("r")) {
-                motor.setDirection(DcMotor.Direction.REVERSE);
+                motor.setDirection(REVERSE);
             }
             if (direction.equals("f")) {
                 motor.setDirection(DcMotor.Direction.FORWARD);

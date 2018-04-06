@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Gyro Turn Test", group="Jewel")
-
+@Disabled   // comment out or remove this line to enable this opmode
 /**
  * Error404_PIDTurnTest extends <code>Error404_Hardware_Tier2</code> and contains the state
  * machine that tests the PID based gyro turn.
