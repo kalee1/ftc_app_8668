@@ -28,11 +28,11 @@ public class e404_RearBlue extends Error404AutonomousRear
         glyphPileSlideDistance = 375;
         driveIntoPile = 250;
         cryptoboxDriveDistance = -484;
-        cryptoboxSlide=120;
+        cryptoboxSlide=20;
 
         //Turn angel and range variables
         turnToPile = 45;
-        turnToCryptobox=0;
+        turnToCryptobox=4;
         distanceFromWall = 52;
         slideToEdge = 37;
         setMultipleDirections("straight", "reverse");
