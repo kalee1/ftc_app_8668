@@ -42,7 +42,9 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
+
     protected RangeCheck distanceCheckBottom = new RangeCheck(360, 52, 3);
+
     protected RangeCheck distanceCheckTop = new RangeCheck(360, 20, 3);
 
     public Error404AutonomousRear()

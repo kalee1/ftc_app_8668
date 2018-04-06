@@ -15,15 +15,21 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION 2.1.2
 
     protected MiniPID turnControl;
+    protected MiniPID driveControl;
 
     /** When the driver hits start sets up PID control. */
     @Override public void start()
     {
-        turnControl = new MiniPID( .01, 0.00000, .018 );
-//        turnControl = new MiniPID(Kp, 2*Kp/Pc, 0.33*Kp*Pc);
+        turnControl = new MiniPID( .01, 0, .018 );
         turnControl.setOutputLimits(1.0);
-//        turnControl.setOutputRampRate(0.25);
+        turnControl.setOutputMin( 0.25 );
         turnControl.reset();
+
+        driveControl = new MiniPID( .025, 0, 0 );
+        driveControl.setOutputLimits(1.0);
+        driveControl.setOutputMin( 0.25 );
+        driveControl.reset();
+
         super.start();
     }
 
@@ -34,6 +40,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         leftRear.setPower(0.0);
         rightRear.setPower(0.0);
         turnControl.reset();
+        driveControl.reset();
     }
 
     /**
@@ -367,14 +374,20 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         set_mode(leftRear, "RUE");
         set_mode(rightFront, "RUE");
         set_mode(rightRear, "RUE");
-        double heading = (double)getHeading();
+        double heading = getHeadingDbl();
+        double correction = driveControl.getOutput( heading, target );
+
         if(power>0) {
-            left_set_power(power + ((heading - target) / sensitivity));
-            right_set_power(power - ((heading - target) / sensitivity));
+//            left_set_power(power + ((heading - target) / sensitivity));
+//            right_set_power(power - ((heading - target) / sensitivity));
+            left_set_power( power - correction );
+            right_set_power( power + correction );
         }
         if(power<0) {
-            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
-            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
+            left_set_power( power + correction );
+            right_set_power( power - correction );
+//            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
+//            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
         }
     }
 
