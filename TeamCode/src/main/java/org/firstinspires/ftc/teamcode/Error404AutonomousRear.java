@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
@@ -440,13 +441,13 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
         }
         telemetry.addData("1. State: ", state);
-        telemetry.addData("2. Gyro: ", getHeading());
-        telemetry.addData("3. Camera:  ", camera.getVoltage());
-        telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
+        telemetry.addData("2. Gyro: ", "%.3f degrees", new Func<Double>() { @Override public Double value() { return getHeadingDbl(); } } );
+        telemetry.addData("3. Camera:  ", "0.3f volts", new Func<Double>() { @Override public Double value() { return camera.getVoltage(); } } );
+        telemetry.addData("4. Left Front Position: ", new Func<Integer>() { @Override public Integer value() { return leftFront.getCurrentPosition(); } } );
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Pattern: ", theColumn );
 
-        //        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM) );
+//        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM) );
 //        telemetry.addData("8. rangeCheck result: ", result);
 //        telemetry.addData("9. length: ", distanceCheckBottom.getLength());
 //        telemetry.addData("7. Top Wall Distance: ", topRange.cmUltrasonic());

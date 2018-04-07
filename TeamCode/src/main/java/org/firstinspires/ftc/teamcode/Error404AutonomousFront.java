@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
- /**
+import org.firstinspires.ftc.robotcore.external.Func;
+
+/**
  *Error404AutonomousFront extends <code>Error404_Hardware_Tier2</code> and contains the state
   * machine that steps through each step in the autonomous mission.
   *
@@ -39,6 +41,9 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
+
+    private String theColumn = "NONE";
+
 
     public Error404AutonomousFront()
     {
@@ -141,11 +146,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 6:  //Read Pictograph
-                if(updateFromVuforia(readCryptograph()))
+                theColumn = readCryptograph();
+                if(updateFromVuforia( theColumn ) )
                 {
                     state= 7;
                 }
-
 
                 if(((int)(getRuntime()-timer))>2)
                 {
@@ -443,15 +448,13 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
         }
         telemetry.addData("1. State: ", state);
-        telemetry.addData("2. Gyro: ", getHeading());
-        telemetry.addData("3. Camera:  ", camera.getVoltage());
-        telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
+        telemetry.addData("2. Gyro: ", "%.3f degrees", new Func<Double>() { @Override public Double value() { return getHeadingDbl(); } } );
+        telemetry.addData("3. Camera:  ", "0.3f volts", new Func<Double>() { @Override public Double value() { return camera.getVoltage(); } } );
+        telemetry.addData("4. Left Front Position: ", new Func<Integer>() { @Override public Integer value() { return leftFront.getCurrentPosition(); } } );
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Cryptobox Drive Distance: ", cryptoboxDriveDistance);
         telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
-        telemetry.addData("Pattern: ", readCryptograph());
-
-
+        telemetry.addData("Pattern: ", theColumn);
 
 
     } // loop
