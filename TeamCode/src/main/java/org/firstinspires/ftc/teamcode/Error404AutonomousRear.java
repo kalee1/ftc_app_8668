@@ -36,8 +36,9 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     protected int turnToPile;
     /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
     protected int cryptoboxSlide;
-    protected double distanceFromWall;
-    protected int slideToEdge;
+    protected int pileDelta;
+//    protected double distanceFromWall;
+//    protected int slideToEdge;
     protected boolean useExtendedGyro;
 
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
@@ -229,11 +230,11 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 {
                     if(driveIntoPile>0)
                     {
-                        driveStraightCombo(0.7 );
+                        driveStraightCombo(0.9 );
                     }
                     else
                     {
-                        driveStraightCombo(-0.7 );
+                        driveStraightCombo(-0.9 );
                     }
 
                     if( getRuntime() - timer > 1.25 )
@@ -242,6 +243,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                         setMultipleDirections("straight", "forward");
                         state++;
                         encoder=leftFront.getCurrentPosition();
+                        timer=getRuntime();
                     }
                 }
                 else
@@ -249,24 +251,26 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     setMultipleDirections("straight", "forward");
                     state++;
                     encoder=leftFront.getCurrentPosition();
+                    timer=getRuntime();
                 }
                 break;
 
             case 10:  //Collect Glyphs From Pile
-                driveStraightCombo(0.3);
-                if(leftFront.getCurrentPosition() - encoder> 100 )
+                driveStraightCombo(0.5);
+                if(getRuntime()-timer>2)
                 {
                     stopEverything();
+                    pileDelta = Math.abs(leftFront.getCurrentPosition()-encoder);
                     setMultipleDirections("straight", "reverse");
+                    encoder = leftFront.getCurrentPosition();
                     state++;
-                    encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 11:  // Back up from glyph pile
 
                     driveStraightCombo(-0.7);
-                    if(leftFront.getCurrentPosition() - encoder > 100 )
+                    if(Math.abs(leftFront.getCurrentPosition() - encoder) > Math.abs(pileDelta))
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -305,9 +309,9 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 13:  // Drive To Cryptobox
 
-                    driveStraightGyro(-0.5, 40, turnToCryptobox, useExtendedGyro);
+                    driveStraightGyro(-0.9, 40, turnToCryptobox, useExtendedGyro);
                     //driveStraightCombo( -0.7);
-                    if( leftFront.getCurrentPosition() - encoder > 500 )  //need to make this generic
+                    if( leftFront.getCurrentPosition() - encoder > cryptoboxDriveDistance )  //need to make this generic
                     {
                         stopEverything();
                         if(fieldSide.equals("RED")){
@@ -354,11 +358,11 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxSlide>0)
                     {
-                        slideSidewaysCombo(0.7);
+                        slideSidewaysCombo(0.8);
                     }
                     else
                     {
-                        slideSidewaysCombo(-0.7);
+                        slideSidewaysCombo(-0.8);
                     }
 
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxSlide))
@@ -379,7 +383,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 16:  //Drive into Cryptobox
                 driveStraightCombo(-0.6);
-                if(leftFront.getCurrentPosition()-encoder>25)
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -415,8 +419,8 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 }
                 break;
             case 20: // Push Glyph in
-                driveStraightCombo(-0.3);
-                if(leftFront.getCurrentPosition()-encoder>40)
+                driveStraightCombo(-0.5);
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");

@@ -34,8 +34,7 @@ public class e404_RearBlue extends Error404AutonomousRear
         //Turn angel and range variables
         turnToPile = 45;
         turnToCryptobox=0;
-        distanceFromWall = 65.70;
-        slideToEdge = 37;
+
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
     }
