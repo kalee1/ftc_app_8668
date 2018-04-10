@@ -33,8 +33,8 @@ public class e404_BlueFront extends Error404AutonomousFront
         backToCryptobox=313;
         slideBackToCryptobox=0;
         useExtendedGyro = false;
-        setMultipleDirections("straight", "reverse");
-        super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+        chassis_setMultipleDirections("straight", "reverse");
+        super.init();  //super.init() method is moved to bottom to not get in the way of the chassis_driveStraight() method
 
     }
 

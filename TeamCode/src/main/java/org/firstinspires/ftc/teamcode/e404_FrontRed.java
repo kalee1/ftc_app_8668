@@ -33,8 +33,8 @@ public class e404_FrontRed extends Error404AutonomousFront
         backToCryptobox=313;
         slideBackToCryptobox=0;
         useExtendedGyro = false;
-        setMultipleDirections("straight", "forward");
-        super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+        chassis_setMultipleDirections("straight", "forward");
+        super.init();  //super.init() method is moved to bottom to not get in the way of the chassis_driveStraight() method
     }
 
     /** Overriding the start method to provide a place to put things for when this class is selected. */

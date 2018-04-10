@@ -238,7 +238,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      *
      * @return  a String denoting left, center, right, or blank if it can't determine the cryptograph.
      */
-    public String readCryptograph(){
+    public String vision_readCryptograph(){
         String dejavu="";
 
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -247,16 +247,16 @@ public class Error404_Hardware_Tier1 extends OpMode {
         }
         return dejavu;
     }
-    public DcMotor convert(int mtr) {
-        if (mtr == 1) {
-            telemetry.addData("test",mtr);
-            return leftFront;
-        }
-        if (mtr == 2) return rightFront;
-        if (mtr == 3) return leftRear;
-        if (mtr == 4) return rightRear;
-        return null;
-    }
+//    public DcMotor convert(int mtr) {
+//        if (mtr == 1) {
+//            telemetry.addData("test",mtr);
+//            return leftFront;
+//        }
+//        if (mtr == 2) return rightFront;
+//        if (mtr == 3) return leftRear;
+//        if (mtr == 4) return rightRear;
+//        return null;
+//    }
 
     /** When the driver hits start sets up Vuforia. */
     public void start() {
@@ -278,16 +278,16 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //  and String versions for printing to   //
     //        Driver's Station phone          //
     *///////////////////////////////////////////
-    public double get_power(DcMotor motor)
-    {
-        double motorReturn = 0;
-        if(motor != null)
-        {
-            motorReturn = motor.getPower();
-            return motorReturn;
-        }
-        return motorReturn;
-    }
+//    public double get_power(DcMotor motor)
+//    {
+//        double motorReturn = 0;
+//        if(motor != null)
+//        {
+//            motorReturn = motor.getPower();
+//            return motorReturn;
+//        }
+//        return motorReturn;
+//    }
 
     /**
      * Gets the motor's position and power
@@ -295,16 +295,16 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  the motor whose position and power will be recorded
      * @return  a String which is the motor's power
      */
-    public String get_power_tele(DcMotor motor)
-    {
-        String motorReturn = "";
-        if(motor != null){
-            motorReturn += motor.getPower();
-            return motorReturn;
-        }
-        motorReturn += "NULL";
-        return motorReturn;
-    }
+//    public String get_power_tele(DcMotor motor)
+//    {
+//        String motorReturn = "";
+//        if(motor != null){
+//            motorReturn += motor.getPower();
+//            return motorReturn;
+//        }
+//        motorReturn += "NULL";
+//        return motorReturn;
+//    }
 
     /**
      * Get the motor's position
@@ -312,16 +312,16 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  the motor whose position will be recorded
      * @return  the motor's posisiton
      */
-    public int get_position(DcMotor motor)
-    {
-        int motorReturn = 0;
-        if (motor != null)
-        {
-            motorReturn = motor.getCurrentPosition();
-            return motorReturn;
-        }
-        return motorReturn;
-    }
+//    public int get_position(DcMotor motor)
+//    {
+//        int motorReturn = 0;
+//        if (motor != null)
+//        {
+//            motorReturn = motor.getCurrentPosition();
+//            return motorReturn;
+//        }
+//        return motorReturn;
+//    }
 
     /**
      * Get the motor's current encoder count
@@ -329,17 +329,17 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  the motor whose encoder counts will be recorded
      * @return  the motor's encoder count
      */
-    public String get_position_tele(DcMotor motor)
-    {
-        String motorReturn = "";
-        if(motor != null)
-        {
-            motorReturn += motor.getCurrentPosition();
-            return motorReturn;
-        }
-        motorReturn += "NULL";
-        return motorReturn;
-    }
+//    public String get_position_tele(DcMotor motor)
+//    {
+//        String motorReturn = "";
+//        if(motor != null)
+//        {
+//            motorReturn += motor.getCurrentPosition();
+//            return motorReturn;
+//        }
+//        motorReturn += "NULL";
+//        return motorReturn;
+//    }
 
     /**
      * Get the motor's current mode
@@ -347,15 +347,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  the motor whose mode will be checked
      * @return  the motor's mode
      */
-    public String get_mode(DcMotor motor) {
-        String motorReturn = "";
-        if (motor != null) {
-            motorReturn += motor.getMode();
-            return motorReturn;
-        }
-        motorReturn += "NULL";
-        return motorReturn;
-    }
+//    public String get_mode(DcMotor motor) {
+//        String motorReturn = "";
+//        if (motor != null) {
+//            motorReturn += motor.getMode();
+//            return motorReturn;
+//        }
+//        motorReturn += "NULL";
+//        return motorReturn;
+//    }
 
     /**
      * Get the motor's current direction
@@ -363,15 +363,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  the motor whose direction will be recorded
      * @return  the motor's direction
      */
-    public String get_direction(DcMotor motor) {
-        String motorReturn = "";
-        if (motor != null) {
-            motorReturn += motor.getDirection();
-            return motorReturn;
-        }
-        motorReturn += "NULL";
-        return motorReturn;
-    }
+//    public String get_direction(DcMotor motor) {
+//        String motorReturn = "";
+//        if (motor != null) {
+//            motorReturn += motor.getDirection();
+//            return motorReturn;
+//        }
+//        motorReturn += "NULL";
+//        return motorReturn;
+//    }
 
     //////////////////////////////////////////
     /*method that checks if the motor has   //
@@ -379,29 +379,29 @@ public class Error404_Hardware_Tier1 extends OpMode {
     //          returns false.              //
     */////////////////////////////////////////
 
-    public boolean is_encoder_reached(int goal, DcMotor motor)
-    {
-        int encoderCount = get_position(motor);
-        // encoderCount=Math.abs(encoderCount);
-        if(encoderCount >= goal)
-        {return true;}
-        else if((encoderCount > (goal - 10)) && (encoderCount < (goal + 10)))
-        {return true;}
-        else
-        {return false;}
-    }
+//    public boolean is_encoder_reached(int goal, DcMotor motor)
+//    {
+//        int encoderCount = get_position(motor);
+//        // encoderCount=Math.abs(encoderCount);
+//        if(encoderCount >= goal)
+//        {return true;}
+//        else if((encoderCount > (goal - 10)) && (encoderCount < (goal + 10)))
+//        {return true;}
+//        else
+//        {return false;}
+//    }
 
     //////////////////////////////////////////////
     /*  method that checks if motors are reset.  //
     // If found returns true, else returns false //
     */////////////////////////////////////////////
-    public boolean is_encoder_reset(DcMotor motor)
-    {
-        if(get_position(motor) == 0)
-        {return true;}
-        else
-        {return false;}
-    }
+//    public boolean is_encoder_reset(DcMotor motor)
+//    {
+//        if(get_position(motor) == 0)
+//        {return true;}
+//        else
+//        {return false;}
+//    }
 
     ///////////////////////////////////////////
     /* methods that resets encoders if found,//
@@ -421,8 +421,8 @@ public class Error404_Hardware_Tier1 extends OpMode {
      *
      * @return  the robtot's heading as an Int
      */
-    public int getHeading(){
-            return (int)getHeadingDbl();
+    public int chassis_getHeading(){
+            return (int)chassis_getHeadingDbl();
         }
 
     /**
@@ -430,7 +430,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      *
      * @return  the robtot's heading as an Int
      */
-    public double getHeadingDbl(){
+    public double chassis_getHeadingDbl(){
         Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
     }
@@ -450,7 +450,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param power  a double the is the power to be set to the motor
      * @param motor  The motor whose power will be set.
      */
-    public void set_power(double power, DcMotor motor){
+    public void chassis_set_power(double power, DcMotor motor){
         if (motor != null) {
             motor.setPower(power);
         }
@@ -472,7 +472,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  The motor whose modes will be set.
      * @param modetoset  The different modes to be set
      */
-    public void set_mode(DcMotor motor, String modetoset){
+    public void chassis_set_mode(DcMotor motor, String modetoset){
         modetoset=modetoset.toUpperCase();
         if (motor != null){
             if (modetoset.equals("RTP")){
@@ -501,7 +501,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  The motor whose direction will be set
      * @param direction  a String that sets the motor's direction.
      */
-    public void set_direction(DcMotor motor, String direction) {
+    public void chassis_set_direction(DcMotor motor, String direction) {
         if (motor != null) {
             direction=direction.toLowerCase();
             if (direction.equals("r")) {
@@ -526,7 +526,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param motor  The motor whose position will be set.
      * @param position  the desired posistion for the motor to achieve.
      */
-    public void set_position(DcMotor motor, int position)
+    public void chassis_set_position(DcMotor motor, int position)
     {
         if (motor != null){
             motor.setTargetPosition(position);
@@ -549,7 +549,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param gear_ratio  a Double that is the gear ratio
      * @return  the needed number of encoder ticks to move the target amount of inches
      */
-    public int distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
+    public int chassis_distance2encoder(int desiredDistance, double wheel_diameter, double gear_ratio) {
         return (int) ( 280*(desiredDistance/(((3.14159265)*(wheel_diameter))*gear_ratio)));}
 
     ///////////////////////////////////

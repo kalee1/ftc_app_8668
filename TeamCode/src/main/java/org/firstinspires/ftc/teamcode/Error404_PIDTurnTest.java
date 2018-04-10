@@ -66,7 +66,7 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
         else
         {
             motor_power = turnControl.getOutput( currentHeading, targetHeading );
-            pointTurnCombo( -1*motor_power );
+            chassis_pointTurnCombo( -1*motor_power );
 
             if ( Math.abs(currentHeading - targetHeading) < 4.0 )
             {
@@ -111,7 +111,7 @@ public class Error404_PIDTurnTest extends Error404_Hardware_Tier2
 
                 break;
             default:
-                stopEverything();
+                chassis_stopEverything();
                 turnControl.reset();
                 break;
 

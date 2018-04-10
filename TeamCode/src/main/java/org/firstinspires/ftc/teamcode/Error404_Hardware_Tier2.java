@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -34,7 +33,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
     /** this method is used to stop all the drive motors. */
-    public void stopEverything(){
+    public void chassis_stopEverything(){
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftRear.setPower(0.0);
@@ -44,10 +43,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
     /**
-     * THe glyphIntake method triggers the two intake motors that will suck in or spit out a glyph.
+     * THe intake_glyphIntake method triggers the two intake motors that will suck in or spit out a glyph.
      *
      * @param inOrOut  A string that determines the motor powers and direction. */
-    public void glyphIntake(String inOrOut){
+    public void intake_glyphIntake(String inOrOut){
         if(inOrOut.toLowerCase().equals("outSlow")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -86,15 +85,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * Combines direction and power into one drive method that drives forward and backward.
      *
      * @param power  determines the power which the motors run at*/
-    public void driveStraightCombo(double power){
+    public void chassis_driveStraightCombo(double power){
         if(power>0){
-            driveStraight("RUE",power,"f",0);
+            chassis_driveStraight("RUE",power,"f",0);
         }
         else if(power<0){
-            driveStraight("RUE",(power*(-1)),"r",0);
+            chassis_driveStraight("RUE",(power*(-1)),"r",0);
         }
         else if(power==0){
-            stopEverything();
+            chassis_stopEverything();
         }
     }
 
@@ -102,15 +101,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * Combines direction and power into one drive method that slides left and right.
      *
      * @param power  determines the power which the motors run at */
-    public void slideSidewaysCombo(double power){
+    public void chassis_slideSidewaysCombo(double power){
         if(power>0){
-            slide_sideways("RUE",power,"r",0);
+            chassis_slide_sideways("RUE",power,"r",0);
         }
         else if(power<0){
-            slide_sideways("RUE",(power*(-1)),"l",0);
+            chassis_slide_sideways("RUE",(power*(-1)),"l",0);
         }
         else if(power==0){
-            stopEverything();
+            chassis_stopEverything();
         }
     }
 
@@ -118,15 +117,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * Combines direction and power into one turning method that spins the robot left and right.
      *
      * @param power  determines the power which the motors run at */
-    public void pointTurnCombo(double power){
+    public void chassis_pointTurnCombo(double power){
         if(power>0){
-            pointTurn("RUE",power,"r",0);
+            chassis_pointTurn("RUE",power,"r",0);
         }
         else if(power<0){
-            pointTurn("RUE",(power*(-1)),"l",0);
+            chassis_pointTurn("RUE",(power*(-1)),"l",0);
         }
         else if(power==0){
-            stopEverything();
+            chassis_stopEverything();
         }
     }
 
@@ -135,10 +134,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param targetHeading specifies the direction the robot needs to face
      */
-    public boolean pointTurnGyro( double targetHeading, boolean extendedGyro )
+    public boolean chassis_pointTurnGyro(double targetHeading, boolean extendedGyro )
     {
         boolean done = false;
-        double currentHeading = getHeadingDbl();
+        double currentHeading = chassis_getHeadingDbl();
         if ( extendedGyro )
         {
             if ( currentHeading < 0.0 )
@@ -156,7 +155,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         else
         {
             motor_power = turnControl.getOutput( currentHeading, targetHeading );
-            pointTurnCombo( -1*motor_power );
+            chassis_pointTurnCombo( -1*motor_power );
 
             if ( Math.abs(currentHeading - targetHeading) < 4.0 )
             {
@@ -172,47 +171,47 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param movement  specifies type of movement (i.e., straight, turn, slide)
      * @param direction  sets motor directions for the encoders */
-    public void setMultipleDirections(String movement, String direction){
+    public void chassis_setMultipleDirections(String movement, String direction){
         if(movement.equals("straight")){
             if(direction.equals("forward")){
-                set_direction(leftFront, "f");
-                set_direction(leftRear, "r");
-                set_direction(rightFront, "r");
-                set_direction(rightRear, "r");
+                chassis_set_direction(leftFront, "f");
+                chassis_set_direction(leftRear, "r");
+                chassis_set_direction(rightFront, "r");
+                chassis_set_direction(rightRear, "r");
             }
             if(direction.equals("reverse")){
-                set_direction(leftFront, "r");
-                set_direction(leftRear, "f");
-                set_direction(rightFront, "f");
-                set_direction(rightRear, "f");
+                chassis_set_direction(leftFront, "r");
+                chassis_set_direction(leftRear, "f");
+                chassis_set_direction(rightFront, "f");
+                chassis_set_direction(rightRear, "f");
             }
         }
         if(movement.equals("turn")){
             if(direction.equals("right")){
-                set_direction(leftFront, "f");
-                set_direction(leftRear, "r");
-                set_direction(rightFront, "f");
-                set_direction(rightRear, "f");
+                chassis_set_direction(leftFront, "f");
+                chassis_set_direction(leftRear, "r");
+                chassis_set_direction(rightFront, "f");
+                chassis_set_direction(rightRear, "f");
             }
             if(direction.equals("left")){
-                set_direction(leftFront, "r");
-                set_direction(leftRear, "f");
-                set_direction(rightFront, "r");
-                set_direction(rightRear, "r");
+                chassis_set_direction(leftFront, "r");
+                chassis_set_direction(leftRear, "f");
+                chassis_set_direction(rightFront, "r");
+                chassis_set_direction(rightRear, "r");
             }
         }
         if(movement.equals("slide")){
             if(direction.equals("right")){
-                set_direction(leftFront, "f");
-                set_direction(rightRear, "r");
-                set_direction(rightFront, "f");
-                set_direction(leftRear, "f");
+                chassis_set_direction(leftFront, "f");
+                chassis_set_direction(rightRear, "r");
+                chassis_set_direction(rightFront, "f");
+                chassis_set_direction(leftRear, "f");
             }
             if(direction.equals("left")){
-                set_direction(leftFront, "r");
-                set_direction(rightRear, "f");
-                set_direction(rightFront, "r");
-                set_direction(leftRear, "r");
+                chassis_set_direction(leftFront, "r");
+                chassis_set_direction(rightRear, "f");
+                chassis_set_direction(rightFront, "r");
+                chassis_set_direction(leftRear, "r");
             }
         }
     }
@@ -227,42 +226,42 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param position  an Int that tells the motor position on the robot
      */
     //tells robot to drive straight at a certain power in a direction until the desired position is reached
-    public void driveStraight(String mode, double power, String direction, int position) {
-        position=distance2encoder(position,6,1);
+    public void chassis_driveStraight(String mode, double power, String direction, int position) {
+        position= chassis_distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("f")) {
-            set_direction(leftFront, "f");
-            set_direction(leftRear, "r");
-            set_direction(rightFront, "r");
-            set_direction(rightRear, "r");
+            chassis_set_direction(leftFront, "f");
+            chassis_set_direction(leftRear, "r");
+            chassis_set_direction(rightFront, "r");
+            chassis_set_direction(rightRear, "r");
         } else {
-            set_direction(leftFront, "r");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "f");
-            set_direction(rightRear, "f");
+            chassis_set_direction(leftFront, "r");
+            chassis_set_direction(leftRear, "f");
+            chassis_set_direction(rightFront, "f");
+            chassis_set_direction(rightRear, "f");
         }
-        set_mode(leftFront, mode);
-        set_mode(leftRear, mode);
-        set_mode(rightFront, mode);
-        set_mode(rightRear, mode);
-        set_position(leftFront, position);
-        set_position(leftRear,position);
-        set_position(rightFront,position);
-        set_position(rightRear,position);
-        left_set_power(power);
-        right_set_power(power);
+        chassis_set_mode(leftFront, mode);
+        chassis_set_mode(leftRear, mode);
+        chassis_set_mode(rightFront, mode);
+        chassis_set_mode(rightRear, mode);
+        chassis_set_position(leftFront, position);
+        chassis_set_position(leftRear,position);
+        chassis_set_position(rightFront,position);
+        chassis_set_position(rightRear,position);
+        chassis_left_set_power(power);
+        chassis_right_set_power(power);
 
     }
 
     /**
      * Sets the left drive motors' power
      *
-     * @param power  a Duble that is the power for the left motors
+     * @param power  a Double that is the power for the left motors
      */
     //sets power to left side of robot to desired power value
-    public void left_set_power(double power)
+    public void chassis_left_set_power(double power)
     {
-        set_power(power, leftFront);
-        set_power(power, leftRear);
+        chassis_set_power(power, leftFront);
+        chassis_set_power(power, leftRear);
     }
 
     /**
@@ -271,10 +270,10 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param power  a Double that is the power for the right motors
      */
     //sets power to right side of robot to desired power value
-    public void right_set_power(double power)
+    public void chassis_right_set_power(double power)
     {
-        set_power(power, rightFront);
-        set_power(power, rightRear);
+        chassis_set_power(power, rightFront);
+        chassis_set_power(power, rightRear);
     }
 
     //Direction is either l "L" for left or r for right, instead of F for forward and B for backward
@@ -287,32 +286,32 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param direction  a String that is the direction of movement
      * @param position  an Int that is the motors' position on the robot
      */
-    public void pointTurn(String mode, double power, String direction, int position){
-        position=distance2encoder(position,6,1);
+    public void chassis_pointTurn(String mode, double power, String direction, int position){
+        position= chassis_distance2encoder(position,6,1);
         if (direction.toLowerCase().equals("r")) {
-            set_direction(leftFront, "f");
-            set_direction(leftRear, "r");
-            set_direction(rightFront, "f");
-            set_direction(rightRear, "f");
+            chassis_set_direction(leftFront, "f");
+            chassis_set_direction(leftRear, "r");
+            chassis_set_direction(rightFront, "f");
+            chassis_set_direction(rightRear, "f");
         } else {
-            set_direction(leftFront, "r");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "r");
-            set_direction(rightRear, "r");
+            chassis_set_direction(leftFront, "r");
+            chassis_set_direction(leftRear, "f");
+            chassis_set_direction(rightFront, "r");
+            chassis_set_direction(rightRear, "r");
         }
         //sets mode to what is sent in with the "mode" parameter
-        set_mode(leftFront, mode);
-        set_mode(leftRear, mode);
-        set_mode(rightFront, mode);
-        set_mode(rightRear, mode);
+        chassis_set_mode(leftFront, mode);
+        chassis_set_mode(leftRear, mode);
+        chassis_set_mode(rightFront, mode);
+        chassis_set_mode(rightRear, mode);
         //sets target position to parameter "position"
-        set_position(leftFront, position);
-        set_position(leftRear,position);
-        set_position(rightFront,position);
-        set_position(rightRear,position);
+        chassis_set_position(leftFront, position);
+        chassis_set_position(leftRear,position);
+        chassis_set_position(rightFront,position);
+        chassis_set_position(rightRear,position);
 
-        left_set_power(power);
-        right_set_power(power);
+        chassis_left_set_power(power);
+        chassis_right_set_power(power);
     }
 
     /**
@@ -324,64 +323,64 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * @param position  an Int that is the motors' position on the robot
      */
     //slides sideways until the wheels reach the desired encoder count
-    public void slide_sideways(String mode, double power, String direction, int position){
-        position = distance2encoder(position, 4, 1);
+    public void chassis_slide_sideways(String mode, double power, String direction, int position){
+        position = chassis_distance2encoder(position, 4, 1);
         position=position*2; //because the wheels on the mecanum wheels are at 45', multiply the encoder counts by 2
-        set_mode(leftFront, mode);
-        set_mode(leftRear, mode);
-        set_mode(rightFront, mode);
-        set_mode(rightRear, mode);
+        chassis_set_mode(leftFront, mode);
+        chassis_set_mode(leftRear, mode);
+        chassis_set_mode(rightFront, mode);
+        chassis_set_mode(rightRear, mode);
         if (direction.toLowerCase().equals("r")) {
-            set_direction(leftFront, "f");
-            set_direction(rightRear, "r");
-            set_direction(rightFront, "f");
-            set_direction(leftRear, "f");
-            set_position(rightFront, position);
-            set_position(rightRear, position);
-            set_position(leftFront, position);
-            set_position(leftRear, position);
-            set_power(power, rightRear);
-            set_power(power, rightFront);
-            set_power(power, leftFront);
-            set_power(power, leftRear);
+            chassis_set_direction(leftFront, "f");
+            chassis_set_direction(rightRear, "r");
+            chassis_set_direction(rightFront, "f");
+            chassis_set_direction(leftRear, "f");
+            chassis_set_position(rightFront, position);
+            chassis_set_position(rightRear, position);
+            chassis_set_position(leftFront, position);
+            chassis_set_position(leftRear, position);
+            chassis_set_power(power, rightRear);
+            chassis_set_power(power, rightFront);
+            chassis_set_power(power, leftFront);
+            chassis_set_power(power, leftRear);
 
         } else if (direction.toLowerCase().equals("l")) {  // added else tim
-            set_direction(leftFront, "r");
-            set_direction(rightRear, "f");
-            set_direction(rightFront, "r");
-            set_direction(leftRear, "r");
-            set_position(rightFront, position);
-            set_position(rightRear, position);
-            set_position(leftFront, position);
-            set_position(leftRear, position);
-            set_power(power, rightRear);
-            set_power(power, rightFront);
-            set_power(power, leftFront);
-            set_power(power, leftRear);
+            chassis_set_direction(leftFront, "r");
+            chassis_set_direction(rightRear, "f");
+            chassis_set_direction(rightFront, "r");
+            chassis_set_direction(leftRear, "r");
+            chassis_set_position(rightFront, position);
+            chassis_set_position(rightRear, position);
+            chassis_set_position(leftFront, position);
+            chassis_set_position(leftRear, position);
+            chassis_set_power(power, rightRear);
+            chassis_set_power(power, rightFront);
+            chassis_set_power(power, leftFront);
+            chassis_set_power(power, leftRear);
         }
     }
 
 
-    public void driveStraightGyro(double power, double sensitivity, double target, boolean extGyro ){
+    public void chassis_driveStraightGyro(double power, double sensitivity, double target, boolean extGyro ){
 
         if(power>0) {
-            set_direction(leftFront, "f");
-            set_direction(leftRear, "r");
-            set_direction(rightFront, "r");
-            set_direction(rightRear, "r");
+            chassis_set_direction(leftFront, "f");
+            chassis_set_direction(leftRear, "r");
+            chassis_set_direction(rightFront, "r");
+            chassis_set_direction(rightRear, "r");
         }
         if(power<0) {
-            set_direction(leftFront, "r");
-            set_direction(leftRear, "f");
-            set_direction(rightFront, "f");
-            set_direction(rightRear, "f");
+            chassis_set_direction(leftFront, "r");
+            chassis_set_direction(leftRear, "f");
+            chassis_set_direction(rightFront, "f");
+            chassis_set_direction(rightRear, "f");
         }
 
-        set_mode(leftFront, "RUE");
-        set_mode(leftRear, "RUE");
-        set_mode(rightFront, "RUE");
-        set_mode(rightRear, "RUE");
-        double heading = getHeadingDbl();
+        chassis_set_mode(leftFront, "RUE");
+        chassis_set_mode(leftRear, "RUE");
+        chassis_set_mode(rightFront, "RUE");
+        chassis_set_mode(rightRear, "RUE");
+        double heading = chassis_getHeadingDbl();
 
         if ( extGyro )
         {
@@ -393,28 +392,28 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         double correction = driveControl.getOutput( heading, target );
 
         if(power>0) {
-            left_set_power(power + ((heading - target) / sensitivity));
-            right_set_power(power - ((heading - target) / sensitivity));
-//            left_set_power( power - correction );
-//            right_set_power( power + correction );
+            chassis_left_set_power(power + ((heading - target) / sensitivity));
+            chassis_right_set_power(power - ((heading - target) / sensitivity));
+//            chassis_left_set_power( power - correction );
+//            chassis_right_set_power( power + correction );
         }
         if(power<0) {
-//            left_set_power( Math.abs(power) + correction );
-//            right_set_power( Math.abs(power) - correction );
-            left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
-            right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
+//            chassis_left_set_power( Math.abs(power) + correction );
+//            chassis_right_set_power( Math.abs(power) - correction );
+            chassis_left_set_power(Math.abs(power) - ((heading - target) / sensitivity));
+            chassis_right_set_power(Math.abs(power) + ((heading - target) / sensitivity));
         }
     }
 
-    public void motorTelemetry(DcMotor motor)
-    {
-        if(motor != null)
-        {
-            telemetry.addData("00", get_direction(motor));
-            telemetry.addData("01", get_mode(motor));
-            telemetry.addData("02", get_power_tele(motor));
-            telemetry.addData("03", get_position_tele(motor));
-        }
-    }
+//    public void motorTelemetry(DcMotor motor)
+//    {
+//        if(motor != null)
+//        {
+//            telemetry.addData("00", get_direction(motor));
+//            telemetry.addData("01", get_mode(motor));
+//            telemetry.addData("02", get_power_tele(motor));
+//            telemetry.addData("03", get_position_tele(motor));
+//        }
+//    }
 
 }

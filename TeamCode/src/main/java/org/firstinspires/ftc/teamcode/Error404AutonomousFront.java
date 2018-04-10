@@ -54,7 +54,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
     * value of the leftFront drive motor for navigation purposes. */
     @Override public void init(){
         super.init();
-        telemetry.addData("Gyro: ", getHeading());
+        telemetry.addData("Gyro: ", chassis_getHeading());
         telemetry.addData("","V 1");
         arm.setPosition(0.1);
         swivel.setPosition(0.52);
@@ -146,7 +146,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 6:  //Read Pictograph
-                theColumn = readCryptograph();
+                theColumn = vision_readCryptograph();
                 if(updateFromVuforia( theColumn ) )
                 {
                     state= 7;
@@ -154,7 +154,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
                 if(((int)(getRuntime()-timer))>2)
                 {
-                    setMultipleDirections("straight", "forward");
+                    chassis_setMultipleDirections("straight", "forward");
                     updateFromVuforia("CENTER");
                     state=7;
                 }
@@ -166,18 +166,18 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxDriveDistance>0)
                     {
-                        driveStraightGyro(0.4, 40, 0, useExtendedGyro);
+                        chassis_driveStraightGyro(0.4, 40, 0, useExtendedGyro);
                     }
                     else
                     {
-                        driveStraightGyro(-0.4, 40, 0, useExtendedGyro);
+                        chassis_driveStraightGyro(-0.4, 40, 0, useExtendedGyro);
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(cryptoboxDriveDistance))
                     {
-                        //slide_sideways("RUE", 0, "l", 0);
-                        stopEverything();
-                        setMultipleDirections("turn", "right");
+                        //chassis_slide_sideways("RUE", 0, "l", 0);
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("turn", "right");
                         state++;
                         encoder = leftFront.getCurrentPosition();
                         timer =getRuntime();
@@ -185,7 +185,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 }
                 else
                 {
-                    setMultipleDirections("turn", "right");
+                    chassis_setMultipleDirections("turn", "right");
                     state++;
                     encoder = leftFront.getCurrentPosition();
                     timer =getRuntime();
@@ -197,17 +197,17 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 8:  //Face Cryptobox
                 if(turnToCryptobox!=0)
                 {
-                    if (pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2)
+                    if (chassis_pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2)
                     {
                         state=10;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
-                    setMultipleDirections("straight", "forward");
+                    chassis_setMultipleDirections("straight", "forward");
                     state=10;
                     encoder = leftFront.getCurrentPosition();
                 }
@@ -215,11 +215,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
 
             case 10:  //Drive into Cryptobox
-                driveStraightCombo(0.6);
+                chassis_driveStraightCombo(0.6);
                 if(leftFront.getCurrentPosition()-encoder>93)
                 {
-                    stopEverything();
-                    setMultipleDirections("straight", "reverse");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "reverse");
                     timer=getRuntime();
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -227,7 +227,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 11:  //Deploy Glyph
-                glyphIntake("out");
+                intake_glyphIntake("out");
                 state++;
                 break;
 
@@ -241,38 +241,38 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 13:  // Back Up
-                driveStraightCombo(-0.7);
+                chassis_driveStraightCombo(-0.7);
                 if(leftFront.getCurrentPosition()-encoder>99)
                 {
-                    stopEverything();
-                    setMultipleDirections("straight", "forward");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "forward");
                     state++;
                     encoder=leftFront.getCurrentPosition();
-                    glyphIntake("stop");
+                    intake_glyphIntake("stop");
                 }
                 break;
 
             case 14: // Push Glyph in
-                glyphIntake("outSlow");
-                driveStraightCombo(0.3);
+                intake_glyphIntake("outSlow");
+                chassis_driveStraightCombo(0.3);
                 if(leftFront.getCurrentPosition()-encoder>93)
                 {
-                    driveStraight("RUE",0,"r",0);
+                    chassis_driveStraight("RUE",0,"r",0);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 15: //Back away from the cryptobox
-                driveStraightCombo(-0.7);
+                chassis_driveStraightCombo(-0.7);
                 if(leftFront.getCurrentPosition()-encoder>94)
                 {
-                    stopEverything();
+                    chassis_stopEverything();
                     if(fieldSide.equals("BLUE")){
-                        setMultipleDirections("turn", "left");
+                        chassis_setMultipleDirections("turn", "left");
                     }
                     else{
-                        setMultipleDirections("turn", "right");
+                        chassis_setMultipleDirections("turn", "right");
                     }
                     state = 17;
                     encoder=leftFront.getCurrentPosition();
@@ -284,29 +284,29 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 17:  //Face Glyph Pile
                 if(turnToPile>0)
                 {
-                    pointTurnGyro(turnToPile, useExtendedGyro);
-                    if (getHeading() > turnToPile || getRuntime()-timer>3)
+                    chassis_pointTurnGyro(turnToPile, useExtendedGyro);
+                    if (chassis_getHeading() > turnToPile || getRuntime()-timer>3)
                     {
                         state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
-                    pointTurnGyro(turnToPile, useExtendedGyro );
-                    if (getHeading() < turnToPile)
+                    chassis_pointTurnGyro(turnToPile, useExtendedGyro );
+                    if (chassis_getHeading() < turnToPile)
                     {
                         state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                     if (getRuntime()-timer>2) {
                         state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("straight", "forward");
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
@@ -314,12 +314,12 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 18:  //Drive into GLyph Pile
                 if(driveToPile!=0)
                 {
-                    driveStraightGyro(.7, 40, turnToPile, useExtendedGyro );
+                    chassis_driveStraightGyro(.7, 40, turnToPile, useExtendedGyro );
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(driveToPile))
                     {
-                        //slide_sideways("RUE", 0, "l", 0);
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
+                        //chassis_slide_sideways("RUE", 0, "l", 0);
+                        chassis_stopEverything();
+                        chassis_setMultipleDirections("straight", "forward");
                         state++;
                         encoder = leftFront.getCurrentPosition();
                     }
@@ -327,7 +327,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 }
                 else
                 {
-                    setMultipleDirections("straight", "forward");
+                    chassis_setMultipleDirections("straight", "forward");
                     state++;
                     encoder = leftFront.getCurrentPosition();
                 }
@@ -335,12 +335,12 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 19:  //Collect Glyphs
-                glyphIntake("in");
-                driveStraightCombo(0.3);
+                intake_glyphIntake("in");
+                chassis_driveStraightCombo(0.3);
                 if(leftFront.getCurrentPosition()-encoder>93)
                 {
-                    stopEverything();
-                    setMultipleDirections("straight", "reverse");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "reverse");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -352,28 +352,28 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 {
                     if(backToCryptobox>0)
                     {
-                        driveStraightGyro(-0.7, 40, turnToPile, useExtendedGyro );
+                        chassis_driveStraightGyro(-0.7, 40, turnToPile, useExtendedGyro );
                     }
                     else
                     {
-                        driveStraightGyro(0.7, 40, turnToPile, useExtendedGyro );
+                        chassis_driveStraightGyro(0.7, 40, turnToPile, useExtendedGyro );
                     }
 
                     if (leftFront.getCurrentPosition() - encoder > Math.abs(backToCryptobox))
                     {
-                        stopEverything();
-                        glyphIntake("stop");
-                        setMultipleDirections("straight","reverse");
-                    //  setMultipleDirections("slide", "right");
+                        chassis_stopEverything();
+                        intake_glyphIntake("stop");
+                        chassis_setMultipleDirections("straight","reverse");
+                    //  chassis_setMultipleDirections("slide", "right");
                         state = 23;
                         encoder = leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
-                //  setMultipleDirections("slide", "left");
-                    stopEverything();
-                    setMultipleDirections("straight", "reverse");
+                //  chassis_setMultipleDirections("slide", "left");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "reverse");
                     state = 23;
                     encoder = leftFront.getCurrentPosition();
                 }
@@ -382,12 +382,12 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
 
             case 23:  //Drive into Cryptobox
-                driveStraightCombo(-0.6);
+                chassis_driveStraightCombo(-0.6);
                 if(leftFront.getCurrentPosition()-encoder>47)
                 {
                     timer = getRuntime();
-                    stopEverything();
-                    setMultipleDirections("straight", "forward");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "forward");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
@@ -408,11 +408,11 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 26:  // Back Up
-                driveStraightCombo(0.7);
+                chassis_driveStraightCombo(0.7);
                 if(leftFront.getCurrentPosition()-encoder>81)
                 {
-                    stopEverything();
-                    setMultipleDirections("straight", "reverse");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "reverse");
                     glyphter.setPosition(.05);
                     state++;
                     encoder=leftFront.getCurrentPosition();
@@ -420,22 +420,22 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
                 break;
 
             case 27: // Push Glyphs in
-                driveStraightCombo(-0.3);
+                chassis_driveStraightCombo(-0.3);
                 if(leftFront.getCurrentPosition()-encoder>81)
                 {
-                    stopEverything();
-                    setMultipleDirections("straight", "forward");
+                    chassis_stopEverything();
+                    chassis_setMultipleDirections("straight", "forward");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 28: //Back away from the cryptobox
-                driveStraightCombo(0.7);
+                chassis_driveStraightCombo(0.7);
                 if(leftFront.getCurrentPosition()-encoder>100)
                 {
                     state++;
-                    stopEverything();
+                    chassis_stopEverything();
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
@@ -448,7 +448,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
         }
         telemetry.addData("1. State: ", state);
-        telemetry.addData("2. Gyro: ", "%.3f degrees", new Func<Double>() { @Override public Double value() { return getHeadingDbl(); } } );
+        telemetry.addData("2. Gyro: ", "%.3f degrees", new Func<Double>() { @Override public Double value() { return chassis_getHeadingDbl(); } } );
         telemetry.addData("3. Camera:  ", "0.3f volts", new Func<Double>() { @Override public Double value() { return camera.getVoltage(); } } );
         telemetry.addData("4. Left Front Position: ", new Func<Integer>() { @Override public Integer value() { return leftFront.getCurrentPosition(); } } );
         telemetry.addData("5. Delta Position: ", encoder);

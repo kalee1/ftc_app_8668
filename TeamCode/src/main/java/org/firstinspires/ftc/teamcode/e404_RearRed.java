@@ -36,8 +36,8 @@ public class e404_RearRed extends Error404AutonomousRear
         turnToCryptobox=180;
         distanceFromWall = 65.70;
         slideToEdge = 37;
-        setMultipleDirections("straight", "forward");
-        super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
+        chassis_setMultipleDirections("straight", "forward");
+        super.init();  //super.init() method is moved to bottom to not get in the way of the chassis_driveStraight() method
 
 
     }
