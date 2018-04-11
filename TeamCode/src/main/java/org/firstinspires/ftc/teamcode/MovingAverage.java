@@ -21,10 +21,11 @@ class MovingAverage
 	private final Vector<Double> myVector = new Vector<Double>();
 
     /**
-	 * Keep track of the size and the sum as we go along
+	 * Keep track of the size and sum as we go along
 	 */
 	private int mySize;
     private double mySum;
+	/** Sets the deadband -- or the minimum power before the power values are averaged. */
 	private double deadband = 0.3;
 
 	/**

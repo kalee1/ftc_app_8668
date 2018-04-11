@@ -6,12 +6,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  *Error404AutonomousRear extends <code>Error404_Hardware_Tier2</code> and contains the state
   * machine that steps through each step in the autonomous mission.
   *
-  * This year's field presents a unique challenge for autonomous. The field is set up so that there
-  * are four unique starting positions and your robot has to be able to start from any of them. We
-  * could have four individual programs (one for each quadrant) but this is clumsy and opens us up
-  * to bugs. Instead what we did is we made one main autonomous class that holds the framework code
-  * that is the same for all four quadrants and then we have four quadrant-specific child classes
-  * that supply the quadrant-specific movement vaules.
+ * This year's field presents a unique challenge for autonomous. The field is set up so that there
+ * are four unique starting positions and your robot has to be able to start from any of them. We
+ * could have four individual programs (one for each quadrant) but this is clumsy and opens us up
+ * to bugs. Instead what we did, is we made two main autonomous classes that hold the framework code
+ * for the front two qudrants and the rear two quadrants. Then we have four quadrant-specific child
+ * classes that supply the quadrant-specific movement vaules.
  *
  * @author Team 8668
  * @see Error404_Hardware_Tier2
@@ -22,23 +22,35 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
     //////////////////////////////////////////////////////////////////////////////////
     /** This int variable sets the starting case value for the state machine (which step in the sequence to start with -- i.e. the first one or case 0) */
     private int state = 0;
+    /** This int variable sets the starting encoder values for the motors. */
     private int encoder=0;
+    /** This double initializes a timer that can be used during the autonomous. */
     private double timer=0;
-    /** A move variable for driving from the glyph pile to the cryptobox. */
+    /** The distance for driving from the glyph pile to the cryptobox. */
     protected int cryptoboxDriveDistance;
-    /** A move variable for driving to line up on the glyph pile. */
+    /** The distance for sliding to line up on the glyph pile. */
     protected int glyphPileSlideDistance;
-    /** A move variable for driving the robot into the glyph pile. */
+    /** The distance to drive the robot into the glyph pile. */
     protected int driveIntoPile;
-    /** Initializing the turning variable used for turning the correct side of the robot to face the cryptobox. */
+    /** The angle on the gyro needed to turn to face the cryptobox. */
     protected int turnToCryptobox;
-    /** A move variable for turing the robot to face the glyph pile. */
+    /** The angle ont he gyro needed to turn to face the glyph pile */
     protected int turnToPile;
-    /** Initializing the variable used for sliding the robot side to side to align on a particular column of the cryptobox. */
+    /** The distance needed to line up on a perticular column of the cryptobox. */
     protected int cryptoboxSlide;
+    /** A delta used when backing out of the glyph pile. Helps with minimizing encoder error. */
     protected int pileDelta;
-//    protected double distanceFromWall;
-//    protected int slideToEdge;
+    /** In terms of cm, how far away the rear of the robot is from the field wall. */
+    protected double distanceFromWall;
+    /** In terms of cm, how far away the robot is from the edge of the cryptobox. */
+    protected int slideToEdge;
+    /**
+     * useExtendedGyro, if True, will be used in the gyro-controlled turn and drive methods to take
+     * the navX +/- 180 degree gyro and read it like a 360 degree gyro. This lets the robot drive at
+     * or turn to a heading of +/- 180 degrees without erroring out.
+     *
+     * If False, useExtendedGyro will not be used in the turn and drive methods and the hyro will be read normally.
+     *  */
     protected boolean useExtendedGyro;
 
     /** A string that indicates which side of the field the robot is on ("blue" or "red") */
@@ -91,10 +103,10 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
     //////////////////////////////////////////////////////////////////////////////////
     /** Contains the state machine which contains the structure for each move the robot will take
-     * during autonomous. In the cases where the robot will drive somewhere, there are no values
-     * hard-coded in as these values will change depending on what quadrant of the field the robot
-     * is starting in. Instead the Autonomous class sources the quadrant-specific movement values
-     * from field position-dependant child classes. */
+     * during autonomous. In the cases where the robot will drive or turn, there are no
+     * quadrant-specific values hard-coded in as these values will change depending on what quadrant
+     * of the field the robot is starting in. Instead the Autonomous class sources the
+     * quadrant-specific movement and turn values from field position-dependant child classes. */
     @Override public void loop ()
     {
         boolean result = false;

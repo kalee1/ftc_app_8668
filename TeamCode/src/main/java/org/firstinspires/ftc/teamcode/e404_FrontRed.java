@@ -28,11 +28,8 @@ public class e404_FrontRed extends Error404AutonomousFront
         cryptoboxDriveDistance = 280;
         backToCryptobox=470;
         driveToPile=313;
-        cryptoboxSlide=0;
-        slideBackToCryptobox=0;
 
         //turns
-        slideAwayFromTheCryptobox=0;
         turnToPile=85;
         turnToCryptobox=-85;
 

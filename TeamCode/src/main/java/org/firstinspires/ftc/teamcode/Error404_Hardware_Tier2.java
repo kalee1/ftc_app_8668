@@ -316,12 +316,12 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
     /**
-     * a method used for sliding sideways
+     * A method used for sliding sideways
      *
-     * @param mode  a String that is the motors' mode
-     * @param power  a Double that is the power
-     * @param direction  a String that is the direction of movement
-     * @param position  an Int that is the motors' position on the robot
+     * @param mode  Sets the motor's mode (run with encoders or un without encoders).
+     * @param power  The power at which the robot will drive.
+     * @param direction  Tells the robot which direction the motors will be turning (forward or reverse).
+     * @param position  Tells the robot which motors are where on the robot.
      */
     //slides sideways until the wheels reach the desired encoder count
     public void slide_sideways(String mode, double power, String direction, int position){
@@ -362,8 +362,15 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     }
 
 
-    public void driveStraightGyro(double power, double sensitivity, double target, boolean extGyro ){
-
+    /**
+     *
+     * @param power  Sets what power the robot starts out at.
+     * @param sensitivity  Sets how sharply the robot responds to error.
+     * @param target  Sets the desired heading or angle.
+     * @param extGyro  Lets the +/- 180 degree gyro be read like a full 360 degree gyro.
+     * */
+    public void driveStraightGyro(double power, double sensitivity, double target, boolean extGyro )
+    {
         if(power>0) {
             set_direction(leftFront, "f");
             set_direction(leftRear, "r");

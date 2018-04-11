@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
  /**
  *Error404AutonomousFront extends <code>Error404_Hardware_Tier2</code> and contains the state
-  * machine that steps through each step in the autonomous mission.
+  * machine that steps through each step in the front autonomous mission.
   *
   * This year's field presents a unique challenge for autonomous. The field is set up so that there
   * are four unique starting positions and your robot has to be able to start from any of them. We
   * could have four individual programs (one for each quadrant) but this is clumsy and opens us up
-  * to bugs. Instead what we did is we made one main autonomous class that holds the framework code
-  * that is the same for all four quadrants and then we have four quadrant-specific child classes
-  * that supply the quadrant-specific movement vaules.
+  * to bugs. Instead what we did, is we made two main autonomous classes that hold the framework code
+  * for the front two qudrants and the rear two quadrants. Then we have four quadrant-specific child
+  * classes that supply the quadrant-specific movement vaules.
  *
  * @author Team 8668
  * @see Error404_Hardware_Tier2
@@ -20,22 +20,29 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
     //////////////////////////////////////////////////////////////////////////////////
     /** This int variable sets the starting case value for the state machine (which step in the sequence to start with -- i.e. the first one or case 0) */
     private int state = 0;
+    /** This int variable sets the starting encoder values for the motors. */
     private int encoder=0;
+    /** This double initializes a timer that can be used during the autonomous. */
     private double timer=0;
-    /** Initializing the method used for driving from the balancing stone to the cryptobox. */
+    /** The distance from the balancing stone to the cryptobox. */
     protected int cryptoboxDriveDistance;
-    /** Initializing the method used for turning the correct side of the robot to face the cryptobox. */
+    /** The angle on the gyro needed to turn to face the cryptobox. */
     protected int turnToCryptobox;
-    /** Initializing the method used for sliding to align on a particular column of the cryptobox. */
-    protected int cryptoboxSlide;
-    /** A string that indicates which side of the field the robot is on ("blue" or "red") */
-    protected int slideAwayFromTheCryptobox;
+    /** The angle on the gyro needed to turn away from the cryptobox to face the glyph pile. */
     protected int turnToPile;
+    /** The distance needed to drive from the cryptobox to the glyph pile. */
     protected int driveToPile;
+    /** The distance needed to drive from the glyph pile back to the cryptobox. */
     protected int backToCryptobox;
-    protected int slideBackToCryptobox;
+    /**
+     * useExtendedGyro, if True, will be used in the gyro-controlled turn and drive methods to take
+     * the navX +/- 180 degree gyro and read it like a 360 degree gyro. This lets the robot drive at
+     * or turn to a heading of +/- 180 degrees without erroring out.
+     *
+     * If False, useExtendedGyro will not be used in the turn and drive methods and the hyro will be read normally.
+     *  */
     protected boolean useExtendedGyro;
-
+    /** A string that indicates which side of the field the robot is on ("blue" or "red") */
     private String fieldSide;
     /** A string that indicates side location on the field ("front" or "back"). */
     private String sideLocation;
@@ -79,10 +86,10 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
     //////////////////////////////////////////////////////////////////////////////////
     /** Contains the state machine which contains the structure for each move the robot will take
-     * during autonomous. In the cases where the robot will drive somewhere, there are no values
-     * hard-coded in as these values will change depending on what quadrant of the field the robot
-     * is starting in. Instead the Autonomous class sources the quadrant-specific movement values
-     * from field position-dependant child classes. */
+     * during autonomous. In the cases where the robot will drive or turn, there are no
+     * quadrant-specific values hard-coded in as these values will change depending on what quadrant
+     * of the field the robot is starting in. Instead the Autonomous class sources the
+     * quadrant-specific movement and turn values from field position-dependant child classes. */
     @Override public void loop ()
     {
         switch (state)
@@ -452,7 +459,6 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Cryptobox Drive Distance: ", cryptoboxDriveDistance);
-        telemetry.addData("7. Cryptobox Slide: ", cryptoboxSlide);
         telemetry.addData("Pattern: ", readCryptograph());
 
 

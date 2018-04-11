@@ -48,12 +48,14 @@ public class team8668Teleop extends OpMode {
     /**
      * Actaully just an encoder counter attached to the axle the glyphter servo spins.
      * This encoder counter lets us move a servo with encoder counts like a DC motor.
+     * -- Not used --
      * */
     DcMotor encoderMotor;
 
 
     /** The arm servo raises and lowers the jewel arm. */
     Servo arm;
+    /** Used to push a glyph out of the robot and into the cryptobox -- not used. */
     Servo glyph;
     /** The swivel servo swings the jewel sword back and forth to knock off the glyph. */
     Servo swivel;
@@ -63,10 +65,11 @@ public class team8668Teleop extends OpMode {
     Servo elbow;
     /** The hand servo controls the claw that grabs the relic. */
     Servo hand;
-
-    /** The glyphter servo raises and lowers the glyph lifter so that glyphs can be deployed at any of the four levels. */
+    /** Dumps the glyph ramp back. */
     Servo glyphter;
+    /** Spins the tracks on the glyph tray, spitting the glyph off -- not used. */
     Servo glyphTrayTilt;
+    /** Moves the glyph tray up and down -- not used. */
     Servo glyphTrayMove;
 
     /**This servo in combination with the leftFinger servo stick out two flexible fingers that aid
@@ -107,11 +110,11 @@ public class team8668Teleop extends OpMode {
     double elbowPos=1;
     /** Setting the start position of the shoulder servo. */
     double shoulderPos=0.95;
-
+    /** Setting the starting position for the swivel servo. */
     double swivelPos =0.522;
     /** Setting the start position for the hand servo. */
     double handPos=0.7;
-    /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. */
+    /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. -- Not used -- */
     double glyphterSpeed=0.5;
     /** Setting the start position for the glyphTrayTilt servo. */
     double tiltPosition=0.05;
@@ -190,6 +193,7 @@ public class team8668Teleop extends OpMode {
 
 
     }
+    /**  The start method. The gyro starts as soon as the class is selected on the driver controller. */
     @Override
     public void start(){
 

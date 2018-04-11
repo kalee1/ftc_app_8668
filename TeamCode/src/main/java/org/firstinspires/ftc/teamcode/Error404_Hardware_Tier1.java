@@ -72,15 +72,22 @@ public class Error404_Hardware_Tier1 extends OpMode {
     protected Servo elbow;
     /** The hand servo opens and closes the relic claw. */
     protected Servo hand;
+    /** The glyphter servo flips the glyph tray, dumping glyphs into the cryptobox. */
     protected Servo glyphter;
 
     /** The Rev Expansion Hub's own gryo and should only be used during initialization. */
     protected IntegratingGyroscope gyro;
     /** The navxMicro is a gyro and is used to record the robot's heading. */
     protected NavxMicroNavigationSensor navxMicro;
-    /** The camera is used to differentiate colors during the jewel mission. */
+    /**
+     * The camera sensor is a CMUcam5 Pixy camer that is used to differentiate colors during the
+     * jewel mission.
+     * */
     protected AnalogInput camera;
-    protected ModernRoboticsI2cRangeSensor topRange;
+    /**
+     * The bottoRange sensor is a Modern Robotics range sensor that gives the robot the ability to
+     * tell its distance from an object located behind it.
+     * */
     protected ModernRoboticsI2cRangeSensor bottomRange;
 
 
@@ -92,15 +99,15 @@ public class Error404_Hardware_Tier1 extends OpMode {
     /** The Vuforia system uses this. */
     VuforiaLocalizer vuforia;
 
-    /** The Vuforia system uses this. */
+    /** The Vuforia system uses this with identification of field elements. */
     VuforiaTrackables relicTrackables;
-    /** The Vuforia system uses this. */
+    /** The Vuforia system uses this with identification of field elements. */
     VuforiaTrackable relicTemplate;
-    /** The Vuforia system uses this. */
+    /** The Vuforia system uses this with identification of field elements. */
     int cameraMonitorViewId;
     /** The Vuforia system uses this. */
     VuforiaLocalizer.Parameters parameters;
-    /** The Vuforia system uses this. */
+    /** The Vuforia system uses this with identification of the pictographs. */
     RelicRecoveryVuMark vuMark;
 
     /**
@@ -108,6 +115,9 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * this method initializes the hardware found in the <code>HardwareMap</code>.
      * If the device cannot be found in the config file, an error message
      * shows on the driver station telemetry.
+     *
+     * This lets the driver verify that everything he thinks should be plugged in and in the config.
+     * file is.
      */
     @Override public void init() {
         /////////////////////////////////////////////////////////////////
@@ -167,12 +177,6 @@ public class Error404_Hardware_Tier1 extends OpMode {
             glyphter = null;
         }
         try {
-            topRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "topRange");
-        } catch (Exception p_exeception) {
-            telemetry.addData("topRange not found in config file", 0);
-            topRange = null;
-        }
-        try {
             bottomRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "bottomRange");
         } catch (Exception p_exeception) {
             telemetry.addData("bottomRange not found in config file", 0);
@@ -224,14 +228,8 @@ public class Error404_Hardware_Tier1 extends OpMode {
             glyphter = null;
         }
 
-        //RGB.setI2cAddress(I2cAddr.create8bit(0x3C));       //30 is the decimal conversion from 7 bit hexadecimal value 0x1e converted from 8 bit hexadecimal 0x3c
-        //beacon.setI2cAddress(I2cAddr.create8bit(0x2C));
-        //beacon2.setI2cAddress(I2cAddr.create8bit(0x5C));
-        //RGB.enableLed(false); //not sure why these are needed here.  Seems to help reset the LEDS so the next enable commands are obeyed.
-        //beacon.enableLed(false);
-        //beacon2.enableLed(false);
-
     }
+
 
     /**
      * Detects cryptograph pattern.
@@ -258,7 +256,10 @@ public class Error404_Hardware_Tier1 extends OpMode {
         return null;
     }
 
-    /** When the driver hits start sets up Vuforia. */
+    /**
+     * When the driver hits start on the driver station phone, Vuforia is initialized and begins
+     * scanning for objects it recognizes.
+     * */
     public void start() {
         cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -421,16 +422,18 @@ public class Error404_Hardware_Tier1 extends OpMode {
      *
      * @return  the robtot's heading as an Int
      */
-    public int getHeading(){
-            return (int)getHeadingDbl();
-        }
+    public int getHeading()
+    {
+        return (int)getHeadingDbl();
+    }
 
     /**
      * Used to get the robot's heading.
      *
      * @return  the robtot's heading as an Int
      */
-    public double getHeadingDbl(){
+    public double getHeadingDbl()
+    {
         Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
     }
@@ -450,7 +453,8 @@ public class Error404_Hardware_Tier1 extends OpMode {
      * @param power  a double the is the power to be set to the motor
      * @param motor  The motor whose power will be set.
      */
-    public void set_power(double power, DcMotor motor){
+    public void set_power(double power, DcMotor motor)
+    {
         if (motor != null) {
             motor.setPower(power);
         }
