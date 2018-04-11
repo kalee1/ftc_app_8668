@@ -27,8 +27,8 @@ public class e404_RearRed extends Error404AutonomousRear
         //Drive distance variables
         glyphPileSlideDistance = 375;
         driveIntoPile = 250;
-        cryptoboxDriveDistance = 480;
-        cryptoboxSlide=-270;
+        cryptoboxDriveDistance = 375;
+        cryptoboxSlide=-305;
         useExtendedGyro = true;
 
         //Turn angle and range variables
@@ -56,17 +56,17 @@ public class e404_RearRed extends Error404AutonomousRear
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxSlide = -180;
+            cryptoboxSlide = -410;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxSlide=-520;
+            cryptoboxSlide=-190;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxSlide=-380;
+            cryptoboxSlide=-305;
             result = true;
         }
         return result;

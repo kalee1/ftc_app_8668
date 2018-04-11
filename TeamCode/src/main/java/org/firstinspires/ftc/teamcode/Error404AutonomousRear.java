@@ -156,202 +156,64 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 6:  //Read Pictograph
                 theColumn = readCryptograph();
-                if( updateFromVuforia( theColumn ) )
-                {
-                    state= 7;
-                    setMultipleDirections("slide", "left");
+                if( updateFromVuforia( theColumn ) ) {
+                    state = 13;
+                    if (fieldSide.equals("BLUE")) {
+                        setMultipleDirections("straight", "reverse");
+                    }
+                    if (fieldSide.equals("RED")) {
+                        setMultipleDirections("straight", "forward");
+                    }
                 }
-
-
                 if(((int)(getRuntime()-timer))>2)
                 {
                     updateFromVuforia("CENTER");
-                    setMultipleDirections("slide", "left");
-                    state=7;
-                }
-                break;
-
-
-            case 7:  // Slide to Glyph Pile
-                if(glyphPileSlideDistance!=0)
-                {
-                    if(glyphPileSlideDistance>0)
-                    {
-                        slideSidewaysCombo(-0.7);
-                    }
-                    else
-                    {
-                        slideSidewaysCombo(0.7);
-                    }
-
-                    if(leftFront.getCurrentPosition()-encoder>Math.abs(glyphPileSlideDistance))
-                    {
-                        stopEverything();
-                        setMultipleDirections("turn", "left");
-                        state++;
-                        encoder=leftFront.getCurrentPosition();
-                        timer=getRuntime();
-                    }
-                }
-                else
-                {
-                    setMultipleDirections("turn", "left");
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                    timer=getRuntime();
-                }
-                break;
-
-            case 8:  //Face Glyph Pile
-                if(turnToPile!=0)
-                {
-                    if (pointTurnGyro(turnToPile, useExtendedGyro) || getRuntime() - timer > 2.5 )
-                    {
-                        state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
-                        encoder = leftFront.getCurrentPosition();
-                        timer = getRuntime();
-                    }
-                }
-                else
-                {
-                    setMultipleDirections("straight", "forward");
-                    state++;
-                    encoder = leftFront.getCurrentPosition();
-                    timer = getRuntime();
-                }
-                break;
-
-            case 9:  // Drive Into GLyph Pile
-                glyphIntake("in");
-
-                if(driveIntoPile!=0)
-                {
-                    if(driveIntoPile>0)
-                    {
-                        driveStraightCombo(0.9 );
-                    }
-                    else
-                    {
-                        driveStraightCombo(-0.9 );
-                    }
-
-                    if( getRuntime() - timer > 1.25 )
-                    {
-                        stopEverything();
-                        setMultipleDirections("straight", "forward");
-                        state++;
-                        encoder=leftFront.getCurrentPosition();
-                        timer=getRuntime();
-                    }
-                }
-                else
-                {
-                    setMultipleDirections("straight", "forward");
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                    timer=getRuntime();
-                }
-                break;
-
-            case 10:  //Collect Glyphs From Pile
-                driveStraightCombo(0.5);
-                if(getRuntime()-timer>2)
-                {
-                    stopEverything();
-                    pileDelta = Math.abs(leftFront.getCurrentPosition()-encoder);
-                    setMultipleDirections("straight", "reverse");
-                    encoder = leftFront.getCurrentPosition();
-                    state++;
-                }
-                break;
-
-            case 11:  // Back up from glyph pile
-
-                    driveStraightCombo(-0.7);
-                    if(Math.abs(leftFront.getCurrentPosition() - encoder) > Math.abs(pileDelta))
-                    {
-                        stopEverything();
-                        if(fieldSide.equals("RED")){
-                            setMultipleDirections("turn", "left");
-                        }
-                        else{
-                            setMultipleDirections("turn", "right");
-                        }
-                        state++;
-                        encoder=leftFront.getCurrentPosition();
-                        timer=getRuntime();
-                    }
-                break;
-
-
-            case 12:  //Orient on Cryptobox
-                if(fieldSide.equals("RED")){
-                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2.5 )
-                    {
-                        state++;
-                        stopEverything();
+                    if (fieldSide.equals("BLUE")) {
                         setMultipleDirections("straight", "reverse");
-                        encoder = leftFront.getCurrentPosition();
                     }
-                }
-                else{
-                    if (pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2.5 )
-                    {
-                        state++;
-                        stopEverything();
-                        setMultipleDirections("straight", "reverse");
-                        encoder = leftFront.getCurrentPosition();
+                    if (fieldSide.equals("RED")) {
+                        setMultipleDirections("straight", "forward");
                     }
+                    state=13;
                 }
                 break;
 
             case 13:  // Drive To Cryptobox
-
-                    driveStraightGyro(-0.9, 40, turnToCryptobox, useExtendedGyro);
-                    //driveStraightCombo( -0.7);
-                    if( leftFront.getCurrentPosition() - encoder > cryptoboxDriveDistance )  //need to make this generic
-                    {
+                if (fieldSide.equals("BLUE")) {
+                    driveStraightGyro(-0.8, 40, 0, useExtendedGyro);
+                }
+                if (fieldSide.equals("RED")) {
+                    driveStraightGyro(0.8, 40, 0, useExtendedGyro);
+                }
+                if( Math.abs(leftFront.getCurrentPosition() - encoder) > Math.abs(cryptoboxDriveDistance) )  //need to make this generic
+                {
                         stopEverything();
                         if(fieldSide.equals("RED")){
                             setMultipleDirections("slide", "left");
                         }
                         else{
-                            setMultipleDirections("slide", "right");
+                            setMultipleDirections("turn", "right");
                         }
-                        state = 15;
+                        state = 14;
                         encoder=leftFront.getCurrentPosition();
-                    }
+                }
                 break;
 
-//            case 14:  // Slide to Cryptobox
-//                if(slideToEdge!=0)
-//                {
-//                    if(slideToEdge>0)
-//                    {
-//                        slideSidewaysCombo(0.3);
-//                    }
-//                    else
-//                    {
-//                        slideSidewaysCombo(-0.3);
-//                    }
-//
-//                    if( (result = distanceCheckTop.checkRange(bottomRange.getDistance(DistanceUnit.CM) ) ) )
-//                    {
-//                        stopEverything();
-//                        setMultipleDirections("slide", "right");
-//                        state++;
-//                        encoder=leftFront.getCurrentPosition();
-//                    }
-//                }
-//                else
-//                {
-//                    setMultipleDirections("slide", "right");
-//                    state++;
-//                    encoder=leftFront.getCurrentPosition();
-//                }
-//                break;
+            case 14:  // face Cryptobox
+                if(fieldSide.equals("RED")) {
+                    state = 15;
+                    break;
+                }
+                if(fieldSide.equals("BLUE")) {
+                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro))
+                    {
+                        state = 15;
+                        stopEverything();
+                        setMultipleDirections("slide", "right");
+                        encoder = leftFront.getCurrentPosition();
+                    }
+                }
+                break;
 
             case 15:  // Line up on a cryptobox column
                 if(cryptoboxSlide!=0)
@@ -368,72 +230,74 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxSlide))
                     {
                         stopEverything();
-                        setMultipleDirections("straight", "reverse");
+                        setMultipleDirections("straight", "forward");
                         state++;
+                        timer=getRuntime();
                         encoder=leftFront.getCurrentPosition();
                     }
                 }
                 else
                 {
-                    setMultipleDirections("straight", "reverse");
+                    setMultipleDirections("straight", "forward");
                     state++;
+                    timer=getRuntime();
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 16:  //Drive into Cryptobox
-                driveStraightCombo(-0.6);
-                if(leftFront.getCurrentPosition()-encoder>60)
+                driveStraightCombo(0.6);
+                if(leftFront.getCurrentPosition()-encoder>70 || ((int)(getRuntime()-timer))>1.3)
                 {
                     stopEverything();
-                    setMultipleDirections("straight", "forward");
-                    timer=getRuntime();
+                    setMultipleDirections("straight", "reverse");
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 17:  //Deploy Glyph
-                glyphter.setPosition(0.23);
+                glyphIntake("out");
+                timer=getRuntime();
                 state++;
                 break;
 
             case 18:  //Wait
-                if(getRuntime()-timer>2.5)
+                if(getRuntime()-timer>0.8)
                 {
-                    glyphter.setPosition(.05);
                     state++;
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;
 
             case 19:  // Back Up
-                driveStraightCombo(0.7);
-                if(leftFront.getCurrentPosition()-encoder>60)
-                {
-                    stopEverything();
-                    setMultipleDirections("straight", "reverse");
-                    state++;
-                    encoder=leftFront.getCurrentPosition();
-                    glyphIntake("stop");
-                }
-                break;
-            case 20: // Push Glyph in
-                driveStraightCombo(-0.5);
+                driveStraightCombo(-0.7);
                 if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
                     state++;
                     encoder=leftFront.getCurrentPosition();
+                    glyphIntake("outSlow");
+                }
+                break;
+            case 20: // Push Glyph in
+                driveStraightCombo(0.5);
+                if(leftFront.getCurrentPosition()-encoder>60)
+                {
+                    stopEverything();
+                    setMultipleDirections("straight", "reverse");
+                    state++;
+                    encoder=leftFront.getCurrentPosition();
                 }
                 break;
             case 21:  //drive away from cryptobox into safe zone
-                driveStraightCombo(0.5);
+                driveStraightCombo(-0.5);
                 if(leftFront.getCurrentPosition()-encoder>50)
                 {
                     stopEverything();
                     state++;
+                    glyphIntake("stop");
                     encoder=leftFront.getCurrentPosition();
                 }
                 break;

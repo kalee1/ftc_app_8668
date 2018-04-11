@@ -48,7 +48,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      *
      * @param inOrOut  A string that determines the motor powers and direction. */
     public void glyphIntake(String inOrOut){
-        if(inOrOut.toLowerCase().equals("outSlow")){
+        if(inOrOut.toLowerCase().equals("outslow")){
             rightGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftGlyph.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightGlyph.setDirection(FORWARD);
