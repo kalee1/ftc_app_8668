@@ -42,25 +42,27 @@ public class RangeCheck {
      * */
     public boolean checkRange (double rangeNum)
     {
-        if ( rangeNum < upperLimit && rangeNum > lowerLimit)
+        boolean result = false;
+
+        if ( rangeNum != Double.MAX_VALUE )
         {
-            length = 0;
-        }
-        else
-        {
-            length++;
+            if (rangeNum < upperLimit && rangeNum > lowerLimit) {
+                length = 0;
+            } else {
+                length++;
+            }
+
+            if (length >= lengthLimit)
+            {
+                result =  true;
+            }
+            else
+            {
+                result = false;
+            }
         }
 
-        if(length >= lengthLimit)
-        {
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return result;
     }
 
     public int getLength()
