@@ -260,9 +260,10 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 15: //Back away from the cryptobox
                 driveStraightCombo(-0.9);
-                if(leftFront.getCurrentPosition()-encoder>94)
+                if(leftFront.getCurrentPosition()-encoder>80)
                 {
                     stopEverything();
+                    glyphIntake("stop");
                     if(fieldSide.equals("BLUE")){
                         setMultipleDirections("turn", "left");
                     }

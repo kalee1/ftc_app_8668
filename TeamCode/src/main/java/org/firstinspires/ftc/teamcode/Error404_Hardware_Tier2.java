@@ -148,13 +148,13 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
         }
         double motor_power = 0;
 
-        if ( Math.abs( targetHeading ) > 180.0 )
-        {
-            // Reject any targetHeadings outside of the allowable rage of the gyro (+/- 180 degrees)
-            done = true;
-        }
-        else
-        {
+//        if ( Math.abs( targetHeading ) > 180.0 )
+//        {
+//            // Reject any targetHeadings outside of the allowable rage of the gyro (+/- 180 degrees)
+//            done = true;
+//        }
+//        else
+//        {
             motor_power = turnControl.getOutput( currentHeading, targetHeading );
             pointTurnCombo( -1*motor_power );
 
@@ -162,7 +162,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             {
                 done = true;
             }
-        }
+        //}
 
         return done;
     }

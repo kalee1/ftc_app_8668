@@ -205,7 +205,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     break;
                 }
                 if(fieldSide.equals("BLUE")) {
-                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro))
+                    if ( pointTurnGyro(turnToCryptobox, true))
                     {
                         state = 15;
                         stopEverything();
@@ -272,7 +272,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 19:  // Back Up
                 driveStraightCombo(-0.7);
-                if(leftFront.getCurrentPosition()-encoder>60)
+                if(leftFront.getCurrentPosition()-encoder>70)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -283,7 +283,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 20: // Push Glyph in
                 driveStraightCombo(0.5);
-                if(leftFront.getCurrentPosition()-encoder>60)
+                if(leftFront.getCurrentPosition()-encoder>40)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
@@ -293,7 +293,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 21:  //drive away from cryptobox into safe zone
                 driveStraightCombo(-0.5);
-                if(leftFront.getCurrentPosition()-encoder>50)
+                if(leftFront.getCurrentPosition()-encoder>40)
                 {
                     stopEverything();
                     state++;
@@ -313,6 +313,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
         telemetry.addData("4. Left Front Position: ", leftFront.getCurrentPosition());
         telemetry.addData("5. Delta Position: ", encoder);
         telemetry.addData("6. Pattern: ", theColumn );
+        telemetry.addData("7. slide distance ", cryptoboxSlide );
 
         //        telemetry.addData("6. Bottom wall Distance: ", bottomRange.getDistance(DistanceUnit.CM) );
 //        telemetry.addData("8. rangeCheck result: ", result);

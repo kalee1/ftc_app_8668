@@ -26,7 +26,7 @@ public class e404_BlueFront extends Error404AutonomousFront
     {
         cryptoboxDriveDistance = -503;
         cryptoboxSlide=0;
-        turnToCryptobox=-85;
+        turnToCryptobox=-90;
         slideAwayFromTheCryptobox=0;
         turnToPile=85;
         driveToPile=313;
@@ -53,17 +53,17 @@ public class e404_BlueFront extends Error404AutonomousFront
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = -420;
+            cryptoboxDriveDistance = -565;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=-619;
+            cryptoboxDriveDistance=-350;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=-503;
+            cryptoboxDriveDistance=-480;
             result = true;
         }
         return result;
