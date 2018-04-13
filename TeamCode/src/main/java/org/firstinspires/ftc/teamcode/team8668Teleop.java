@@ -34,60 +34,60 @@ import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODE
 public class team8668Teleop extends OpMode {
 
     /** The front right drive motor on the robot. */
-    DcMotor rightFront;
+    protected DcMotor rightFront;
     /** The front left drive motor on the robot. */
-    DcMotor leftFront;
+    protected DcMotor leftFront;
     /** The right rear drive motor on the robot. */
-    DcMotor rightRear;
+    protected DcMotor rightRear;
     /** The left rear drive motor on the robot. */
-    DcMotor leftRear;
+    protected DcMotor leftRear;
     /** The left glyph intake motor -- used in conjunction with the rightGlyph motor to suck in glyphs. */
-    DcMotor leftGlyph;
+    protected DcMotor leftGlyph;
     /** The right glyph intake motor -- used in conjunction with the leftGlyph motor to suck in glyphs. */
-    DcMotor rightGlyph;
+    protected DcMotor rightGlyph;
     /**
      * Actaully just an encoder counter attached to the axle the glyphter servo spins.
      * This encoder counter lets us move a servo with encoder counts like a DC motor.
      * -- Not used --
      * */
-    DcMotor encoderMotor;
+    protected DcMotor encoderMotor;
 
 
     /** The arm servo raises and lowers the jewel arm. */
-    Servo arm;
+    protected Servo arm;
     /** Used to push a glyph out of the robot and into the cryptobox -- not used. */
-    Servo glyph;
+    protected Servo glyph;
     /** The swivel servo swings the jewel sword back and forth to knock off the glyph. */
-    Servo swivel;
+    protected Servo swivel;
     /** The shoulder servo is a high-torque servo that extends the relic arm up and over the field wall. */
-    Servo shoulder;
+    protected Servo shoulder;
     /** The elbow servo raises and lowers the relic for extra flexibility when deploying the relic. */
-    Servo elbow;
+    protected Servo elbow;
     /** The hand servo controls the claw that grabs the relic. */
-    Servo hand;
+    protected Servo hand;
     /** Dumps the glyph ramp back. */
-    Servo glyphter;
+    protected Servo glyphter;
     /** Spins the tracks on the glyph tray, spitting the glyph off -- not used. */
-    Servo glyphTrayTilt;
+    protected Servo glyphTrayTilt;
     /** Moves the glyph tray up and down -- not used. */
-    Servo glyphTrayMove;
+    protected Servo glyphTrayMove;
 
     /**This servo in combination with the leftFinger servo stick out two flexible fingers that aid
      * the drivers with aligning the robot on a column when deploying glyphs. */
-    Servo rightFinger;
+    protected Servo rightFinger;
     /**This servo in combination with the rightFinger servo stick out two flexible fingers that aid
      * the drivers with aligning the robot on a column when deploying glyphs. */
-    Servo leftFinger;
+    protected Servo leftFinger;
     protected IntegratingGyroscope gyro;
     /** The navxMicro is a gyro and is used to record the robot's heading. */
     protected NavxMicroNavigationSensor navxMicro;
 
     /** Moving average window used to filter the leftStick_y value. */
-    MovingAverage leftStick_y = new MovingAverage(6);
+    protected MovingAverage leftStick_y = new MovingAverage(6);
     /** Moving average window used to filter the leftStick_x value. */
-    MovingAverage leftStick_x = new MovingAverage(6);
+    protected MovingAverage leftStick_x = new MovingAverage(6);
     /** Moving average window used to filter the rightStick_x value. */
-    MovingAverage rightStick_x = new MovingAverage(6);
+    protected  MovingAverage rightStick_x = new MovingAverage(6);
 
 
     /**
@@ -95,10 +95,10 @@ public class team8668Teleop extends OpMode {
      * glyph lifter from going down too far. The bottom limit switch also acts as
      * the home position for the glyph lifter.
      * */
-    DigitalChannel bottom;
+    protected DigitalChannel bottom;
     /** A limit switch on the top of the glyph lifter. It acts as a hard stop to prevent the
      * glyph lifter from going up too far. */
-    DigitalChannel top;
+    protected DigitalChannel top;
 
     float launchspeed1;
     double powerval;
@@ -107,19 +107,19 @@ public class team8668Teleop extends OpMode {
     double incrementDir=0;
 
     /** Setting the start position of the elbow servo. */
-    double elbowPos=1;
+    protected double elbowPos=1;
     /** Setting the start position of the shoulder servo. */
-    double shoulderPos=0.95;
+    protected double shoulderPos=0.95;
     /** Setting the starting position for the swivel servo. */
-    double swivelPos =0.522;
+    protected double swivelPos =0.522;
     /** Setting the start position for the hand servo. */
-    double handPos=0.7;
+    protected double handPos=0.7;
     /** Setting the starting speed for the glyph lifter. For a servo like the glyphter servo, 0.5 is stopped. -- Not used -- */
-    double glyphterSpeed=0.5;
+    protected double glyphterSpeed=0.5;
     /** Setting the start position for the glyphTrayTilt servo. */
-    double tiltPosition=0.05;
+    protected double tiltPosition=0.05;
     /** Setting the start position for the glyphTrayMove servo. */
-    double trayMovePosition=0.5;
+    protected double trayMovePosition=0.5;
 
     boolean fingersOut = true;
 

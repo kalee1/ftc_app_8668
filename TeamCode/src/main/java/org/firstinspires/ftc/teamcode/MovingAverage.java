@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author  error404
  *
  */
-class MovingAverage
+public class MovingAverage
 {
     /**
 	 * Use a Vector class to implement the window of values to average.
@@ -36,7 +36,6 @@ class MovingAverage
  	 */
     public MovingAverage(int theSize)
 	{
-        assert theSize > 0 : "Window size must be a positive integer";
         mySize = theSize;
 		mySum = 0;
     }

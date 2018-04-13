@@ -134,6 +134,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
      * Uses PID control to turn to a particular heading.
      *
      * @param targetHeading specifies the direction the robot needs to face
+     * @return returns a boolean on whether or not the gyro has reached the desired heading.
      */
     public boolean pointTurnGyro( double targetHeading, boolean extendedGyro )
     {
@@ -363,6 +364,7 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
 
 
     /**
+     * Uses the gyro to hold the robot to a target heading when driving. Works driving forward or in reverse.
      *
      * @param power  Sets what power the robot starts out at.
      * @param sensitivity  Sets how sharply the robot responds to error.

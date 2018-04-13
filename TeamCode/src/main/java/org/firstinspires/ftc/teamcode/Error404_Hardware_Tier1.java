@@ -430,7 +430,7 @@ public class Error404_Hardware_Tier1 extends OpMode {
     /**
      * Used to get the robot's heading.
      *
-     * @return  the robtot's heading as an Int
+     * @return  the robtot's heading as an double
      */
     public double getHeadingDbl()
     {

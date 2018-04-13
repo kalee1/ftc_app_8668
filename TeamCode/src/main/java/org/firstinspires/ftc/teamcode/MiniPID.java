@@ -8,7 +8,7 @@ package org.firstinspires.ftc.teamcode;
 *   output= pid.getOutput(sensorvalue,target); <br>
 * }
 * 
-* @see http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction
+* @see "brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction"
 */
 public class MiniPID
 {
@@ -96,7 +96,6 @@ public class MiniPID
 	 * Typically tuned second for "Position" based modes, and third for "Rate" or continuous based modes. <br>
 	 * Affects output through <b>output+=previous_errors*Igain ;previous_errors+=current_error</b>
 	 * 
-	 * @see {@link #setMaxIOutput(double) setMaxIOutput} for how to restrict
 	 *
 	 * @param i New gain value for the Integral term
 	 */
@@ -118,10 +117,10 @@ public class MiniPID
 	/**
 	 * Changes the D parameter <br>
 	 * This has two primary effects:
-	 * <list>
-	 * <li> Adds a "startup kick" and speeds up system response during setpoint changes
-	 * <li> Adds "drag" and slows the system when moving toward the target
-	 * </list>
+	 * <ul>
+	 * <li> Adds a "startup kick" and speeds up system response during setpoint changes</li>
+	 * <li> Adds "drag" and slows the system when moving toward the target</li>
+	 * </ul>
 	 * A small D value can be useful for both improving response times, and preventing overshoot.
 	 * However, in many systems a large D value will cause significant instability, particularly 
 	 * for large setpoint changes.
@@ -183,7 +182,7 @@ public class MiniPID
 	/**
 	 * Set the maximum output value contributed by the I component of the system
 	 * This can be used to prevent large windup issues and make tuning simpler
-	 * @param maximum. Units are the same as the expected output value
+	 * @param maximum  Units are the same as the expected output value
 	 */
 	public void setMaxIOutput(double maximum){
 		// Internally maxError and Izone are similar, but scaled for different purposes. 
@@ -244,7 +243,7 @@ public class MiniPID
 	 * Configure setpoint for the PID calculations<br>
 	 * This represents the target for the PID system's, such as a 
 	 * position, velocity, or angle. <br>
-	 * @see MiniPID#getOutput(actual) <br>
+	 * @see MiniPID#getOutput( ) <br>
 	 * @param setpoint
 	 */
 	public void setSetpoint(double setpoint){
@@ -367,9 +366,7 @@ public class MiniPID
 	/**
 	 * Calculate the output value for the current PID cycle.<br>
 	 * In one parameter mode, the last configured setpoint will be used.<br>
-	 * @see MiniPID#setSetpoint()
 	 * @param actual The monitored value, typically as a sensor input.
-	 * @param setpoint The target value for the system
 	 * @return calculated output value for driving the system
 	 */
 	public double getOutput(double actual){
@@ -396,7 +393,7 @@ public class MiniPID
      * Can be very useful for fast-reacting control loops, such as ones 
      * with large P or D values and feed-forward systems.
      * 
-	 * @param rate, with units being the same as the output
+	 * @param rate with units being the same as the output
 	 */
 	public void setOutputRampRate(double rate){
 		outputRampRate=rate;
@@ -407,7 +404,7 @@ public class MiniPID
 	 * <br>Can simplify tuning by helping tuning over a small range applies to a much larger range. 
 	 * <br>This limits the reactivity of P term, and restricts impact of large D term
 	 * during large setpoint adjustments. Increases lag and I term if range is too small.
-	 * @param range, with units being the same as the expected sensor range. 
+	 * @param range with units being the same as the expected sensor range.
 	 */
 	public void setSetpointRange(double range){
 		setpointRange=range;
@@ -422,7 +419,7 @@ public class MiniPID
 	 * values and increase I term overshoot.<br>
 	 * Uses an exponential wieghted rolling sum filter, according to a simple <br>
 	 * <pre>output*(1-strength)*sum(0..n){output*strength^n}</pre> algorithm.
-	 * @param output valid between [0..1), meaning [current output only.. historical output only)
+	 * @param strength valid between [0..1), meaning [current output only.. historical output only)
 	 */
 	public void setOutputFilter(double strength){
 		if(strength==0 || bounded(strength,0,1)){
