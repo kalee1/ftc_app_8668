@@ -7,7 +7,10 @@ package org.firstinspires.ftc.teamcode;
 * ...looping code...{ <br>
 *   output= pid.getOutput(sensorvalue,target); <br>
 * }
-* 
+ *
+ * Error404 would like to thank tekdemo for putting this class on gitHub for public use.
+*
+* @author tekdemo
 * @see "brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction"
 */
 public class MiniPID
