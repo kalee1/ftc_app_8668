@@ -192,7 +192,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
             case 8:  //Face Cryptobox
                 if(turnToCryptobox!=0)
                 {
-                    if (pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>2)
+                    if (pointTurnGyro(turnToCryptobox, useExtendedGyro) || getRuntime()-timer>5 )
                     {
                         state=10;
                         stopEverything();
@@ -237,7 +237,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 13:  // Back Up
                 driveStraightCombo(-0.8);
-                if(leftFront.getCurrentPosition()-encoder>99)
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "forward");
@@ -260,7 +260,7 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
 
             case 15: //Back away from the cryptobox
                 driveStraightCombo(-0.9);
-                if(leftFront.getCurrentPosition()-encoder>80)
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     glyphIntake("stop");

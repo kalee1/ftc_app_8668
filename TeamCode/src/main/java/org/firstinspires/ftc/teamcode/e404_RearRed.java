@@ -56,17 +56,18 @@ public class e404_RearRed extends Error404AutonomousRear
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxSlide = -250;
+            cryptoboxSlide = -257;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxSlide=-20;
+            cryptoboxSlide=-32;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxSlide=-140;
+            cryptoboxSlide=-139;
+
             result = true;
         }
         return result;

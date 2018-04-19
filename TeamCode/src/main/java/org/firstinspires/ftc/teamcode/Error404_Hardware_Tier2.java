@@ -21,8 +21,8 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
     @Override public void start()
     {
         turnControl = new MiniPID( .01, 0, .018 );
-        turnControl.setOutputLimits(1.0);
-        turnControl.setOutputMin( 0.25 );
+        turnControl.setOutputLimits(.5);
+        turnControl.setOutputMin( 0.07 );
         turnControl.reset();
 
         driveControl = new MiniPID( .025, 0, 0 );
@@ -113,6 +113,55 @@ public class Error404_Hardware_Tier2 extends Error404_Hardware_Tier1 { //VERSION
             stopEverything();
         }
     }
+
+    public void slideSidewaysGyro (double power, double sensitivity, double target, boolean extGyro )
+    {
+        if(power>0) {
+            set_direction(leftFront, "f");
+            set_direction(leftRear, "f");
+            set_direction(rightFront, "f");
+            set_direction(rightRear, "r");
+        }
+        if(power<0) {
+            set_direction(leftFront, "r");
+            set_direction(leftRear, "r");
+            set_direction(rightFront, "r");
+            set_direction(rightRear, "f");
+        }
+
+        set_mode(leftFront, "RUE");
+        set_mode(leftRear, "RUE");
+        set_mode(rightFront, "RUE");
+        set_mode(rightRear, "RUE");
+        double heading = getHeadingDbl();
+
+        if ( extGyro )
+        {
+            if ( heading < 0.0 )
+            {
+                heading = heading + 360.0;
+            }
+        }
+        double correction = (heading - target) / sensitivity;
+
+        if(power>0) {
+            set_power(power + correction, leftFront);
+            set_power(power + correction, rightFront);
+            set_power(power - correction, rightRear);
+            set_power(power - correction, leftRear);
+//            left_set_power( power - correction );
+//            right_set_power( power + correction );
+        }
+        if(power<0) {
+//            left_set_power( Math.abs(power) + correction );
+//            right_set_power( Math.abs(power) - correction );
+            set_power(power - correction, leftFront);
+            set_power(power - correction, rightFront);
+            set_power(power + correction, rightRear);
+            set_power(power + correction, leftRear);
+        }
+    }
+
 
     /**
      * Combines direction and power into one turning method that spins the robot left and right.

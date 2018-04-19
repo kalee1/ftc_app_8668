@@ -24,14 +24,18 @@ public class e404_BlueFront extends Error404AutonomousFront
    /** Setting the movement distances for this quadrant. */
     @Override public void init()
     {
+        //Drive moves
         cryptoboxDriveDistance = -503;
         cryptoboxSlide=0;
-        turnToCryptobox=-90;
         slideAwayFromTheCryptobox=0;
-        turnToPile=85;
         driveToPile=313;
         backToCryptobox=313;
         slideBackToCryptobox=0;
+
+        // turns
+        turnToPile=85;
+        turnToCryptobox=-90;
+
         useExtendedGyro = false;
         setMultipleDirections("straight", "reverse");
         super.init();  //super.init() method is moved to bottom to not get in the way of the driveStraight() method
@@ -53,17 +57,17 @@ public class e404_BlueFront extends Error404AutonomousFront
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = -565;
+            cryptoboxDriveDistance = -380;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=-350;
+            cryptoboxDriveDistance=-590;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=-480;
+            cryptoboxDriveDistance=-485;
             result = true;
         }
         return result;

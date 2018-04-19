@@ -80,11 +80,11 @@ public class team8668Teleop extends OpMode {
     protected NavxMicroNavigationSensor navxMicro;
 
     /** Moving average window used to filter the leftStick_y value. */
-    MovingAverage leftStick_y = new MovingAverage(4);
+    MovingAverage leftStick_y = new MovingAverage(3);
     /** Moving average window used to filter the leftStick_x value. */
-    MovingAverage leftStick_x = new MovingAverage(4);
+    MovingAverage leftStick_x = new MovingAverage(3);
     /** Moving average window used to filter the rightStick_x value. */
-    MovingAverage rightStick_x = new MovingAverage(4);
+    MovingAverage rightStick_x = new MovingAverage(3);
 
 
     /**

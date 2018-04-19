@@ -25,14 +25,15 @@ public class e404_FrontRed extends Error404AutonomousFront
     @Override public void init()
     {
         //Drive moves
-        cryptoboxDriveDistance = 280;
+        cryptoboxDriveDistance = 435;
         backToCryptobox=470;
         driveToPile=313;
         cryptoboxSlide=0;
         slideBackToCryptobox=0;
+        slideAwayFromTheCryptobox=0;
+
 
         //turns
-        slideAwayFromTheCryptobox=0;
         turnToPile=85;
         turnToCryptobox=-85;
 
@@ -57,17 +58,19 @@ public class e404_FrontRed extends Error404AutonomousFront
 
         if(cryptoboxKey.equals("LEFT"))
         {
-            cryptoboxDriveDistance = 565;
+            cryptoboxDriveDistance = 550;
             result = true;
         }
         else if(cryptoboxKey.equals("RIGHT"))
         {
-            cryptoboxDriveDistance=350;
+            cryptoboxDriveDistance=340;
             result = true;
         }
         else if(cryptoboxKey.equals("CENTER"))
         {
-            cryptoboxDriveDistance=480;
+            // REAL CENTER VALUE //
+           cryptoboxDriveDistance=445;
+
             result = true;
         }
         return result;

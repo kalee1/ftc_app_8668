@@ -180,10 +180,10 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
 
             case 13:  // Drive To Cryptobox
                 if (fieldSide.equals("BLUE")) {
-                    driveStraightGyro(-0.8, 40, 0, useExtendedGyro);
+                    driveStraightGyro(-0.5, 40, 0, useExtendedGyro);
                 }
                 if (fieldSide.equals("RED")) {
-                    driveStraightGyro(0.8, 40, 0, useExtendedGyro);
+                    driveStraightGyro(0.5, 40, 0, useExtendedGyro);
                 }
                 if( Math.abs(leftFront.getCurrentPosition() - encoder) > Math.abs(cryptoboxDriveDistance) )  //need to make this generic
                 {
@@ -205,7 +205,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     break;
                 }
                 if(fieldSide.equals("BLUE")) {
-                    if ( pointTurnGyro(turnToCryptobox, true))
+                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro))
                     {
                         state = 15;
                         stopEverything();
@@ -220,11 +220,11 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 {
                     if(cryptoboxSlide>0)
                     {
-                        slideSidewaysCombo(0.8);
+                        slideSidewaysCombo(.6);
                     }
                     else
                     {
-                        slideSidewaysCombo(-0.8);
+                        slideSidewaysCombo(-.6);
                     }
 
                     if(leftFront.getCurrentPosition()-encoder>Math.abs(cryptoboxSlide))
@@ -283,7 +283,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                 break;
             case 20: // Push Glyph in
                 driveStraightCombo(0.5);
-                if(leftFront.getCurrentPosition()-encoder>40)
+                if(leftFront.getCurrentPosition()-encoder>60)
                 {
                     stopEverything();
                     setMultipleDirections("straight", "reverse");
