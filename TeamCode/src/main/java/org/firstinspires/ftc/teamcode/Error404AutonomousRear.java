@@ -205,7 +205,7 @@ public class Error404AutonomousRear extends Error404_Hardware_Tier2
                     break;
                 }
                 if(fieldSide.equals("BLUE")) {
-                    if ( pointTurnGyro(turnToCryptobox, useExtendedGyro))
+                    if ( pointTurnGyro(turnToCryptobox, true))
                     {
                         state = 15;
                         stopEverything();
