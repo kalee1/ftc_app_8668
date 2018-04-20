@@ -84,10 +84,13 @@ public class team8668Teleop extends OpMode {
 
     /** Moving average window used to filter the leftStick_y value. */
     protected MovingAverage leftStick_y = new MovingAverage(6);
+    MovingAverage leftStick_y = new MovingAverage(3);
     /** Moving average window used to filter the leftStick_x value. */
     protected MovingAverage leftStick_x = new MovingAverage(6);
+    MovingAverage leftStick_x = new MovingAverage(3);
     /** Moving average window used to filter the rightStick_x value. */
     protected  MovingAverage rightStick_x = new MovingAverage(6);
+    MovingAverage rightStick_x = new MovingAverage(3);
 
 
     /**
