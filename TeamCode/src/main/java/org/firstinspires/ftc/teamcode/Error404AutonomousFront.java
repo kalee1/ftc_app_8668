@@ -28,12 +28,18 @@ public class Error404AutonomousFront extends Error404_Hardware_Tier2
     protected int cryptoboxDriveDistance;
     /** The angle on the gyro needed to turn to face the cryptobox. */
     protected int turnToCryptobox;
+    /** Initializing the method used for turning the current side of the robot to face the cryptobox. */
+    protected int cryptoboxSlide;
     /** The angle on the gyro needed to turn away from the cryptobox to face the glyph pile. */
     protected int turnToPile;
     /** The distance needed to drive from the cryptobox to the glyph pile. */
     protected int driveToPile;
     /** The distance needed to drive from the glyph pile back to the cryptobox. */
     protected int backToCryptobox;
+
+    protected int slideBackToCryptobox;
+    protected int slideAwayFromTheCryptobox;
+
     /**
      * useExtendedGyro, if True, will be used in the gyro-controlled turn and drive methods to take
      * the navX +/- 180 degree gyro and read it like a 360 degree gyro. This lets the robot drive at
